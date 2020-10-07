@@ -9,8 +9,6 @@ public class BGTitle extends Object
     {
         //マルチスレッドでぶん投げ隊
 
-        position = new Vector2();
-        texInfo = info;
     }
 
 }

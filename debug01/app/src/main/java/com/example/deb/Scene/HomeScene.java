@@ -17,7 +17,7 @@ public class HomeScene extends BaseScene
 
     public HomeScene(GL10 gl, Context context)
     {
-        //スプライト初期化
+        //インスタンス初期化
         TextureInfo info;
         info = Texture.loadTexture(gl, context.getResources(), R.drawable.title);
         bgTitle = new BGTitle(info);
