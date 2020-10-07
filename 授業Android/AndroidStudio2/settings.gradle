@@ -1,0 +1,2 @@
+rootProject.name='AndroidStadio2'
+include ':app'
