@@ -2,6 +2,7 @@ package com.example.deb.BaseClass;
 
 import android.view.MotionEvent;
 
+import com.example.deb.System.TextureDrawer;
 import com.example.deb.System.TextureInfo;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -22,8 +23,8 @@ public class Object
     //javaにはVector2が用意されていないので自分で用意する
     protected class Vector2
     {
-        float x;
-        float y;
+        public float x;
+        public float y;
 
         //初期化式
         public Vector2()
@@ -42,10 +43,10 @@ public class Object
     //カラー型も用意しておく
     protected class Color
     {
-        float r;
-        float g;
-        float b;
-        float a;
+        public float r;
+        public float g;
+        public float b;
+        public float a;
 
         //初期化式
         public Color()
@@ -90,18 +91,39 @@ public class Object
     protected Vector2       size;       //描画サイズ
 
     protected float         rotate;     //回転 ゲームによってはあまり使わない
-    protected boolean       reverce;    //反転 同上
+    protected boolean       reverse;    //反転 同上
 
-    protected int           animCnt;    //アニメーションの状態遷移を管理
-    protected int           interval;   //アニメーションの休憩時間
+    protected float         animCnt;    //アニメーションの状態遷移を管理
+    protected float         interval;   //アニメーションの休憩時間
     protected int           pattern;    //アニメーションが何パターンあるか
+
+    protected Vector2       texRange;   //使う画像の範囲指定
 
     protected Color         color;      //色 all1.0fで描画される
 
 
     protected Layer layer;
-    //public:
-    //純粋仮想関数もどき 基本継承して自分のしたいことすればいいと思う
+//public:
+
+    //コンストラクタ
+    public Object()
+    {
+        pos = new Vector2();
+        size = new Vector2(100.0f,100.0f);
+
+        rotate = 0.0f;
+        reverse = false;
+
+        animCnt = 0.0f;
+        interval = 0;
+        pattern = 1;
+
+        texRange = new Vector2(1.0f,1.0f);
+
+        color = new Color();
+    }
+
+    //純粋仮想関数ぽいものを実装
     public void init() {}
     public void uninit() {texInfo = null;}
 
@@ -115,8 +137,17 @@ public class Object
         //例外処理
         if(texInfo == null) return;
 
-        //描画
-
+        //描画 ここ書けば描画できそう
+        TextureDrawer.drawTexture
+        (   gl,
+            texInfo.texId,
+            pos.x, pos.y, size.x, size.y,
+            rotate, reverse,
+            (float)((int)(animCnt / interval) % pattern) % texRange.x / texRange.x,
+            (float)((int)(animCnt / interval) % pattern / texRange.x)/texRange.y ,
+            1.0f / texRange.x, 1.0f / texRange.y,
+            color.a, color.g, color.b, color.a
+        );
     }
 
     //スマホっぽい関数 これも継承して使う
@@ -124,8 +155,8 @@ public class Object
     public void button(int id, MotionEvent event){}
 
     //ゲッターとセッター
-    public Vector2 getPosition()           {return pos;}
-    public void setPosition(Vector2 pos)   {pos = pos;}
+    public Vector2 getPosition()                {return pos;}
+    public void setPosition(Vector2 position)   {pos = position;}
 
-    public int getLayer()                 {return layer.id;}
+    public int getLayer()                       {return layer.id;}
 }

@@ -2,7 +2,12 @@ package com.example.deb.Activity;
 
 
 import android.content.Context;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLU;
+
+import android.app.Activity;
+import android.view.Display;
 
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Scene.HomeScene;
@@ -19,6 +24,23 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     private GL10 gl10;
     private Context context;
 
+    //解像度らしい
+    public static float BASE_WID = 768;
+    public static float BASE_HEI = 0;
+    // サーフェイスの幅・高さ
+    public static int surfaceWid;
+    public static int surfaceHei;
+
+    //画面のサイズ取得？？
+    public static Point getDisplaySize(Activity activity)
+    {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        return point;
+    }
+
+    //コンストラクタ
     public GameActivity(Context context, MainActivity activity)
     {
         super(context);
@@ -32,8 +54,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     {
         //init
 
+
         //OpenGLの初期化
         {
+            //背景色のクリア
+            gl.glClearColor(0.5f,1.0f,0.5f,1.0f);
+
             // アルファブレンド有効
             gl.glEnable(GL10.GL_BLEND);
             gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
@@ -42,9 +68,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             gl.glDisable(GL10.GL_DITHER);
             // カラーとテクスチャ座標の補間精度を、最も効率的なものに指定
             gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-
-            // バッファ初期化時のカラー情報をセット
-            gl.glClearColor(0, 0, 0, 1);
 
             // 片面表示を有効に
             gl.glEnable(GL10.GL_CULL_FACE);
@@ -62,13 +85,35 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         }
 
         //シーン設定、上書きは直接行うつもり
-        BaseScene scene = new HomeScene(gl10,context);
+        scene = new HomeScene(gl10,context);
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
-        //横縦切り替え時 おそらく使わない
+
+        //横縦切り替え時 画面初期化時に通る
+        gl10 = gl;
+
+        // サーフェイスの幅・高さを更新
+        surfaceWid = width;
+        surfaceHei = height;
+
+        // ビューポートをサイズに合わせてセットしなおす
+        gl.glViewport(0, 0, width, height);
+
+        // 射影行列を選択
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        // 現在選択されている行列(射影行列)に、単位行列をセット
+        gl.glLoadIdentity();
+        // 平行投影用のパラメータをセット
+        if(BASE_WID == 0) {
+            BASE_WID = (float)width * BASE_HEI / height;
+        }
+        else {
+            BASE_HEI = (float)height * BASE_WID / width;
+        }
+        GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
     }
 
     @Override
@@ -77,14 +122,19 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //毎f呼び出される処理なのでここで欲しいものを呼び出す
         //フレーム処理を忘れずに入れておく
         update();
+
+        // 描画用バッファをクリア
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
         draw();
     }
+
     protected void update()
     {
         scene.update();
     }
     protected void draw()
     {
-        scene.update();
+        scene.draw();
     }
 }

@@ -12,7 +12,7 @@ public class BaseScene
 
 //protected
     //リスト ここでシーン内のオブジェクトを管理する
-    List<Object> list = new ArrayList<Object>();
+    protected List<Object> list = new ArrayList<Object>();
 
     //描画の際に必要
     protected GL10 gl10;
@@ -35,6 +35,7 @@ public class BaseScene
 
     public void draw()
     {
+        //2Dでもレイヤーに合わせて描画順番を変更
         for(int i = 0; i < LAYER_MAX; i++)
         {
             //拡張型for文 list内の全要素を参照できる

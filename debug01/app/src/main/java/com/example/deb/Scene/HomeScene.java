@@ -3,6 +3,8 @@ package com.example.deb.Scene;
 
 import android.content.Context;
 
+import androidx.appcompat.view.menu.MenuBuilder;
+
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.R;
 import com.example.deb.System.Texture;
@@ -18,21 +20,9 @@ public class HomeScene extends BaseScene
     public HomeScene(GL10 gl, Context context)
     {
         //インスタンス初期化
-        TextureInfo info;
-        info = Texture.loadTexture(gl, context.getResources(), R.drawable.title);
-        bgTitle = new BGTitle(info);
+        bgTitle = new BGTitle(Texture.loadTexture(gl, context.getResources(), R.drawable.title));
+        //TextureInfo info = Texture.loadTexture(gl, context.getResources(), R.drawable.title);
+        list.add(bgTitle);
         gl10 = gl;
-    }
-
-    @Override
-    public void update()
-    {
-
-    }
-
-    @Override
-    public void draw()
-    {
-
     }
 }
