@@ -2,9 +2,11 @@ package com.example.deb.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,7 +16,6 @@ import com.example.deb.Scene.HomeScene;
 
 public class MainActivity extends AppCompatActivity
 {
-    //viewManager(?)
     GameActivity gameActivity;
     public static int screenWid, screenHei;
 
@@ -49,4 +50,13 @@ public class MainActivity extends AppCompatActivity
         screenWid = point.x;
         screenHei = point.y;
     }
+
+    @Override
+    // 画面タッチ時処理
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        gameActivity.touch(event);
+        return true;
+    }
+
 }

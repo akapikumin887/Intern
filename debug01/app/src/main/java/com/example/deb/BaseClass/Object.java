@@ -2,8 +2,12 @@ package com.example.deb.BaseClass;
 
 import android.view.MotionEvent;
 
+import com.example.deb.Activity.GameActivity;
+import com.example.deb.System.Texture;
 import com.example.deb.System.TextureDrawer;
 import com.example.deb.System.TextureInfo;
+import com.example.deb.System.Vector2;
+import com.example.deb.System.Color;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -20,53 +24,6 @@ import javax.microedition.khronos.opengles.GL10;
 public class Object
 {
 //protected:
-    //javaにはVector2が用意されていないので自分で用意する
-    protected class Vector2
-    {
-        public float x;
-        public float y;
-
-        //初期化式
-        public Vector2()
-        {
-            x = 0.0f;
-            y = 0.0f;
-        }
-        //代入式
-        public Vector2(float X,float Y)
-        {
-            x = X;
-            y = Y;
-        }
-    }
-
-    //カラー型も用意しておく
-    protected class Color
-    {
-        public float r;
-        public float g;
-        public float b;
-        public float a;
-
-        //初期化式
-        public Color()
-        {
-            r = 1.0f;
-            g = 1.0f;
-            b = 1.0f;
-            a = 1.0f;
-        }
-
-        //代入式
-        public Color(float R,float G,float B, float A)
-        {
-            r = R;
-            g = G;
-            b = B;
-            a = A;
-        }
-    }
-
     //レイヤーはオブジェクト側で管理する
     protected enum Layer
     {
@@ -84,9 +41,6 @@ public class Object
     }
 
     //draw関数で使う変数群
-    protected GL10          gl10;       //GLを司るもの あまりよくわからない
-    protected TextureInfo   texInfo;    //テクスチャ情報
-
     protected Vector2       pos;        //描画座標 左上基準
     protected Vector2       size;       //描画サイズ
 
@@ -125,29 +79,15 @@ public class Object
 
     //純粋仮想関数ぽいものを実装
     public void init() {}
-    public void uninit() {texInfo = null;}
+    public void uninit() {}
 
     public void update(float dt)
     {
         animCnt += dt;      //アニメーションを動かす
     }
 
-    public void draw(GL10 gl)
+    public void draw()
     {
-        //例外処理
-        if(texInfo == null) return;
-
-        //描画 ここ書けば描画できそう
-        TextureDrawer.drawTexture
-        (   gl,
-            texInfo.texId,
-            pos.x, pos.y, size.x, size.y,
-            rotate, reverse,
-            (float)((int)(animCnt / interval) % pattern) % texRange.x / texRange.x,
-            (float)((int)(animCnt / interval) % pattern / texRange.x)/texRange.y ,
-            1.0f / texRange.x, 1.0f / texRange.y,
-            color.a, color.g, color.b, color.a
-        );
     }
 
     //スマホっぽい関数 これも継承して使う

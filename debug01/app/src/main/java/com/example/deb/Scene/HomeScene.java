@@ -2,6 +2,7 @@ package com.example.deb.Scene;
 
 
 import android.content.Context;
+import android.view.MotionEvent;
 
 import androidx.appcompat.view.menu.MenuBuilder;
 
@@ -17,12 +18,23 @@ public class HomeScene extends BaseScene
 {
     BGTitle bgTitle;
 
-    public HomeScene(GL10 gl, Context context)
+    public HomeScene()
     {
         //インスタンス初期化
-        bgTitle = new BGTitle(Texture.loadTexture(gl, context.getResources(), R.drawable.title));
-        //TextureInfo info = Texture.loadTexture(gl, context.getResources(), R.drawable.title);
+        BGTitle.loadTexture();
+        bgTitle = new BGTitle();
         list.add(bgTitle);
-        gl10 = gl;
+    }
+
+    public void uninit()
+    {
+        list.remove(bgTitle);
+    }
+
+    @Override
+    public  void touch(MotionEvent event)
+    {
+        super.touch(event);
+
     }
 }

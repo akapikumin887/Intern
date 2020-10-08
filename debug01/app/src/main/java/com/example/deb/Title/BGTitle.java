@@ -1,39 +1,35 @@
 package com.example.deb.Title;
 
-import com.example.deb.BaseClass.Object;
-import com.example.deb.System.TextureDrawer;
-import com.example.deb.System.TextureInfo;
+import android.view.MotionEvent;
 
-import javax.microedition.khronos.opengles.GL10;
+import com.example.deb.Activity.GameActivity;
+import com.example.deb.BaseClass.Object;
+import com.example.deb.R;
+import com.example.deb.System.Texture;
+import com.example.deb.System.Vector2;
 
 public class BGTitle extends Object
 {
-    public BGTitle(TextureInfo info)
+    private static Texture texture;
+
+    public BGTitle()
     {
         //マルチスレッドでぶん投げ隊
         super();
         layer = Layer.LAYER_BG;
-        texInfo = info;
-        size = new Vector2(1.0f,1.0f);
+        size = new Vector2(1000.0f,1000.0f);
     }
 
     @Override
-    public void draw(GL10 gl)
+    public void draw()
     {
-        //例外処理
-        if(texInfo == null) return;
-
         //描画 ここ書けば描画できそう
-        TextureDrawer.drawTexture
-                (   gl,
-                        texInfo.texId,
-                        pos.x, pos.y, 768.0f, 1600.0f,
-                        rotate, reverse,
-                        0.0f,
-                        0.0f ,
-                        1.0f, 1.0f,
-                        color.a, color.g, color.b, color.a
-                );
+        texture.draw(pos,size,rotate,reverse, new Vector2(),new Vector2(1.0f,1.0f),color);
+        /*
+        * イメージ
+        * 例外処理
+        * texture.draw();
+        * */
     }
 
     @Override
@@ -43,4 +39,15 @@ public class BGTitle extends Object
 
     }
 
+    public static void loadTexture()
+    {
+        texture = new Texture();
+        texture.loadTexture(GameActivity.context, R.drawable.title);
+    }
+
+    @Override
+    public void touch(MotionEvent event)
+    {
+
+    }
 }

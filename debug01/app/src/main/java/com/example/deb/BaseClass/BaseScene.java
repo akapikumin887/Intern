@@ -1,5 +1,9 @@
 package com.example.deb.BaseClass;
 
+import android.view.MotionEvent;
+
+import com.example.deb.Activity.GameActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +17,6 @@ public class BaseScene
 //protected
     //リスト ここでシーン内のオブジェクトを管理する
     protected List<Object> list = new ArrayList<Object>();
-
-    //描画の際に必要
-    protected GL10 gl10;
 
     //コンストラクタ
     public void BaseScene()
@@ -42,8 +43,16 @@ public class BaseScene
             for(Object o : list)
             {
                 if(i == o.getLayer())
-                    o.draw(gl10);
+                    o.draw();
             }
         }
+    }
+
+    //画面を触ったら勝手に処理してくれる update等に入れる必要なし
+    public void touch(MotionEvent event)
+    {
+        //拡張型for文 list内の全要素を参照できる
+        for(Object o : list)
+            o.touch(event);
     }
 }

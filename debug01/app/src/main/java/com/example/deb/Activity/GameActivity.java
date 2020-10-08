@@ -8,9 +8,11 @@ import android.opengl.GLU;
 
 import android.app.Activity;
 import android.view.Display;
+import android.view.MotionEvent;
 
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Scene.HomeScene;
+import com.example.deb.Scene.StatusScene;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -21,10 +23,10 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 {
     private BaseScene scene;
 
-    private GL10 gl10;
-    private Context context;
+    private static GL10 gl10;
+    public static Context context;
 
-    //解像度らしい
+    //解像度らしい 直接値入れているのはあまりよくわからない
     public static float BASE_WID = 768;
     public static float BASE_HEI = 0;
     // サーフェイスの幅・高さ
@@ -66,6 +68,10 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
             // ディザを無効化
             gl.glDisable(GL10.GL_DITHER);
+            //深度テストを無効化
+            gl.glDisable(GL10.GL_DEPTH_TEST);
+            //ライティングを無効化
+            gl.glDisable(GL10.GL_LIGHTING);
             // カラーとテクスチャ座標の補間精度を、最も効率的なものに指定
             gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
 
@@ -73,9 +79,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             gl.glEnable(GL10.GL_CULL_FACE);
             // カリング設定をCCWに
             gl.glFrontFace(GL10.GL_CCW);
-
-            // 深度テストを無効に
-            gl.glDisable(GL10.GL_DEPTH_TEST);
 
             // フラットシェーディングにセット
             gl.glShadeModel(GL10.GL_FLAT);
@@ -85,13 +88,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         }
 
         //シーン設定、上書きは直接行うつもり
-        scene = new HomeScene(gl10,context);
+        scene = new HomeScene();
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
-
         //横縦切り替え時 画面初期化時に通る
         gl10 = gl;
 
@@ -129,6 +131,25 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         draw();
     }
 
+    public void touch(MotionEvent event)
+    {
+        //このタッチの処理はplessと同じ扱い
+        scene.touch(event);
+        scene.uninit();
+        scene = new StatusScene();
+        if(event.getAction() == MotionEvent.ACTION_UP)
+        {
+            // 離した際の処理(releace)
+
+        }
+        else if(event.getAction() == MotionEvent.ACTION_DOWN)
+        {
+            // 押した際の処理（trigger）
+
+        }
+
+    }
+
     protected void update()
     {
         scene.update();
@@ -137,4 +158,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     {
         scene.draw();
     }
+
+    public static GL10 getGL(){return gl10;}
+    public static Context getCntxt(){return context;}       //contextのgetterだがなにやら別の場所で同名が定義されているため名前を一部変更
 }
