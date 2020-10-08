@@ -1,31 +1,28 @@
 package com.example.deb.Scene;
 
 
-import android.content.Context;
 import android.view.MotionEvent;
 
-import androidx.appcompat.view.menu.MenuBuilder;
-
 import com.example.deb.BaseClass.BaseScene;
-import com.example.deb.R;
-import com.example.deb.System.Texture;
-import com.example.deb.System.TextureInfo;
 import com.example.deb.Title.BGTitle;
-
-import javax.microedition.khronos.opengles.GL10;
 
 public class HomeScene extends BaseScene
 {
-    BGTitle bgTitle;
+    BGTitle[] bgTitle = new BGTitle[10];
 
     public HomeScene()
     {
         //インスタンス初期化
-        BGTitle.loadTexture();
-        bgTitle = new BGTitle();
-        list.add(bgTitle);
+        for(int i = 0; i < 10; i++)
+        {
+            bgTitle[i] = new BGTitle();
+            list.add(bgTitle[i]);
+        }
+        //bgTitle = new BGTitle();
+        //list.add(bgTitle);
     }
 
+    @Override
     public void uninit()
     {
         list.remove(bgTitle);

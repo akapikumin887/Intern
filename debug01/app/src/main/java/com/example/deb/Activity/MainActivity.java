@@ -17,14 +17,11 @@ import com.example.deb.Scene.HomeScene;
 public class MainActivity extends AppCompatActivity
 {
     GameActivity gameActivity;
-    public static int screenWid, screenHei;
+    public static float screenWid, screenHei;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -58,5 +55,4 @@ public class MainActivity extends AppCompatActivity
         gameActivity.touch(event);
         return true;
     }
-
 }

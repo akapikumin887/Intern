@@ -11,6 +11,10 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class BaseScene
 {
+//peivate
+    private static BaseScene nowScene;
+    private static BaseScene nextScene;
+
 //定数定義
     private final int LAYER_MAX = 4;
 
@@ -55,4 +59,23 @@ public class BaseScene
         for(Object o : list)
             o.touch(event);
     }
+
+
+    //ゲッターとセッター
+    public static void setScene(BaseScene scene)
+    {
+        if(nowScene != null)
+            nowScene.uninit();
+        if(nextScene == null)
+            nowScene = scene;
+        else
+            nowScene = nextScene;
+        nextScene = null;
+    }
+
+    public static BaseScene getScene(){return nowScene;}
+
+    public static BaseScene getnextScene(){return nextScene;}
+    public static void setnextScene(BaseScene scene){nextScene = scene;}
+
 }

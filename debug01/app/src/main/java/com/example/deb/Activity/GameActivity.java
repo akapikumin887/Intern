@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.StatusScene;
+import com.example.deb.Status.BGStatus;
+import com.example.deb.Title.BGTitle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -21,10 +23,8 @@ import javax.microedition.khronos.opengles.GL10;
 //イメージ的にはここを描画し続けなければならない
 public class GameActivity extends GLSurfaceView implements GLSurfaceView.Renderer
 {
-    private BaseScene scene;
-
     private static GL10 gl10;
-    public static Context context;
+    private static Context context;
 
     //解像度らしい 直接値入れているのはあまりよくわからない
     public static float BASE_WID = 768;
@@ -56,7 +56,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     {
         //init
 
-
         //OpenGLの初期化
         {
             //背景色のクリア
@@ -86,9 +85,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             //glをもらってきたものに上書きする
             gl10 = gl;
         }
-
-        //シーン設定、上書きは直接行うつもり
-        scene = new HomeScene();
     }
 
     @Override
@@ -116,6 +112,11 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             BASE_HEI = (float)height * BASE_WID / width;
         }
         GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
+
+        load();
+
+        //シーン設定、上書きは直接行うつもり
+        BaseScene.setScene(new HomeScene());
     }
 
     @Override
@@ -129,14 +130,21 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         draw();
+
+
+        //シーン遷移
+        if(BaseScene.getnextScene() != null)
+        {
+            BaseScene.getScene().uninit();
+
+            BaseScene.setScene(BaseScene.getnextScene());
+        }
     }
 
     public void touch(MotionEvent event)
     {
         //このタッチの処理はplessと同じ扱い
-        scene.touch(event);
-        scene.uninit();
-        scene = new StatusScene();
+        BaseScene.getScene().touch(event);
         if(event.getAction() == MotionEvent.ACTION_UP)
         {
             // 離した際の処理(releace)
@@ -152,11 +160,17 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     protected void update()
     {
-        scene.update();
+        BaseScene.getScene().update();
     }
     protected void draw()
     {
-        scene.draw();
+        BaseScene.getScene().draw();
+    }
+
+    private void load()
+    {
+        BGTitle.loadTexture();
+        BGStatus.loadTexture();
     }
 
     public static GL10 getGL(){return gl10;}

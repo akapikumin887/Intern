@@ -2,14 +2,8 @@ package com.example.deb.BaseClass;
 
 import android.view.MotionEvent;
 
-import com.example.deb.Activity.GameActivity;
-import com.example.deb.System.Texture;
-import com.example.deb.System.TextureDrawer;
-import com.example.deb.System.TextureInfo;
 import com.example.deb.System.Vector2;
 import com.example.deb.System.Color;
-
-import javax.microedition.khronos.opengles.GL10;
 
 /*
 * javaの命名規則について(C++との違い)
