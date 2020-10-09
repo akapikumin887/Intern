@@ -12,8 +12,8 @@ import android.view.MotionEvent;
 
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Scene.HomeScene;
-import com.example.deb.Scene.StatusScene;
 import com.example.deb.Status.BGStatus;
+import com.example.deb.System.FPSManager;
 import com.example.deb.Title.BGTitle;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -55,7 +55,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         //init
-
+        FPSManager.setIsLate(true);
         //OpenGLの初期化
         {
             //背景色のクリア
@@ -90,6 +90,8 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
+        FPSManager.setIsLate(true);
+
         //横縦切り替え時 画面初期化時に通る
         gl10 = gl;
 
@@ -122,23 +124,31 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onDrawFrame(GL10 gl)
     {
-        //毎f呼び出される処理なのでここで欲しいものを呼び出す
-        //フレーム処理を忘れずに入れておく
-        update();
+        FPSManager.calcFPS();
 
-        // 描画用バッファをクリア
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-
-        draw();
-
-
-        //シーン遷移
-        if(BaseScene.getnextScene() != null)
+        if(FPSManager.getcanUpdate())
         {
-            BaseScene.getScene().uninit();
+            update();
 
-            BaseScene.setScene(BaseScene.getnextScene());
-        }
+            // 描画用バッファをクリア
+            gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+            draw();
+
+            //シーン遷移
+            if(BaseScene.getnextScene() != null)
+            {
+                BaseScene.getScene().uninit();
+
+                BaseScene.setScene(BaseScene.getnextScene());
+            }
+            FPSManager.setcanUpdate(false);
+    }
+        else
+    {
+        //1fに満たない場合は休憩
+        //FPSManager.drowsy(FPSManager.getSleepTime());
+    }
+
     }
 
     public void touch(MotionEvent event)

@@ -12,6 +12,7 @@ public class FPSManager {
     // FPS値
     private float fps;
     // 経過時間の和
+
     private long times;
     // 毎フレームの経過時間を、サンプル数だけ保持するQueue
     private LinkedList<Long> elapsedTimeList;
@@ -40,7 +41,7 @@ public class FPSManager {
      */
     public void calcFPS()
     {
-        // ブート後のミリ秒を取得
+        // 起動後のミリ秒を取得
         long now_time = SystemClock.uptimeMillis();
 
         elapsedTime = now_time - prevTime;
