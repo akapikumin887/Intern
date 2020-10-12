@@ -42,6 +42,7 @@ public class Figure extends Object
         {
             // 一桁ずつ数字を表示
             //ここでいうサイズは1桁分
+            //xyは中心座表
             texture.draw(new Vector2(x,pos.y),size,
                     rotate,reverse,
 /*
@@ -49,9 +50,11 @@ public class Figure extends Object
                     new Vector2((v % 10) * 0.1f + 0.1f,1.0f),
 */
                     //参照する場所がおかしい候補
-                    new Vector2(0.1f,0.0f),
-                    new Vector2(1.0f,1.0f),
+                    new Vector2(0.8f,0.0f),     //始点、左上
+                    new Vector2(0.1f,1.0f),     //幅と高さ
                     color);
+
+
 
             // 表示桁・座標更新
             v /= 10;
