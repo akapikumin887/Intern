@@ -6,6 +6,7 @@ import com.example.deb.Activity.GameActivity;
 import com.example.deb.Activity.MainActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Object.Figure;
 import com.example.deb.R;
 import com.example.deb.Scene.StatusScene;
 import com.example.deb.System.Texture;
@@ -18,8 +19,8 @@ public class BGTitle extends Object
     public BGTitle()
     {
         super();
-        layer = Layer.LAYER_BG;
-        size = new Vector2(GameActivity.BASE_WID,GameActivity.BASE_HEI);
+        setLayer(Layer.LAYER_BG);
+        setSize(new Vector2(GameActivity.getBaseWid(),GameActivity.getBaseHei()));
     }
 
     @Override
@@ -39,12 +40,12 @@ public class BGTitle extends Object
     public static void loadTexture()
     {
         texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.title);
+        texture.loadTexture(GameActivity.getCntxt(), R.drawable.title02);
     }
 
     @Override
     public void touch(MotionEvent event)
     {
-        BaseScene.setnextScene(new StatusScene());
+        //BaseScene.setnextScene(new StatusScene());
     }
 }

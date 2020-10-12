@@ -79,10 +79,7 @@ public class Object
     {
         animCnt += dt;      //アニメーションを動かす
     }
-
-    public void draw()
-    {
-    }
+    public void draw() {}
 
     //スマホっぽい関数 これも継承して使う
     public void touch(MotionEvent event){}
@@ -90,7 +87,14 @@ public class Object
 
     //ゲッターとセッター
     public Vector2 getPosition()                {return pos;}
-    public void setPosition(Vector2 position)   {pos = position;}
+    public void setPosition(Vector2 num)        {pos = num;}
+
+    public Vector2 getSize()                    {return size;}
+    public void setSize(Vector2 num)            {size = num;}
+
+    public Vector2 getTexRange()                {return texRange;}
+    public void setTexRange(Vector2 num)        {texRange = num;}
 
     public int getLayer()                       {return layer.id;}
+    public void setLayer(Layer num)               {layer = num;}
 }

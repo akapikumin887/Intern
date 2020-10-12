@@ -3,14 +3,14 @@ package com.example.deb.Activity;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.hardware.Sensor;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
-import android.app.Activity;
-import android.view.Display;
 import android.view.MotionEvent;
 
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Object.Figure;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Status.BGStatus;
 import com.example.deb.System.FPSManager;
@@ -23,24 +23,17 @@ import javax.microedition.khronos.opengles.GL10;
 //イメージ的にはここを描画し続けなければならない
 public class GameActivity extends GLSurfaceView implements GLSurfaceView.Renderer
 {
+    private final int LATE = -1;    //遅延確認時に次fを飛ばす用
+
     private static GL10 gl10;
     private static Context context;
 
     //解像度らしい 直接値入れているのはあまりよくわからない
-    public static float BASE_WID = 768;
-    public static float BASE_HEI = 0;
+    private static float BASE_WID = 768;
+    private static float BASE_HEI = 0;
     // サーフェイスの幅・高さ
     public static int surfaceWid;
     public static int surfaceHei;
-
-    //画面のサイズ取得？？
-    public static Point getDisplaySize(Activity activity)
-    {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        return point;
-    }
 
     //コンストラクタ
     public GameActivity(Context context, MainActivity activity)
@@ -55,7 +48,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         //init
-        FPSManager.setIsLate(true);
+        FPSManager.setIsLate(LATE);
         //OpenGLの初期化
         {
             //背景色のクリア
@@ -90,7 +83,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
-        FPSManager.setIsLate(true);
+        FPSManager.setIsLate(LATE);
 
         //横縦切り替え時 画面初期化時に通る
         gl10 = gl;
@@ -142,13 +135,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
                 BaseScene.setScene(BaseScene.getnextScene());
             }
             FPSManager.setcanUpdate(false);
-    }
+        }
         else
-    {
-        //1fに満たない場合は休憩
-        //FPSManager.drowsy(FPSManager.getSleepTime());
-    }
-
+        {
+            //1fに満たない場合は休憩
+            FPSManager.drowsy(FPSManager.getSleepTime());
+        }
     }
 
     public void touch(MotionEvent event)
@@ -181,8 +173,11 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     {
         BGTitle.loadTexture();
         BGStatus.loadTexture();
+        Figure.loadTexture();
     }
 
     public static GL10 getGL(){return gl10;}
     public static Context getCntxt(){return context;}       //contextのgetterだがなにやら別の場所で同名が定義されているため名前を一部変更
+    public static float getBaseWid(){return BASE_WID;}
+    public static float getBaseHei(){return BASE_HEI;}
 }

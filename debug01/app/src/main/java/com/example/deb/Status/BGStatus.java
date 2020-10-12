@@ -20,14 +20,19 @@ public class BGStatus extends Object
     public BGStatus()
     {
         super();
-        layer = Layer.LAYER_BG;
-        size = new Vector2(GameActivity.BASE_WID,GameActivity.BASE_HEI);
+        setLayer(Layer.LAYER_BG);
+        setSize(new Vector2(GameActivity.getBaseWid(),GameActivity.getBaseHei()));
+        //setSize(new Vector2(500.0f,500.0f));
     }
 
     @Override
     public void draw()
     {
-        texture.draw(pos,size,rotate,reverse, new Vector2(),new Vector2(1.0f,1.0f),color);
+        texture.draw(pos,size,
+                rotate,reverse,
+                new Vector2(),
+                new Vector2(1.0f,1.0f),
+                color);
     }
 
     @Override

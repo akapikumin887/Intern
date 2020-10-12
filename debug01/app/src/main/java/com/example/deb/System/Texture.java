@@ -191,15 +191,15 @@ public class Texture
         float[] coords = getCoords(8);
         if(!reverse)
         {
-            coords[0] =           texUV.x; coords[1] = texUV.x + texWH.x;
+            coords[0] =           texUV.x; coords[1] = texUV.y + texWH.y;
             coords[2] = texUV.x + texWH.x; coords[3] = texUV.y + texWH.y;
             coords[4] =           texUV.x; coords[5] =           texUV.y;
             coords[6] = texUV.x + texWH.x; coords[7] =           texUV.y;
         }
         else
         {
-            coords[0] = texUV.x + texWH.x; coords[1] = texUV.x + texWH.x;
-            coords[2] =           texUV.x; coords[3] = texUV.x + texWH.x;
+            coords[0] = texUV.x + texWH.x; coords[1] = texUV.y + texWH.y;
+            coords[2] =           texUV.x; coords[3] = texUV.y + texWH.y;
             coords[4] = texUV.x + texWH.x; coords[5] =           texUV.y;
             coords[6] =           texUV.x; coords[7] =           texUV.y;
         }
