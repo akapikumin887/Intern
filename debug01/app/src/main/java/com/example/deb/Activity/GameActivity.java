@@ -27,6 +27,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     private static GL10 gl10;
     private static Context context;
+    private static MainActivity activity;
 
     //解像度らしい 直接値入れているのはあまりよくわからない
     private static float BASE_WID = 768;
@@ -40,15 +41,17 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     {
         super(context);
         this.context = context;
+        this.activity = activity;
 
         setRenderer(this);
+        FPSManager.init();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         //init
-        FPSManager.setIsLate(LATE);
+        //FPSManager.setIsLate(LATE);
         //OpenGLの初期化
         {
             //背景色のクリア
@@ -83,7 +86,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
-        FPSManager.setIsLate(LATE);
+        //FPSManager.setIsLate(LATE);
 
         //横縦切り替え時 画面初期化時に通る
         gl10 = gl;
@@ -117,30 +120,23 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onDrawFrame(GL10 gl)
     {
+
         FPSManager.calcFPS();
 
-        if(FPSManager.getcanUpdate())
+        update();
+        //描画用バッファをクリア
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        draw();
+
+        //シーン遷移
+        if(BaseScene.getnextScene() != null)
         {
-            update();
+            BaseScene.getScene().uninit();
 
-            // 描画用バッファをクリア
-            gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-            draw();
-
-            //シーン遷移
-            if(BaseScene.getnextScene() != null)
-            {
-                BaseScene.getScene().uninit();
-
-                BaseScene.setScene(BaseScene.getnextScene());
-            }
-            FPSManager.setcanUpdate(false);
+            BaseScene.setScene(BaseScene.getnextScene());
         }
-        else
-        {
-            //1fに満たない場合は休憩
-            FPSManager.drowsy(FPSManager.getSleepTime());
-        }
+
+        FPSManager.drowsy();
     }
 
     public void touch(MotionEvent event)
@@ -178,6 +174,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     public static GL10 getGL(){return gl10;}
     public static Context getCntxt(){return context;}       //contextのgetterだがなにやら別の場所で同名が定義されているため名前を一部変更
+    public static  MainActivity getActivity(){return  activity;}
     public static float getBaseWid(){return BASE_WID;}
     public static float getBaseHei(){return BASE_HEI;}
 }

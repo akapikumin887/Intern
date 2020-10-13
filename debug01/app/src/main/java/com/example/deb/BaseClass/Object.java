@@ -96,5 +96,5 @@ public class Object
     public void setTexRange(Vector2 num)        {texRange = num;}
 
     public int getLayer()                       {return layer.id;}
-    public void setLayer(Layer num)               {layer = num;}
+    public void setLayer(Layer num)             {layer = num;}
 }

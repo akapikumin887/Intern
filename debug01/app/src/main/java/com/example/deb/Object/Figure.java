@@ -45,22 +45,30 @@ public class Figure extends Object
             //xyは中心座表
             texture.draw(new Vector2(x,pos.y),size,
                     rotate,reverse,
-/*
-                    new Vector2((v % 10) * 0.1f,0.0f),
-                    new Vector2((v % 10) * 0.1f + 0.1f,1.0f),
-*/
-                    //参照する場所がおかしい候補
-                    new Vector2(0.8f,0.0f),     //始点、左上
-                    new Vector2(0.1f,1.0f),     //幅と高さ
+                    new Vector2((v % 10) * 0.1f,0.0f),  //始点、左上
+                    new Vector2(0.1f,1.0f),             //幅と高さ
                     color);
-
-
 
             // 表示桁・座標更新
             v /= 10;
             x -= size.x;
         }
         while(++cnt < digit || v != 0);
+    }
+
+    @Override
+    public void update(float dt)
+    {
+        super.update(dt);
+
+        digit = 0;
+        int v = value;
+        do
+        {
+            v /= 10;
+            digit++;
+        }while(v != 0);
+
     }
 
     //テクスチャロード

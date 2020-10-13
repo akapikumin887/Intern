@@ -29,7 +29,15 @@ public class BaseScene
     }
     //純粋及び仮想関数
     public void init(){}
-    public void uninit(){}
+    public void uninit()
+    {
+        //拡張型for文 list内の全要素を参照できる
+        for(Object o : list)
+        {
+            list.remove(o);
+            o.uninit();
+        }
+    }
 
     public void update()
     {
@@ -66,6 +74,7 @@ public class BaseScene
     {
         if(nowScene != null)
             nowScene.uninit();
+
         if(nextScene == null)
             nowScene = scene;
         else

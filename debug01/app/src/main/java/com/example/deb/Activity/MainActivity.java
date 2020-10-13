@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.R;
 import com.example.deb.Scene.HomeScene;
 
@@ -46,6 +47,30 @@ public class MainActivity extends AppCompatActivity
         display.getRealSize(point);
         screenWid = point.x;
         screenHei = point.y;
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        BaseScene scene = BaseScene.getScene();
+        scene.uninit();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        BaseScene scene = BaseScene.getScene();
+        scene.uninit();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        BaseScene scene = BaseScene.getScene();
+        scene.uninit();
+        super.onStop();
     }
 
     @Override
