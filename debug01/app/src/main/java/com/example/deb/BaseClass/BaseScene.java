@@ -12,8 +12,8 @@ import javax.microedition.khronos.opengles.GL10;
 public class BaseScene
 {
 //peivate
-    private static BaseScene nowScene;
-    private static BaseScene nextScene;
+    private static BaseScene nowScene  = null;
+    private static BaseScene nextScene = null;
 
 //定数定義
     private final int LAYER_MAX = 4;
@@ -23,20 +23,15 @@ public class BaseScene
     protected List<Object> list = new ArrayList<Object>();
 
     //コンストラクタ
-    public void BaseScene()
-    {
-
-    }
+    public BaseScene() {}
     //純粋及び仮想関数
     public void init(){}
     public void uninit()
     {
         //拡張型for文 list内の全要素を参照できる
         for(Object o : list)
-        {
-            list.remove(o);
             o.uninit();
-        }
+        list.clear();
     }
 
     public void update()
@@ -72,14 +67,19 @@ public class BaseScene
     //ゲッターとセッター
     public static void setScene(BaseScene scene)
     {
+        if(nowScene == scene)
+            return;
+
         if(nowScene != null)
             nowScene.uninit();
 
         if(nextScene == null)
             nowScene = scene;
         else
+        {
             nowScene = nextScene;
-        nextScene = null;
+            nextScene = null;
+        }
     }
 
     public static BaseScene getScene(){return nowScene;}

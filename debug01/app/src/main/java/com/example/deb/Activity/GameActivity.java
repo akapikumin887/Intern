@@ -14,6 +14,7 @@ import com.example.deb.Object.Figure;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Status.BGStatus;
 import com.example.deb.System.FPSManager;
+import com.example.deb.System.StepCount;
 import com.example.deb.Title.BGTitle;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -40,18 +41,18 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public GameActivity(Context context, MainActivity activity)
     {
         super(context);
-        this.context = context;
-        this.activity = activity;
+        GameActivity.context = context;
+        GameActivity.activity = activity;
 
         setRenderer(this);
         FPSManager.init();
+        StepCount.init();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         //init
-        //FPSManager.setIsLate(LATE);
         //OpenGLの初期化
         {
             //背景色のクリア
@@ -86,8 +87,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
-        //FPSManager.setIsLate(LATE);
-
         //横縦切り替え時 画面初期化時に通る
         gl10 = gl;
 
@@ -120,7 +119,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     @Override
     public void onDrawFrame(GL10 gl)
     {
-
         FPSManager.calcFPS();
 
         update();

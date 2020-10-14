@@ -1,9 +1,17 @@
 package com.example.deb.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -12,18 +20,44 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.deb.BaseClass.BaseScene;
-import com.example.deb.R;
-import com.example.deb.Scene.HomeScene;
+import com.example.deb.System.StepCount;
 
-public class MainActivity extends AppCompatActivity
+import static android.Manifest.permission.ACTIVITY_RECOGNITION;
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
     GameActivity gameActivity;
-    public static float screenWid, screenHei;
+
+    //歩数取得用
+    private SensorManager sensorManager;
+    private Sensor stepConterSensor;
+    private Sensor stepDetectorSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if(ContextCompat.checkSelfPermission(this,ACTIVITY_RECOGNITION) == PERMISSION_DENIED)
+        {
+            shouldShowRequestPermissionRationale(ACTIVITY_RECOGNITION);
+            //RequestPermission
+        }
         super.onCreate(savedInstanceState);
+
+        //センサーマネージャを取得
+        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        //センサマネージャから TYPE_STEP_COUNTER についての情報を取得する
+        stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        //リスナー設定
+        sensorManager.registerListener (this, stepConterSensor,
+                                         SensorManager.SENSOR_DELAY_FASTEST);
+
+/*
+        //加速度も取得してみる
+        accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+*/
+        //加速度も取得してみる
+        stepDetectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -37,16 +71,35 @@ public class MainActivity extends AppCompatActivity
         View view = this.getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        // WindowManagerのインスタンス取得
-        WindowManager wm = getWindowManager();
 
-        // Displayのインスタンス取得
-        Display display = wm.getDefaultDisplay();
+/*
+        sensorManager.registerListener(new SensorEventListener()
+        {
+            @Override
+            public void onSensorChanged(SensorEvent event)
+            {
+                StepCount.setTtPhone(event.values[0]);
+            }
 
-        Point point = new Point();
-        display.getRealSize(point);
-        screenWid = point.x;
-        screenHei = point.y;
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+        }, stepConterSensor, SensorManager.SENSOR_DELAY_UI);
+*/
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+/*
+        sensorManager.registerListener (this,
+                accSensor,
+                SensorManager.SENSOR_DELAY_FASTEST);
+*/
+        sensorManager.registerListener (this,
+                stepDetectorSensor,
+                SensorManager.SENSOR_DELAY_FASTEST);
+
     }
 
     @Override
@@ -54,14 +107,20 @@ public class MainActivity extends AppCompatActivity
     {
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
+        StepCount.uninit();
         super.onDestroy();
     }
 
     @Override
     protected void onPause()
     {
+        super.onPause();
+        StepCount.getSensorManager().unregisterListener(this,StepCount.getSensor());
+
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
+
+        StepCount.uninit();
         super.onPause();
     }
 
@@ -70,6 +129,8 @@ public class MainActivity extends AppCompatActivity
     {
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
+
+        //StepCount.uninit();
         super.onStop();
     }
 
@@ -79,5 +140,25 @@ public class MainActivity extends AppCompatActivity
     {
         gameActivity.touch(event);
         return true;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy){}
+
+    @Override
+    public void onSensorChanged(SensorEvent event)
+    {
+        Sensor sensor = event.sensor;
+        //TYPE_STEP_COUNTER
+        if(sensor.getType() == Sensor.TYPE_STEP_COUNTER)
+        {
+            // sensor からの値を取得するなどの処理を行う
+            StepCount.setTtPhone(StepCount.getAll() + event.values[0]);
+        }
+        if(sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
+        {
+            // sensor からの値を取得するなどの処理を行う
+            StepCount.setTtPhone(StepCount.getAll() + event.values[0]);
+        }
     }
 }

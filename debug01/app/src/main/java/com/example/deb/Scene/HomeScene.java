@@ -6,11 +6,10 @@ import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
-import com.example.deb.Activity.MainActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Object.Figure;
-import com.example.deb.Status.BGStatus;
 import com.example.deb.System.FPSManager;
+import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.Title.BGTitle;
 
@@ -19,8 +18,9 @@ public class HomeScene extends BaseScene
     private BGTitle bgTitle;
     private Figure fps;
     private Figure touchCount;
+    private Figure step;
 
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     public HomeScene()
     {
 //インスタンス初期化
@@ -38,18 +38,29 @@ public class HomeScene extends BaseScene
         prefs = GameActivity.getActivity().getSharedPreferences("touchCount", Context.MODE_PRIVATE);
 
         //タッチカウント
+/*
         touchCount = new Figure(prefs.getInt("int",0));
         list.add(touchCount);
         touchCount.setSize(new Vector2(75.0f,75.0f));
         touchCount.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,0.0f));
+*/
+
+        //歩数
+        step = new Figure(StepCount.getAll());
+        list.add(step);
+        step.setSize(new Vector2(75.0f,75.0f));
+        step.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,0.0f));
     }
 
     @Override
     public void uninit()
     {
+        //データを保存する
+/*
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("int",touchCount.getValue());
         editor.apply();
+*/
 
         super.uninit();
     }
@@ -58,6 +69,7 @@ public class HomeScene extends BaseScene
     public void update()
     {
         super.update();
+        step.setValue(StepCount.getAll());
 
         fps.setValue((int)FPSManager.getFPS());
     }
@@ -67,11 +79,13 @@ public class HomeScene extends BaseScene
     {
         //getX(),getYは左上が0。右下になるにつれて値が大きくなる。
         super.touch(event);
+/*
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
             touchCount.setValue(touchCount.getValue() + 1);
             if(event.getY() < GameActivity.getBaseHei() / 2)
                 touchCount.setValue(0);
         }
+*/
     }
 }
