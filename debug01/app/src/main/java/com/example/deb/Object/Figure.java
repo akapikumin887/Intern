@@ -57,10 +57,8 @@ public class Figure extends Object
     }
 
     @Override
-    public void update(float dt)
+    public void update()
     {
-        super.update(dt);
-
         digit = 0;
         int v = value;
         do

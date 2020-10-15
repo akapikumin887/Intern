@@ -19,10 +19,8 @@ public class StepCount
     private static int all;           //今までで何歩歩いたか
 
     //保存用
-/*
     private static SharedPreferences phonePrefs;
     private static SharedPreferences allPrefs;
-*/
 
     //歩数取得用
     private static SensorManager sensorManager;
@@ -30,41 +28,39 @@ public class StepCount
 
     public static void init()
     {
-        //センサー取得
-        sensorManager = (SensorManager)GameActivity.getCntxt().getSystemService(SENSOR_SERVICE);
-        stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-
-/*
         //保存した情報の読み込み
         phonePrefs = GameActivity.getActivity().getSharedPreferences("phoneStep", Context.MODE_PRIVATE);
         ltPhone = phonePrefs.getInt("int",0);
 
         allPrefs = GameActivity.getActivity().getSharedPreferences("AllStep", Context.MODE_PRIVATE);
         lastTime = allPrefs.getInt("int",0);
-*/
 
-        all = 0;
+        //再起動するとttPhoneの歩数が0になってしまうため確認を入れて少しでも誤差を減らす
+        //しかしこれでも再起動前の歩数は失われてしまうs
+        if(ttPhone < ltPhone)
+            all = ttPhone + ltPhone;
+        else
+            all = ttPhone - ltPhone;
+
         thisTime = all - lastTime;
     }
 
-    public static void uninit()
+    public static void save()
     {
         //データを保存する
-/*
         SharedPreferences.Editor editor = allPrefs.edit();
         editor.putInt("int",all);
+        editor.apply();
 
         editor = phonePrefs.edit();
         editor.putInt("int", ttPhone);
-
         editor.apply();
-*/
     }
 
     //ゲッターとセッター
     public static SensorManager getSensorManager(){return sensorManager;}
     public static Sensor getSensor(){return stepConterSensor;}
-    public static void setTtPhone(float f){all = (int)f;}
+    public static void setTtPhone(float f){ttPhone = (int)f;}
 
     public static int getAll(){return all;}
 }

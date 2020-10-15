@@ -13,9 +13,12 @@ import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Object.Figure;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Status.BGStatus;
+import com.example.deb.Status.UIStatus;
 import com.example.deb.System.FPSManager;
 import com.example.deb.System.StepCount;
 import com.example.deb.Title.BGTitle;
+import com.example.deb.Title.HeroTitle;
+import com.example.deb.Title.UITitle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -24,8 +27,6 @@ import javax.microedition.khronos.opengles.GL10;
 //イメージ的にはここを描画し続けなければならない
 public class GameActivity extends GLSurfaceView implements GLSurfaceView.Renderer
 {
-    private final int LATE = -1;    //遅延確認時に次fを飛ばす用
-
     private static GL10 gl10;
     private static Context context;
     private static MainActivity activity;
@@ -46,7 +47,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
         setRenderer(this);
         FPSManager.init();
-        StepCount.init();
     }
 
     @Override
@@ -165,8 +165,17 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     private void load()
     {
-        BGTitle.loadTexture();
-        BGStatus.loadTexture();
+        //title
+        {
+            BGTitle.loadTexture();
+            UITitle.loadTexture();
+            HeroTitle.loadTexture();
+        }
+        //status
+        {
+            BGStatus.loadTexture();
+            UIStatus.loadTexture();
+        }
         Figure.loadTexture();
     }
 
@@ -175,4 +184,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public static  MainActivity getActivity(){return  activity;}
     public static float getBaseWid(){return BASE_WID;}
     public static float getBaseHei(){return BASE_HEI;}
+    public static float getSurfaceWid(){return surfaceWid;}
+    public static float getSurfaceHei(){return surfaceHei;}
 }

@@ -36,21 +36,23 @@ public class BGStatus extends Object
     }
 
     @Override
-    public void update(float dt)
+    public void update()
     {
-        super.update(dt);
 
     }
 
     public static void loadTexture()
     {
         texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.status);
+        texture.loadTexture(GameActivity.getCntxt(), R.drawable.s_s_g_background);
     }
 
     @Override
     public void touch(MotionEvent event)
     {
-        BaseScene.setnextScene(new HomeScene());
+        if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
+        {
+            BaseScene.setnextScene(new HomeScene());
+        }
     }
 }

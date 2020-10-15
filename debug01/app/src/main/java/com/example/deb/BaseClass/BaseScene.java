@@ -38,7 +38,7 @@ public class BaseScene
     {
         //拡張型for文 list内の全要素を参照できる
         for(Object o : list)
-            o.update(0.5f);
+            o.update();
     }
 
     public void draw()

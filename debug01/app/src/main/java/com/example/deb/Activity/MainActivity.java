@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     {
         super.onCreate(savedInstanceState);
 
-        //SDKVer23以上だと必要な権限認証
-        if(Build.VERSION.SDK_INT >= 23)
+        //SDKVer29以降だと歩数にも権限リクエストがいる
+        if(Build.VERSION.SDK_INT >= 29)
         {
             //今回は歩数が欲しい
             if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED)
@@ -66,9 +66,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         }
 
-        //detectも取得してみる
-        //stepDetectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Window window = getWindow();
@@ -80,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         View view = this.getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+
+        // WindowManagerのインスタンス取得
+        WindowManager wm = getWindowManager();
     }
 
     @Override
@@ -104,13 +105,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
-        StepCount.uninit();
+        StepCount.save();
         super.onDestroy();
     }
 
     @Override
     protected void onPause()
     {
+        StepCount.save();
+
         super.onPause();
     }
 
@@ -143,13 +146,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(sensor.getType() == Sensor.TYPE_STEP_COUNTER)
         {
             // sensor からの値を取得するなどの処理を行う
-            StepCount.setTtPhone(StepCount.getAll() + event.values[0]);
+            StepCount.setTtPhone(event.values[0]);
         }
-        if(sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
-        {
-            // sensor からの値を取得するなどの処理を行う
-            StepCount.setTtPhone(StepCount.getAll() + event.values[0]);
-        }
+        StepCount.init();
     }
 
     //権限リクエストした結果が返ってくるところ

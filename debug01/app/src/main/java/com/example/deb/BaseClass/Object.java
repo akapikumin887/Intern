@@ -75,10 +75,7 @@ public class Object
     public void init() {}
     public void uninit() {}
 
-    public void update(float dt)
-    {
-        animCnt += dt;      //アニメーションを動かす
-    }
+    public void update(){}
     public void draw() {}
 
     //スマホっぽい関数 これも継承して使う

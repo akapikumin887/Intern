@@ -168,7 +168,9 @@ public class Texture
         return coords;
     }
 
-
+    //texUVとtexWHについて簡単な説明
+    //UVは左上から測る、最大値は1.0f
+    //WHはUVの地点からどれだけのサイズ欲しいかを入力する
     public void draw(Vector2 pos, Vector2 size,
                      float rotate, boolean reverse,
                      Vector2 texUV, Vector2 texWH,

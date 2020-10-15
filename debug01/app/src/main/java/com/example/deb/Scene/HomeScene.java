@@ -12,13 +12,19 @@ import com.example.deb.System.FPSManager;
 import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.Title.BGTitle;
+import com.example.deb.Title.HeroTitle;
+import com.example.deb.Title.UITitle;
 
 public class HomeScene extends BaseScene
 {
     private BGTitle bgTitle;
+    private UITitle uiTitle;
+    private HeroTitle heroTitle;
     private Figure fps;
     private Figure touchCount;
     private Figure step;
+
+
 
     private SharedPreferences prefs;
     public HomeScene()
@@ -28,6 +34,13 @@ public class HomeScene extends BaseScene
         bgTitle = new BGTitle();
         list.add(bgTitle);
 
+        //UI
+        uiTitle = new UITitle();
+        list.add(uiTitle);
+
+        //勇者
+        heroTitle = new HeroTitle();
+        list.add(heroTitle);
         //fps
         fps = new Figure(0);
         list.add(fps);
