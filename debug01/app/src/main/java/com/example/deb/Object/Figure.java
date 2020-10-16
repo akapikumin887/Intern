@@ -8,9 +8,6 @@ import com.example.deb.System.Vector2;
 
 public class Figure extends Object
 {
-    //マクロ定義
-    private final float TEXTURE_WIDTH  = 5115.0f;
-
     //private:
     private static Texture texture;
 
@@ -73,7 +70,7 @@ public class Figure extends Object
     public static void loadTexture()
     {
         texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.number);
+        texture.loadTexture(GameActivity.getCntxt(), R.drawable.number_white);
     }
 
     //ゲッターとセッター

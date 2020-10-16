@@ -1,4 +1,4 @@
-package com.example.deb.Title;
+package com.example.deb.BG;
 
 import android.view.MotionEvent;
 
@@ -27,21 +27,9 @@ public class BGTitle extends Object
         texture.draw(pos,size,rotate,reverse, new Vector2(),new Vector2(1.0f,1.0f),color);
     }
 
-    @Override
-    public void update()
-    {
-
-    }
-
     public static void loadTexture()
     {
         texture = new Texture();
         texture.loadTexture(GameActivity.getCntxt(), R.drawable.home_background);
-    }
-
-    @Override
-    public void touch(MotionEvent event)
-    {
-        //BaseScene.setnextScene(new StatusScene());
     }
 }

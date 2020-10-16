@@ -2,23 +2,26 @@ package com.example.deb.Activity;
 
 
 import android.content.Context;
-import android.graphics.Point;
-import android.hardware.Sensor;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
 import android.view.MotionEvent;
 
+import com.example.deb.BG.BGProgress;
+import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Object.Figure;
+import com.example.deb.Object.Item;
+import com.example.deb.Progress.ProgressHero;
 import com.example.deb.Scene.HomeScene;
-import com.example.deb.Status.BGStatus;
 import com.example.deb.Status.UIStatus;
 import com.example.deb.System.FPSManager;
-import com.example.deb.System.StepCount;
-import com.example.deb.Title.BGTitle;
-import com.example.deb.Title.HeroTitle;
-import com.example.deb.Title.UITitle;
+import com.example.deb.BG.BGTitle;
+import com.example.deb.UI.ChoiseBack;
+import com.example.deb.UI.HeroUI;
+import com.example.deb.UI.HomeButton;
+import com.example.deb.UI.Status;
+import com.example.deb.UI.StatusButton;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -137,6 +140,8 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         FPSManager.drowsy();
     }
 
+
+
     public void touch(MotionEvent event)
     {
         //このタッチの処理はplessと同じ扱い
@@ -165,18 +170,29 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     private void load()
     {
+        //common
+        {
+            BGStShGp.loadTexture();
+            Item.loadTexture();
+            Figure.loadTexture();
+            HeroUI.loadTexture();
+            ChoiseBack.loadTexture();
+        }
         //title
         {
             BGTitle.loadTexture();
-            UITitle.loadTexture();
-            HeroTitle.loadTexture();
+            HomeButton.loadTexture();
         }
         //status
         {
-            BGStatus.loadTexture();
-            UIStatus.loadTexture();
+            Status.loadTexture();
+            StatusButton.loadTexture();
         }
-        Figure.loadTexture();
+        //game
+        {
+            BGProgress.loadTexture();
+            ProgressHero.loadTexture();
+        }
     }
 
     public static GL10 getGL(){return gl10;}

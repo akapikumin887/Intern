@@ -36,11 +36,16 @@ public class StepCount
         lastTime = allPrefs.getInt("int",0);
 
         //再起動するとttPhoneの歩数が0になってしまうため確認を入れて少しでも誤差を減らす
-        //しかしこれでも再起動前の歩数は失われてしまうs
+        //しかしこれでも再起動前の歩数は失われてしまう
         if(ttPhone < ltPhone)
             all = ttPhone + ltPhone;
         else
-            all = ttPhone - ltPhone;
+        {
+            if(ltPhone == 0)    //初回起動時は0歩スタートでなければならない
+                all = 0;
+            else
+                all = ttPhone - ltPhone;
+        }
 
         thisTime = all - lastTime;
     }

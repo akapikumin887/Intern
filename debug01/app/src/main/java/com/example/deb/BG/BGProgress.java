@@ -1,28 +1,20 @@
-package com.example.deb.Status;
-
-
-import android.transition.Scene;
-import android.view.MotionEvent;
+package com.example.deb.BG;
 
 import com.example.deb.Activity.GameActivity;
-import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.R;
-import com.example.deb.Scene.HomeScene;
-import com.example.deb.Scene.StatusScene;
 import com.example.deb.System.Texture;
 import com.example.deb.System.Vector2;
 
-public class BGStatus extends Object
+public class BGProgress extends Object
 {
     private static Texture texture;
 
-    public BGStatus()
+    public BGProgress()
     {
         super();
         setLayer(Layer.LAYER_BG);
         setSize(new Vector2(GameActivity.getBaseWid(),GameActivity.getBaseHei()));
-        //setSize(new Vector2(500.0f,500.0f));
     }
 
     @Override
@@ -35,24 +27,10 @@ public class BGStatus extends Object
                 color);
     }
 
-    @Override
-    public void update()
-    {
-
-    }
-
     public static void loadTexture()
     {
         texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.s_s_g_background);
+        texture.loadTexture(GameActivity.getCntxt(), R.drawable.game_background);
     }
 
-    @Override
-    public void touch(MotionEvent event)
-    {
-        if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
-        {
-            BaseScene.setnextScene(new HomeScene());
-        }
-    }
 }

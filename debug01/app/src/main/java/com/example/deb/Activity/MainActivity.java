@@ -77,10 +77,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         View view = this.getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-
-        // WindowManagerのインスタンス取得
-        WindowManager wm = getWindowManager();
     }
 
     @Override
@@ -120,10 +116,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onStop()
     {
-        BaseScene scene = BaseScene.getScene();
-        scene.uninit();
 
-        //StepCount.uninit();
         super.onStop();
     }
 

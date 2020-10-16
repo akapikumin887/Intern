@@ -1,71 +1,45 @@
-package com.example.deb.Status;
+package com.example.deb.Progress;
 
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
+import com.example.deb.BG.BGProgress;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.ShopScene;
+import com.example.deb.System.Texture;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
-import com.example.deb.UI.Status;
-import com.example.deb.UI.StatusButton;
 
-public class UIStatus extends Object
+public class UIProgress extends Object
 {
-    private Status level;
-    private Status attack;
-    private Status hitPoint;
+    private ProgressHero progsHero;
 
     private ChoiseBack back;
 
-    private StatusButton pt;
-    private StatusButton lvUp;
-    private StatusButton shop;
-
-    public UIStatus()
+    public UIProgress()
     {
         super();
         setLayer(Layer.LAYER_BUTTON);
 
-        //ステータス
-        level = new Status(0);
-        attack = new Status(1);
-        hitPoint = new Status(2);
+        progsHero = new ProgressHero();
 
-        //戻る
         back = new ChoiseBack(2);
-
-        //ボタン
-        pt = new StatusButton(0);
-        lvUp = new StatusButton(1);
-        shop = new StatusButton(2);
     }
 
     @Override
     public void draw()
     {
-        //status組
-        level.draw();
-        attack.draw();
-        hitPoint.draw();
-
-        //戻るボタン
+        progsHero.draw();
         back.draw();
-
-        //ボタン
-        pt.draw();
-        lvUp.draw();
-        shop.draw();
     }
 
     @Override
     public void update()
     {
-
+        progsHero.update();
     }
-
 
     @Override
     public void touch(MotionEvent event)
@@ -84,14 +58,7 @@ public class UIStatus extends Object
             {
                 BaseScene.setnextScene(new HomeScene());
             }
-
-            //ショップ遷移
-            if(touchPos.x < shop.getPosition().x + shop.getSize().x / 2 && touchPos.x > shop.getPosition().x - shop.getSize().x / 2 &&
-                    touchPos.y < shop.getPosition().y + shop.getSize().y / 2 && touchPos.y > shop.getPosition().y - shop.getSize().y / 2)
-            {
-                BaseScene.setnextScene(new ShopScene());
-            }
-
         }
     }
+
 }
