@@ -24,17 +24,17 @@ public class ChoiseBack extends Object
         {
             case 0:
                 //左矢印 ショップ想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f + size.y));
+                setSize(new Vector2(200.0f,200.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,0.0f));
                 texStartPoint = new Vector2();
-                texSize = new Vector2(0.5f,0.3333f);
+                texSize = new Vector2(0.25f,0.3333f);
                 return;
             case 1:
                 //右矢印 ショップ想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f));
-                texStartPoint = new Vector2(0.0f,0.3334f);
-                texSize = new Vector2(0.5f,0.3333f);
+                setSize(new Vector2(200.0f,200.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,0.0f));
+                texStartPoint = new Vector2(0.25f,0.0f);
+                texSize = new Vector2(0.25f,0.3333f);
                 return;
             case 2:
                 //戻るボタン 様々な場所で使うが場所は変わらないはずなのでそこを基準に
