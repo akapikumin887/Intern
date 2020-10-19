@@ -1,52 +1,35 @@
-package com.example.deb.Progress;
+package com.example.deb.Step;
 
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
-import com.example.deb.Scene.HomeScene;
-import com.example.deb.Scene.StepScene;
+import com.example.deb.Scene.ProgressScene;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.GameWay;
-import com.example.deb.UI.MessageWindow;
 
-public class UIProgress extends Object
+public class UIStep extends Object
 {
-    private ProgressHero progsHero;
-
-    private MessageWindow messageWindow;
     private ChoiseBack back;
-    private GameWay way;
 
-    public UIProgress()
+    public  UIStep()
     {
         super();
         setLayer(Layer.LAYER_BUTTON);
 
-        progsHero = new ProgressHero();
-
-        messageWindow = new MessageWindow(4);
+        //戻る
         back = new ChoiseBack(2);
 
-        way = new GameWay(0);
     }
 
     @Override
-    public void draw()
+    public  void draw()
     {
-        progsHero.draw();
-        messageWindow.draw();
+        //戻るボタン
         back.draw();
 
-        way.draw();
-    }
-
-    @Override
-    public void update()
-    {
-        progsHero.update();
     }
 
     @Override
@@ -60,20 +43,13 @@ public class UIProgress extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //Home遷移
+            //ゲーム画面遷移
             if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
                     touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
             {
-                BaseScene.setnextScene(new HomeScene());
-            }
-
-            //Step遷移
-            if(touchPos.x < way.getPosition().x + way.getSize().x / 2 && touchPos.x > way.getPosition().x - way.getSize().x / 2 &&
-                    touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
-            {
-                BaseScene.setnextScene(new StepScene());
+                BaseScene.setnextScene(new ProgressScene());
             }
         }
-    }
 
+    }
 }
