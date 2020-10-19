@@ -2,12 +2,12 @@ package com.example.deb.Scene;
 
 import com.example.deb.BG.BGProgress;
 import com.example.deb.BaseClass.BaseScene;
-import com.example.deb.Progress.ProgressHero;
 import com.example.deb.Progress.UIProgress;
-import com.example.deb.UI.ChoiseBack;
 
 public class ProgressScene extends BaseScene
 {
+    //ここで歩数分だけ乱数回して敵と遭遇する
+
     private BGProgress bgProgress;
     private UIProgress uiProgress;
 
