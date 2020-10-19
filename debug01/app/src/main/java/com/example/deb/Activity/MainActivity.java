@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onDestroy()
     {
-        StepCount.getSensorManager().unregisterListener(this,StepCount.getSensor());
-
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
         StepCount.save();

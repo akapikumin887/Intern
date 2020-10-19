@@ -22,10 +22,6 @@ public class StepCount
     private static SharedPreferences phonePrefs;
     private static SharedPreferences allPrefs;
 
-    //歩数取得用
-    private static SensorManager sensorManager;
-    private static Sensor stepConterSensor;
-
     public static void init()
     {
         //保存した情報の読み込み
@@ -63,9 +59,8 @@ public class StepCount
     }
 
     //ゲッターとセッター
-    public static SensorManager getSensorManager(){return sensorManager;}
-    public static Sensor getSensor(){return stepConterSensor;}
     public static void setTtPhone(float f){ttPhone = (int)f;}
 
     public static int getAll(){return all;}
+    public static int getThisTime(){return thisTime;}
 }

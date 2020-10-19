@@ -1,12 +1,16 @@
 package com.example.deb.Status;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Object.Figure;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.ShopScene;
+import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.Status;
@@ -23,6 +27,9 @@ public class UIStatus extends Object
     private StatusButton pt;
     private StatusButton lvUp;
     private StatusButton shop;
+
+    private Figure point;
+    private static SharedPreferences pointPrefs;
 
     public UIStatus()
     {
@@ -41,6 +48,16 @@ public class UIStatus extends Object
         pt = new StatusButton(0);
         lvUp = new StatusButton(1);
         shop = new StatusButton(2);
+
+        //ポイント(数値)
+        pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
+
+        int n = pointPrefs.getInt("int",0) + StepCount.getThisTime() / 10;  //今回歩いた歩数から今回得られるポイントを取得
+        if(StepCount.getThisTime() % 10 > 4)    //四捨五入
+            n++;
+        point = new Figure(n);
+        point.setSize(new Vector2(100.0f,100.0f));
+        point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
     }
 
     @Override
@@ -58,6 +75,9 @@ public class UIStatus extends Object
         pt.draw();
         lvUp.draw();
         shop.draw();
+
+        //ポイント
+        point.draw();
     }
 
     @Override
