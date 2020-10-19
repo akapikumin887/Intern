@@ -129,6 +129,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
+    public void onBackPressed()
+    {
+        gameActivity.back();
+    }
+
+    @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy){}
 
     @Override

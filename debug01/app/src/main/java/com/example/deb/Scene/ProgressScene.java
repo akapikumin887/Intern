@@ -33,4 +33,10 @@ public class ProgressScene extends BaseScene
 
         super.update();
     }
+
+    @Override
+    public void back()
+    {
+        BaseScene.setnextScene(new HomeScene());
+    }
 }

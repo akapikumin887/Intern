@@ -23,39 +23,39 @@ public class MessageWindow extends Object
         switch (texNum)
         {
             case 0:
-                //左矢印 ショップ想定
+                //ptを消費して武器の強化を行いますか？ ショップ想定
                 setSize(new Vector2(200.0f,200.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,0.0f));
                 texStartPoint = new Vector2();
-                texSize = new Vector2(0.25f,0.3333f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 1:
-                //右矢印 ショップ想定
+                //ptを消費してlevelをあげますか？ ショップ想定
                 setSize(new Vector2(200.0f,200.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,0.0f));
-                texStartPoint = new Vector2(0.25f,0.0f);
-                texSize = new Vector2(0.25f,0.3333f);
+                texStartPoint = new Vector2(0.0f,0.3334f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 2:
-                //戻るボタン 様々な場所で使うが場所は変わらないはずなのでそこを基準に
+                //ptを消費してアイテムを購入しますか？ ショップ想定
                 setSize(new Vector2(120.0f,120.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2(0.5f,0.0f);
-                texSize = new Vector2(0.25f,0.3334f);
+                texStartPoint = new Vector2(0.0f,0.6667f);
+                texSize = new Vector2(0.5f,1.0f);
                 return;
             case 3:
-                //メッセージ選択矢印 どこだろう
+                //縦長無地mw 未定
                 setSize(new Vector2(120.0f,120.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,GameActivity.getBaseHei() / 2 - size.y));
                 texStartPoint = new Vector2(0.5f,0.0f);
-                texSize = new Vector2(0.25f,0.3334f);
+                texSize = new Vector2(0.25f,0.6666f);
                 return;
             case 4:
-                //はい ショップ想定
-                setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2();
-                texSize = new Vector2(0.25f,1.0f);
+                //横長無地 進行画面想定
+                setSize(new Vector2(GameActivity.getBaseWid() - 10.0f,400.0f));
+                setPosition(new Vector2(0.0f, -GameActivity.getBaseHei() / 2 + size.y / 1.8f));
+                texStartPoint = new Vector2(0.5f,0.6667f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
         }
 

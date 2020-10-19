@@ -2,12 +2,8 @@ package com.example.deb.BaseClass;
 
 import android.view.MotionEvent;
 
-import com.example.deb.Activity.GameActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.microedition.khronos.opengles.GL10;
 
 public class BaseScene
 {
@@ -63,6 +59,11 @@ public class BaseScene
             o.touch(event);
     }
 
+    public void back()
+    {
+        for(Object o : list)
+            o.onBackkPlessed();
+    }
 
     //ゲッターとセッター
     public static void setScene(BaseScene scene)

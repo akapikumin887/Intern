@@ -45,4 +45,9 @@ public class StatusScene extends BaseScene
 
     }
 
+    @Override
+    public void back()
+    {
+        BaseScene.setnextScene(new HomeScene());
+    }
 }

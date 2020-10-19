@@ -20,6 +20,7 @@ import com.example.deb.BG.BGTitle;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.HeroUI;
 import com.example.deb.UI.HomeButton;
+import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
 import com.example.deb.UI.StatusButton;
 
@@ -140,8 +141,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         FPSManager.drowsy();
     }
 
-
-
     public void touch(MotionEvent event)
     {
         //このタッチの処理はplessと同じ扱い
@@ -156,7 +155,11 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             // 押した際の処理（trigger）
 
         }
+    }
 
+    public void back()
+    {
+        BaseScene.getScene().back();
     }
 
     protected void update()
@@ -192,6 +195,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         {
             BGProgress.loadTexture();
             ProgressHero.loadTexture();
+            MessageWindow.loadTexture();
         }
     }
 

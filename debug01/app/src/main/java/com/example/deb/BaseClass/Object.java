@@ -80,6 +80,7 @@ public class Object
 
     //スマホっぽい関数 これも継承して使う
     public void touch(MotionEvent event){}
+    public void onBackkPlessed(){}
     public void button(int id, MotionEvent event){}
 
     //ゲッターとセッター

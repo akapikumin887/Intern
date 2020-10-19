@@ -34,8 +34,8 @@ public class ShopScene extends BaseScene
     }
 
     @Override
-    public void touch(MotionEvent event)
+    public void back()
     {
-        super.touch(event);
+        BaseScene.setnextScene(new StatusScene());
     }
 }

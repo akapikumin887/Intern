@@ -20,7 +20,7 @@ public class Item extends Object
         super();
         itemType = type;
         setLayer(Layer.LAYER_CHARE);
-        setSize(new Vector2(200.0f,200.0f));
+        setSize(new Vector2(300.0f,300.0f));
     }
 
     @Override

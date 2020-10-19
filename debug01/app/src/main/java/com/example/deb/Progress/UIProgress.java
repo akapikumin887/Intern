@@ -3,19 +3,18 @@ package com.example.deb.Progress;
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
-import com.example.deb.BG.BGProgress;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Scene.HomeScene;
-import com.example.deb.Scene.ShopScene;
-import com.example.deb.System.Texture;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
+import com.example.deb.UI.MessageWindow;
 
 public class UIProgress extends Object
 {
     private ProgressHero progsHero;
 
+    private MessageWindow messageWindow;
     private ChoiseBack back;
 
     public UIProgress()
@@ -25,6 +24,7 @@ public class UIProgress extends Object
 
         progsHero = new ProgressHero();
 
+        messageWindow = new MessageWindow(4);
         back = new ChoiseBack(2);
     }
 
@@ -32,6 +32,7 @@ public class UIProgress extends Object
     public void draw()
     {
         progsHero.draw();
+        messageWindow.draw();
         back.draw();
     }
 
