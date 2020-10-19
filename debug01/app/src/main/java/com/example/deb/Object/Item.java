@@ -13,6 +13,7 @@ public class Item extends Object
     private float itemType;
 
 //マクロ定義
+    private static final int ITEM_MAX = 2;
     private final Vector2 TEX_SIZE = new Vector2(0.5f,0.25f);
 
     public Item(float type)
@@ -35,4 +36,6 @@ public class Item extends Object
         texture = new Texture();
         texture.loadTexture(GameActivity.getCntxt(), R.drawable.item);
     }
+
+    public static int getItemMax(){return ITEM_MAX;}
 }
