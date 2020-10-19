@@ -14,7 +14,8 @@ public class BGProgress extends Object
     {
         super();
         setLayer(Layer.LAYER_BG);
-        setSize(new Vector2(GameActivity.getBaseWid(),GameActivity.getBaseHei()));
+        setSize(new Vector2(GameActivity.getBaseHei() / 3 * 40,GameActivity.getBaseHei()));
+        setPosition(new Vector2(-GameActivity.getBaseHei() / 3 * 19,0.0f));
     }
 
     @Override
@@ -23,8 +24,14 @@ public class BGProgress extends Object
         texture.draw(pos,size,
                 rotate,reverse,
                 new Vector2(),
-                new Vector2(1.0f,1.0f),
+                new Vector2(20.0f,1.0f),
                 color);
+    }
+
+    @Override
+    public void update()
+    {
+        pos.x += 0.5f;
     }
 
     public static void loadTexture()
