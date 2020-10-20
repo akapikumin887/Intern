@@ -41,8 +41,8 @@ public class BGProgress extends Object
     @Override
     public void update()
     {
-        pos.x += 2;
-        loopPos.x += 2.0f;
+        pos.x += 0.5f;
+        loopPos.x += 0.5f;
 
         if(pos.x - size.x / 2 > GameActivity.getBaseWid() / 2)
             pos.x = loopPos.x - size.x;

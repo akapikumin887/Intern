@@ -51,13 +51,32 @@ public class UIStatus extends Object
 
         //ポイント(数値)
         pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
-        int p = pointPrefs.getInt("int",0) + StepCount.getThisTime() / 10;  //今回歩いた歩数から今回得られるポイントを取得
-        if(StepCount.getThisTime() % 10 > 4)    //四捨五入
+        int p = pointPrefs.getInt("int",0) + StepCount.getTtPoint() / 10;  //今回歩いた歩数から今回得られるポイントを取得
+        if(StepCount.getTtPoint() % 10 > 4)    //四捨五入
             p++;
+        StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
 
         point = new Figure(p,1);
         point.setSize(new Vector2(100.0f,100.0f));
-        point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
+        point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 100.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
+        //point.setValue(0);
+    }
+
+    @Override
+    public void uninit()
+    {
+        //値を保存
+        SharedPreferences .Editor editor = pointPrefs.edit();
+        editor.putInt("int",point.getValue());
+        editor.apply();
+
+        super.uninit();
+    }
+
+    @Override
+    public void update()
+    {
+        point.update();
     }
 
     @Override
@@ -79,14 +98,6 @@ public class UIStatus extends Object
         //ポイント
         point.draw();
     }
-
-    @Override
-    public void update()
-    {
-
-    }
-
-
 
     @Override
     public void touch(MotionEvent event)
