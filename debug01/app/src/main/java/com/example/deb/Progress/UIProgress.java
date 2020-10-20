@@ -19,6 +19,8 @@ public class UIProgress extends Object
     private MessageWindow messageWindow;
     private ChoiseBack back;
     private GameWay way;
+    private GameWay boss_icom;
+    private GameWay player_icom;
 
     public UIProgress()
     {
@@ -31,6 +33,9 @@ public class UIProgress extends Object
         back = new ChoiseBack(2);
 
         way = new GameWay(0);
+        player_icom = new GameWay(1);
+        boss_icom = new GameWay(2);
+
     }
 
     @Override
@@ -41,6 +46,8 @@ public class UIProgress extends Object
         back.draw();
 
         way.draw();
+        boss_icom.draw();
+        player_icom.draw();
     }
 
     @Override

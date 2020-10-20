@@ -27,10 +27,10 @@ public class BGBattle extends Object
                 color);
     }
 
-    public static void loadTexture()
-    {
-        texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.battle_background);
-    }
+//    public static void loadTexture()
+//    {
+//        texture = new Texture();
+//        texture.loadTexture(GameActivity.getCntxt(), R.drawable.battle_background);
+//    }
 
 }

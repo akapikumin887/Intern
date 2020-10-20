@@ -21,11 +21,25 @@ public class GameWay extends Object
         switch (num)
         {
             case 0:
-                //
-                setSize(new Vector2(GameActivity.getBaseWid()/ 2- size.x / 2.0f,200.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f,GameActivity.getBaseHei() / 2 - size.y / 1.3f));
+                //画面上の進行度を表す道
+                setSize(new Vector2(GameActivity.getBaseWid()+70.0f,200.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 -GameActivity.getBaseWid() / 2,GameActivity.getBaseHei() / 2 - size.y / 0.7f));
                 texStartPoint = new Vector2(0.0f,0.5f);
                 texSize = new Vector2(1.0f,0.5f);
+                return;
+            case 1:
+                //
+                setSize(new Vector2(80.0f,80.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y/0.28f));
+                texStartPoint = new Vector2();
+                texSize = new Vector2(0.25f,0.5f);
+                return;
+            case 2:
+                //
+                setSize(new Vector2(80.0f,80.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 0.11f, GameActivity.getBaseHei() / 2 - size.y/0.28f));
+                texStartPoint = new Vector2(0.25f,0.0f);
+                texSize = new Vector2(0.25f,0.5f);
                 return;
         }
     }
