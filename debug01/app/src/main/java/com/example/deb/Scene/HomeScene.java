@@ -36,14 +36,14 @@ public class HomeScene extends BaseScene
         list.add(heroTitle);
 
         //fps ここからはそのうち消す
-        fps = new Figure(0);
+        fps = new Figure(0,1);
         list.add(fps);
         fps.setSize(new Vector2(100.0f,100.0f));
         fps.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,GameActivity.getBaseHei() / 2 - 50.0f));
 
 
         //歩数 ここからはそのうち消す
-        step = new Figure(StepCount.getAll());
+        step = new Figure(StepCount.getAll(),1);
         list.add(step);
         step.setSize(new Vector2(75.0f,75.0f));
         step.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,0.0f));
