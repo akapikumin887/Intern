@@ -28,14 +28,14 @@ public class GameWay extends Object
                 texSize = new Vector2(1.0f,0.5f);
                 return;
             case 1:
-                //
+                //player_icom (青)
                 setSize(new Vector2(80.0f,80.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,0.5f);
                 return;
             case 2:
-                //
+                //boss_icom(赤)
                 setSize(new Vector2(80.0f,80.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 0.11f, GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 texStartPoint = new Vector2(0.25f,0.0f);

@@ -21,6 +21,7 @@ import com.example.deb.System.FPSManager;
 import com.example.deb.BG.BGTitle;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.GameWay;
+import com.example.deb.UI.Game_stepword;
 import com.example.deb.UI.HeroUI;
 import com.example.deb.UI.HomeButton;
 import com.example.deb.UI.MessageWindow;
@@ -203,6 +204,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             BGProgress.loadTexture();
             ProgressHero.loadTexture();
             GameWay.loadTexture();
+            Game_stepword.loadTexture();
         }
         //battle
         {
