@@ -7,6 +7,7 @@ import android.opengl.GLU;
 
 import android.view.MotionEvent;
 
+import com.example.deb.BG.BGBattle;
 import com.example.deb.BG.BGProgress;
 import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
@@ -198,6 +199,10 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             BGProgress.loadTexture();
             ProgressHero.loadTexture();
             GameWay.loadTexture();
+        }
+        //battle
+        {
+            BGBattle.loadTexture();
         }
     }
 

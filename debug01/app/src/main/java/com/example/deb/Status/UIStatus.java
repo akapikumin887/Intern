@@ -51,11 +51,11 @@ public class UIStatus extends Object
 
         //ポイント(数値)
         pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
-
-        int n = pointPrefs.getInt("int",0) + StepCount.getThisTime() / 10;  //今回歩いた歩数から今回得られるポイントを取得
+        int p = pointPrefs.getInt("int",0) + StepCount.getThisTime() / 10;  //今回歩いた歩数から今回得られるポイントを取得
         if(StepCount.getThisTime() % 10 > 4)    //四捨五入
-            n++;
-        point = new Figure(n,1);
+            p++;
+
+        point = new Figure(p,1);
         point.setSize(new Vector2(100.0f,100.0f));
         point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
     }
@@ -85,6 +85,7 @@ public class UIStatus extends Object
     {
 
     }
+
 
 
     @Override

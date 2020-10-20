@@ -21,15 +21,20 @@ public class StepCount
     //保存用
     private static SharedPreferences phonePrefs;
     private static SharedPreferences allPrefs;
+    private static SharedPreferences thisPrefs;
 
     public static void init()
     {
         //保存した情報の読み込み
         phonePrefs = GameActivity.getActivity().getSharedPreferences("phoneStep", Context.MODE_PRIVATE);
-        ltPhone = phonePrefs.getInt("int",0);
+        ltPhone = phonePrefs.getInt("int",0);   //前回起動時に歩いていた距離(スマホ換算)
 
-        allPrefs = GameActivity.getActivity().getSharedPreferences("AllStep", Context.MODE_PRIVATE);
-        lastTime = allPrefs.getInt("int",0);
+        allPrefs = GameActivity.getActivity().getSharedPreferences("allStep", Context.MODE_PRIVATE);
+        lastTime = allPrefs.getInt("int",0);    //前回起動時に歩いていた歩数(人間換算)
+
+        thisPrefs = GameActivity.getActivity().getSharedPreferences("countStep", Context.MODE_PRIVATE);
+        thisTime = allPrefs.getInt("int",0);    //消費されるまで今回歩いた分を残し続けておく
+
 
         //再起動するとttPhoneの歩数が0になってしまうため確認を入れて少しでも誤差を減らす
         //しかしこれでも再起動前の歩数は失われてしまう
@@ -56,6 +61,10 @@ public class StepCount
         editor = phonePrefs.edit();
         editor.putInt("int", ttPhone);
         editor.apply();
+
+        editor = thisPrefs.edit();
+        editor.putInt("int",thisTime);
+        editor.apply();
     }
 
     //ゲッターとセッター
@@ -63,4 +72,5 @@ public class StepCount
 
     public static int getAll(){return all;}
     public static int getThisTime(){return thisTime;}
+    public static void setThisTime(int num){thisTime = num;}
 }

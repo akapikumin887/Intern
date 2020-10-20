@@ -11,6 +11,7 @@ public class BattleScene extends BaseScene
     public BattleScene()
     {
         bgBattle = new BGBattle();
+        list.add(bgBattle);
     }
 
 
