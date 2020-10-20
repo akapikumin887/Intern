@@ -5,14 +5,22 @@ import android.view.MotionEvent;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Object.Figure;
 import com.example.deb.Scene.ProgressScene;
+import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
-import com.example.deb.UI.GameWay;
+import com.example.deb.UI.Game_stepword;
 
 public class UIStep extends Object
 {
     private ChoiseBack back;
+    private Game_stepword word;
+    private Game_stepword bossword;
+    private Game_stepword word_agter;
+    private Game_stepword walk1;
+    private Game_stepword walk2;
+    private Figure step;
 
     public  UIStep()
     {
@@ -22,6 +30,22 @@ public class UIStep extends Object
         //戻る
         back = new ChoiseBack(2);
 
+        //総歩数
+        word = new Game_stepword(0);
+        //ボスまで
+        bossword = new Game_stepword(1);
+        //あと
+        word_agter = new Game_stepword(2);
+        //歩1
+        walk1 = new Game_stepword(3);
+
+        walk2 = new Game_stepword(4);
+
+
+        //歩数 ここからはそのうち消す
+        step = new Figure(StepCount.getAll(),1);
+        step.setSize(new Vector2(250.0f,250.0f));
+        step.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.17f));
     }
 
     @Override
@@ -29,7 +53,25 @@ public class UIStep extends Object
     {
         //戻るボタン
         back.draw();
+        //総歩数
+        word.draw();
+        //ボスまで
+        bossword.draw();
+        //あと
+        word_agter.draw();
+        //歩1
+        walk1.draw();
+        //歩2
+        walk2.draw();
+        //歩数
+        step.draw();
+    }
 
+    @Override
+    public void update()
+    {
+        super.update();
+        step.setValue(StepCount.getAll());
     }
 
     @Override

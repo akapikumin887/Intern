@@ -3,8 +3,10 @@ package com.example.deb.Scene;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Object.Figure;
 import com.example.deb.Status.UIStatus;
 import com.example.deb.Step.UIStep;
+import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.HeroUI;
 
@@ -12,6 +14,7 @@ public class StepScene extends BaseScene
 {
     private BGStShGp bgStep;
     private UIStep uiStep;
+
 
     public StepScene()
     {
@@ -23,10 +26,7 @@ public class StepScene extends BaseScene
         uiStep = new UIStep();
         list.add(uiStep);
 
-
-
     }
-
 
 
     @Override
