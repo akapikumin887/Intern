@@ -1,9 +1,11 @@
 package com.example.deb.Activity;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.app.ProgressDialog;
 
 import android.view.MotionEvent;
 
@@ -15,7 +17,6 @@ import com.example.deb.Object.Figure;
 import com.example.deb.Object.Item;
 import com.example.deb.Progress.ProgressHero;
 import com.example.deb.Scene.HomeScene;
-import com.example.deb.Status.UIStatus;
 import com.example.deb.System.FPSManager;
 import com.example.deb.BG.BGTitle;
 import com.example.deb.UI.ChoiseBack;
@@ -43,6 +44,9 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     // サーフェイスの幅・高さ
     public static int surfaceWid;
     public static int surfaceHei;
+
+    ProgressDialog progressDialog;
+    Thread thread;
 
     //コンストラクタ
     public GameActivity(Context context, MainActivity activity)

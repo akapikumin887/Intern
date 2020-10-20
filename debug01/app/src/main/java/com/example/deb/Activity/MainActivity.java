@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.hardware.Sensor;
@@ -47,23 +49,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //SDKVer29以降だと歩数にも権限リクエストがいる
         if(Build.VERSION.SDK_INT >= 29)
         {
-            //今回は歩数が欲しい
-            if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(this,new String[]{
-                        Manifest.permission.ACTIVITY_RECOGNITION},PERMISSION_REQUEST_CODE);
-            }
-            else
-            {
-                //既に権限の許可をもらっている場合
-                //センサーマネージャを取得
-                sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-                //センサマネージャから TYPE_STEP_COUNTER についての情報を取得する
-                stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-                //リスナー設定
-                sensorManager.registerListener (this, stepConterSensor,
-                        SensorManager.SENSOR_DELAY_FASTEST);
-            }
+                //今回は歩数が欲しい
+                if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(this,new String[]{
+                            Manifest.permission.ACTIVITY_RECOGNITION},PERMISSION_REQUEST_CODE);
+                }
+                else
+                {
+                    //既に権限の許可をもらっている場合
+                    //センサーマネージャを取得
+                    sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+                    //センサマネージャから TYPE_STEP_COUNTER についての情報を取得する
+                    stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+                    //リスナー設定
+                    sensorManager.registerListener (this, stepConterSensor,
+                            SensorManager.SENSOR_DELAY_FASTEST);
+                }
         }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -171,6 +173,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 else
                 {
                     //ダメだった時の処理
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("このアプリには歩数を利用するため、許可してください。").setPositiveButton("OK", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            // ボタンをクリックしたときの動作
+                        }});
+                    builder.show();
                 }
             }
             return;

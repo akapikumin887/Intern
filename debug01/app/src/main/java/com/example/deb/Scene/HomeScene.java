@@ -49,18 +49,6 @@ public class HomeScene extends BaseScene
         step.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 50.0f,0.0f));
     }
 
-    @Override
-    public void uninit()
-    {
-        //データを保存する
-/*
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("int",touchCount.getValue());
-        editor.apply();
-*/
-
-        super.uninit();
-    }
 
     @Override
     public void update()
