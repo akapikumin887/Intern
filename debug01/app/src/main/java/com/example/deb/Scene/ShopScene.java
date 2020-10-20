@@ -2,7 +2,6 @@ package com.example.deb.Scene;
 
 import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
-import com.example.deb.Object.Item;
 import com.example.deb.Shop.UIShop;
 
 public class ShopScene extends BaseScene
