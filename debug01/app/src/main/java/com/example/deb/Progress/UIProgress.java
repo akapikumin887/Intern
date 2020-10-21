@@ -15,6 +15,7 @@ import com.example.deb.UI.MessageWindow;
 public class UIProgress extends Object
 {
     private ProgressHero progsHero;
+    private Coffin coffin;
 
     private MessageWindow messageWindow;
     private ChoiseBack back;
@@ -28,6 +29,7 @@ public class UIProgress extends Object
         setLayer(Layer.LAYER_BUTTON);
 
         progsHero = new ProgressHero();
+        coffin = new Coffin();
 
         messageWindow = new MessageWindow(4);
         back = new ChoiseBack(2);
@@ -42,6 +44,8 @@ public class UIProgress extends Object
     public void draw()
     {
         progsHero.draw();
+        //coffin.draw();
+
         messageWindow.draw();
         back.draw();
 

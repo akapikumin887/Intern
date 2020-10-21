@@ -57,12 +57,12 @@ public class ProgressScene extends BaseScene
             {
                 step--;
                 stepCount++;
-                //3歩で1度エンカウント確率を上げていく
-                if(stepCount % 3 == 0)
-                    encounter += (float)random.nextInt(10) * 0.01f;     //30歩で大体1/3くらいになる
+                //20歩で1度エンカウント確率を上げていく
+                if(stepCount % 20 == 0)
+                    encounter += (float)random.nextInt(5) * 0.01f;     //200歩で大体1/3くらいになる
 
                 //バトル発生確率
-                float b = encounter * count / 20;
+                float b = encounter * count / 200;
 
                 if(b * (float)random.nextInt(100) > 15.0f)
                 {

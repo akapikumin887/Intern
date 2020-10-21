@@ -14,6 +14,7 @@ import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.Item;
+import com.example.deb.Progress.Coffin;
 import com.example.deb.Progress.ProgressHero;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.System.FPSManager;
@@ -24,6 +25,7 @@ import com.example.deb.UI.GameWay;
 import com.example.deb.UI.Game_stepword;
 import com.example.deb.UI.HeroUI;
 import com.example.deb.UI.HomeButton;
+import com.example.deb.UI.HpBar;
 import com.example.deb.UI.ItemName;
 import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
@@ -207,10 +209,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             ProgressHero.loadTexture();
             GameWay.loadTexture();
             Game_stepword.loadTexture();
+            Coffin.loadTexture();
         }
         //battle
         {
             BGBattle.loadTexture();
+            HpBar.loadTexture();
             Enemy.loadTexture();
         }
     }

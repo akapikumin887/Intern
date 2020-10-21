@@ -19,10 +19,11 @@ public class ProgressHero extends Object
     public ProgressHero()
     {
         super();
-        animCounter = 0;
-        texAnim = new Vector2();
         setLayer(Layer.LAYER_CHARE);
         setSize(new Vector2(200.0f,200.0f));
+
+        animCounter = 0;
+        texAnim = new Vector2();
     }
 
     @Override
