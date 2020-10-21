@@ -32,7 +32,6 @@ public class ProgressScene extends BaseScene
         list.add(uiProgress);
 
         step = StepCount.getTtStep();
-        StepCount.resetTtStep();
         encounter = 0.0f;
         count = 0;
         stepCount = 0;
@@ -42,13 +41,13 @@ public class ProgressScene extends BaseScene
     public void uninit()
     {
 
+        StepCount.resetTtStep();
         super.uninit();
     }
 
     @Override
     public void update()
     {
-        //20倍歩かなきゃいけない状態になってる
         count++;
 
         //20fに1度歩数計を進める

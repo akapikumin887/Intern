@@ -38,4 +38,6 @@ public class Item extends Object
     }
 
     public static int getItemMax(){return ITEM_MAX;}
+    public float getItemType(){return itemType;}
+    public void setItemType(float type){itemType = type;}
 }

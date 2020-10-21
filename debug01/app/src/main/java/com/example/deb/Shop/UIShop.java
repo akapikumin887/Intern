@@ -12,6 +12,7 @@ import com.example.deb.Object.Item;
 import com.example.deb.Scene.StatusScene;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
+import com.example.deb.UI.ItemName;
 import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.StatusButton;
 
@@ -28,9 +29,10 @@ public class UIShop extends Object
     private Figure point;
     private static SharedPreferences pointPrefs;
 
-
     private Item heal;
     private Item resurrection;
+
+    private ItemName itemName;
 
     private MessageWindow window;
     private MessageWindow yeswnd;
@@ -64,6 +66,9 @@ public class UIShop extends Object
         //アイテム
         heal = new Item(0.5f);
         resurrection = new Item(0.75f);
+
+        //アイテム名
+        itemName = new ItemName();
 
         //ウィンドウと選択肢
         window = new MessageWindow(2);
@@ -110,6 +115,9 @@ public class UIShop extends Object
                 break;
         }
 
+        itemName.draw();
+
+        //ウィンドウ表示(選んだ時のみ)
         if(isWindow)
         {
             window.draw();
