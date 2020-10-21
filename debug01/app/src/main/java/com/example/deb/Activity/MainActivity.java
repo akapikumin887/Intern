@@ -26,9 +26,6 @@ import android.view.WindowManager;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.System.StepCount;
 
-import static android.Manifest.permission.ACTIVITY_RECOGNITION;
-import static android.content.pm.PackageManager.PERMISSION_DENIED;
-
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
     GameActivity gameActivity;
@@ -36,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //歩数取得用
     private SensorManager sensorManager;
     private Sensor stepConterSensor;
-    private Sensor stepDetectorSensor;
 
 //マクロ定義
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -84,16 +80,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume()
     {
-        super.onResume();
-/*
-        sensorManager.registerListener (this,
-                accSensor,
-                SensorManager.SENSOR_DELAY_FASTEST);
+        BaseScene scene = BaseScene.getScene();
+        if(scene != null)
+            scene.init();
 
-        sensorManager.registerListener (this,
-                stepDetectorSensor,
-                SensorManager.SENSOR_DELAY_FASTEST);
-*/
+        super.onResume();
     }
 
     @Override

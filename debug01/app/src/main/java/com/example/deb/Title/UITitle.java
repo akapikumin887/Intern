@@ -6,6 +6,7 @@ import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.R;
+import com.example.deb.Scene.BattleScene;
 import com.example.deb.Scene.ProgressScene;
 import com.example.deb.Scene.StatusScene;
 import com.example.deb.System.Texture;
@@ -60,6 +61,13 @@ public class UITitle extends Object
             {
                 //冒険する を押したらゲーム画面へ
                 BaseScene.setnextScene(new ProgressScene());
+            }
+
+            if(touchPos.x < hint.getPosition().x + hint.getSize().x / 2 && touchPos.x > hint.getPosition().x - hint.getSize().x / 2 &&
+                    touchPos.y < hint.getPosition().y + hint.getSize().y / 2 && touchPos.y > hint.getPosition().y - hint.getSize().y / 2)
+            {
+                //デバッグ用 はてなを押したらバトル画面へ
+                BaseScene.setnextScene(new BattleScene());
             }
 
             if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&

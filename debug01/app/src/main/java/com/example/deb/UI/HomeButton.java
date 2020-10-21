@@ -22,14 +22,14 @@ public class HomeButton extends Object
             case 0:
                 //？ボタン
                 setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y * 2.2f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,1.0f);
                 return;
             case 1:
                 //設定ボタン
                 setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y * 2.2f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
                 texStartPoint = new Vector2(0.25f,0.0f);
                 texSize = new Vector2(0.25f,1.0f);
                 return;

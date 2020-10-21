@@ -50,7 +50,7 @@ public class Figure extends Object
 
             // 表示桁・座標更新
             v /= 10;
-            x -= size.x;
+            x -= size.x / 2;
         }while(++cnt < digit || v != 0);
     }
 

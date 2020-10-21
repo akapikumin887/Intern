@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.app.ProgressDialog;
 
 import android.view.MotionEvent;
 
@@ -20,10 +19,12 @@ import com.example.deb.Scene.HomeScene;
 import com.example.deb.System.FPSManager;
 import com.example.deb.BG.BGTitle;
 import com.example.deb.UI.ChoiseBack;
+import com.example.deb.UI.Enemy;
 import com.example.deb.UI.GameWay;
 import com.example.deb.UI.Game_stepword;
 import com.example.deb.UI.HeroUI;
 import com.example.deb.UI.HomeButton;
+import com.example.deb.UI.ItemName;
 import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
 import com.example.deb.UI.StatusButton;
@@ -45,9 +46,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     // サーフェイスの幅・高さ
     public static int surfaceWid;
     public static int surfaceHei;
-
-    ProgressDialog progressDialog;
-    Thread thread;
 
     //コンストラクタ
     public GameActivity(Context context, MainActivity activity)
@@ -199,6 +197,10 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             Status.loadTexture();
             StatusButton.loadTexture();
         }
+        //shop
+        {
+            ItemName.loadTexture();
+        }
         //game
         {
             BGProgress.loadTexture();
@@ -209,6 +211,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //battle
         {
             BGBattle.loadTexture();
+            Enemy.loadTexture();
         }
     }
 
