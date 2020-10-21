@@ -21,6 +21,9 @@ public class UIStep extends Object
     private Game_stepword walk1;
     private Game_stepword walk2;
     private Figure step;
+    private Figure step1;
+
+    private  static  int MAX=0;
 
     public  UIStep()
     {
@@ -46,6 +49,19 @@ public class UIStep extends Object
         step = new Figure(StepCount.getAll(),1);
         step.setSize(new Vector2(250.0f,250.0f));
         step.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.17f));
+
+
+        int bossstep;
+        MAX=10;
+        bossstep=MAX-StepCount.getAll();
+        if (bossstep<=0)
+        {
+            bossstep=0;
+        }
+        step1 = new Figure(bossstep,1);
+        step1.setSize(new Vector2(250.0f,250.0f));
+        step1.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.086f));
+
     }
 
     @Override
@@ -65,6 +81,8 @@ public class UIStep extends Object
         walk2.draw();
         //歩数
         step.draw();
+
+        step1.draw();
     }
 
     @Override

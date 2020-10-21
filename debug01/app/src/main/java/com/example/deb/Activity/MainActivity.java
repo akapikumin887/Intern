@@ -67,6 +67,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             SensorManager.SENSOR_DELAY_FASTEST);
                 }
         }
+        else
+        {
+            //ver28未満なら許可をもらわずに歩数をもらえる
+            //センサーマネージャを取得
+            sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+            //センサマネージャから TYPE_STEP_COUNTER についての情報を取得する
+            stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            //リスナー設定
+            sensorManager.registerListener (this, stepConterSensor,
+                    SensorManager.SENSOR_DELAY_FASTEST);
+        }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 

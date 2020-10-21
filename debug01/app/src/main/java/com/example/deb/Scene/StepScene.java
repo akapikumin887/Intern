@@ -15,7 +15,6 @@ public class StepScene extends BaseScene
     private BGStShGp bgStep;
     private UIStep uiStep;
 
-
     public StepScene()
     {
         //背景
