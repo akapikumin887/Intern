@@ -56,21 +56,15 @@ public class UIStatus extends Object
             p++;
         StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
 
+        //ポイントの変更をすぐ保存しておく
+        SharedPreferences .Editor editor = pointPrefs.edit();
+        editor.putInt("int",p);
+        editor.apply();
+
         point = new Figure(p,1);
         point.setSize(new Vector2(100.0f,100.0f));
         point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 100.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
         //point.setValue(0);
-    }
-
-    @Override
-    public void uninit()
-    {
-        //値を保存
-        SharedPreferences .Editor editor = pointPrefs.edit();
-        editor.putInt("int",point.getValue());
-        editor.apply();
-
-        super.uninit();
     }
 
     @Override

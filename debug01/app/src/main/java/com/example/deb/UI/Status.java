@@ -42,24 +42,24 @@ public class Status extends Object
                 return;
             case 3:
                 //白レベル ゲーム画面想定
-                setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2();
-                texSize = new Vector2(0.25f,1.0f);
+                setSize(new Vector2(200.0f,50.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 7));
+                texStartPoint = new Vector2(0.5f,0.0f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 4:
                 //白攻撃力 ゲーム画面想定
-                setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2();
-                texSize = new Vector2(0.25f,1.0f);
+                setSize(new Vector2(200.0f,50.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 6));
+                texStartPoint = new Vector2(0.5f,0.3334f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 5:
                 //白HP ゲーム画面想定
-                setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2();
-                texSize = new Vector2(0.25f,1.0f);
+                setSize(new Vector2(200.0f,50.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 5));
+                texStartPoint = new Vector2(0.5f,0.6667f);
+                texSize = new Vector2(0.5f,0.3333f);
                 return;
 
         }
