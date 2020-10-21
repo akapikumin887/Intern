@@ -20,25 +20,18 @@ public class BattleCommand extends Object
         switch(num)
         {
             case 0:
-                //緑色のHP
-                setSize(new Vector2(GameActivity.getBaseWid(),200.0f));
+                //攻撃コマンド
+                setSize(new Vector2(GameActivity.getBaseWid() / 3,150.0f));
                 setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 2 - size.y / 3));
                 texStartPoint = new Vector2();
-                texSize = new Vector2(1.0f,0.3333f);
+                texSize = new Vector2(1.0f,0.5f);
                 break;
             case 1:
-                //赤いHP
-                setSize(new Vector2(GameActivity.getBaseWid(),200.0f));
+                //回復コマンド
+                setSize(new Vector2(GameActivity.getBaseWid() / 3,150.0f));
                 setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 2 - size.y / 3));
-                texStartPoint = new Vector2(0.0f,0.3334f);
-                texSize = new Vector2(1.0f,0.3333f);
-                break;
-            case 2:
-                //HPの枠 使う予定なし
-                setSize(new Vector2(GameActivity.getBaseWid(),100.0f));
-                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2(0.0f,0.6667f);
-                texSize = new Vector2(1.0f,0.3333f);
+                texStartPoint = new Vector2(0.0f,0.5f);
+                texSize = new Vector2(1.0f,0.5f);
                 break;
         }
     }
@@ -52,7 +45,7 @@ public class BattleCommand extends Object
     public static void loadTexture()
     {
         texture = new Texture();
-        //texture.loadTexture(GameActivity.getCntxt(), R.drawable.command);
+        texture.loadTexture(GameActivity.getCntxt(), R.drawable.command);
     }
 
 }

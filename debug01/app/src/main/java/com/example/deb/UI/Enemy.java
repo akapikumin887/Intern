@@ -25,25 +25,25 @@ public class Enemy extends Object
             case 0:
                 //敵01 一般的な奴
                 setSize(new Vector2(GameActivity.getBaseWid() / 2,GameActivity.getBaseWid() / 2));
-                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 4));
+                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 5));
                 texStartPoint = new Vector2();
-                texSize = new Vector2(0.2f,0.5f);
+                texSize = new Vector2(0.2f,0.3333f);
                 isBoss = false;
                 return;
             case 1:
                 //敵02 角が生えたやつ
                 setSize(new Vector2(GameActivity.getBaseWid() / 2,GameActivity.getBaseWid() / 2));
-                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 4));
+                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 5));
                 texStartPoint = new Vector2(0.2f,0.0f);
-                texSize = new Vector2(0.2f,0.5f);
+                texSize = new Vector2(0.2f,0.3333f);
                 isBoss = false;
                 return;
             case 2:
                 //ボス01 動く
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,GameActivity.getBaseWid() / 3 * 2));
-                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 4));
-                texStartPoint = new Vector2(0.0f,0.5f);
-                texSize = new Vector2(0.1667f,0.5f);
+                setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 5));
+                texStartPoint = new Vector2(0.0f,0.3334f);
+                texSize = new Vector2(0.25f,0.3333f);
                 isBoss = true;
                 return;
         }
@@ -57,11 +57,19 @@ public class Enemy extends Object
         if(isBoss)
         {
             animCnt++;
-            if(animCnt >= 10)
+            if(animCnt >= 15)
             {
-                texStartPoint.x += 0.1667f;
-                if(texStartPoint.x >= 1.0f)
+                texStartPoint.x += 0.25f;
+                if(texStartPoint.x >= 0.75f)
+                {
+                    if(texStartPoint.y >= 0.6667f)
+                        texStartPoint.y = 0.3334f;
+                    else
+                    {
+                        texStartPoint.y = 0.6667f;
+                    }
                     texStartPoint.x = 0.0f;
+                }
                 animCnt = 0;
             }
         }

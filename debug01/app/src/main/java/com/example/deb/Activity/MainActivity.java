@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume()
     {
+        //起動したときや復帰した時の処理
         BaseScene scene = BaseScene.getScene();
         if(scene != null)
             scene.init();
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onDestroy()
     {
+        //アプリが完全に削除された時の処理
         BaseScene scene = BaseScene.getScene();
         scene.uninit();
         StepCount.save();
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onPause()
     {
+        //アプリが中断された時の処理
         StepCount.save();
 
         super.onPause();

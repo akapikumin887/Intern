@@ -2,6 +2,7 @@ package com.example.deb.Scene;
 
 import com.example.deb.BG.BGBattle;
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Battle.BattleCommand;
 import com.example.deb.Battle.UIBattle;
 
 public class BattleScene extends BaseScene

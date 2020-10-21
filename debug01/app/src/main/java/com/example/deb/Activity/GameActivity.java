@@ -12,6 +12,7 @@ import com.example.deb.BG.BGBattle;
 import com.example.deb.BG.BGProgress;
 import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Battle.BattleCommand;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.Item;
 import com.example.deb.Progress.Coffin;
@@ -19,6 +20,7 @@ import com.example.deb.Progress.ProgressHero;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.System.FPSManager;
 import com.example.deb.BG.BGTitle;
+import com.example.deb.System.StepCount;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.Enemy;
 import com.example.deb.UI.GameWay;
@@ -58,6 +60,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
         setRenderer(this);
         FPSManager.init();
+        StepCount.init();
     }
 
     @Override
@@ -215,6 +218,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         {
             BGBattle.loadTexture();
             HpBar.loadTexture();
+            BattleCommand.loadTexture();
             Enemy.loadTexture();
         }
     }

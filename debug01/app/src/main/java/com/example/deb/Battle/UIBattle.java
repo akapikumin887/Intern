@@ -10,6 +10,8 @@ import com.example.deb.UI.MessageWindow;
 public class UIBattle extends Object
 {
     private MessageWindow window;
+    BattleCommand attack;
+    BattleCommand heal;
 
     private HpBar redBar;
     private HpBar greenBar;
@@ -23,7 +25,12 @@ public class UIBattle extends Object
         super();
         setLayer(Layer.LAYER_BUTTON);
         phoneLeftWidth = -GameActivity.getBaseWid() / 2;
+
         window = new MessageWindow(4);
+        attack = new BattleCommand(0);
+        attack.setPosition(new Vector2(-attack.getSize().x / 2 - 50.0f,window.getPosition().y + window.getSize().y / 2 + attack.getSize().y / 1.5f));
+        heal   = new BattleCommand(1);
+        heal.setPosition(new Vector2(attack.getSize().x / 2 + 50.0f,window.getPosition().y + window.getSize().y / 2 + attack.getSize().y / 1.5f));
 
         float num = 0.05f;
 
@@ -46,6 +53,9 @@ public class UIBattle extends Object
     public void draw()
     {
         window.draw();
+        attack.draw();
+        heal.draw();
+
         boss.draw();
 
         redBar.draw();

@@ -21,8 +21,14 @@ public class StepCount
     private static SharedPreferences thisStepPrefs;
     private static SharedPreferences pointPrefs;
 
+    private static boolean isRead = false;
+
     public static void init()
     {
+        //既に呼び出していたら省略する
+        if(isRead)
+            return;
+
         //保存した情報の読み込み
         phonePrefs = GameActivity.getActivity().getSharedPreferences("phoneStep", Context.MODE_PRIVATE);
         ltPhone = phonePrefs.getInt("int",0);   //前回起動時に歩いていた歩数(スマホ換算)
@@ -35,6 +41,10 @@ public class StepCount
 
         pointPrefs = GameActivity.getActivity().getSharedPreferences("countPoint", Context.MODE_PRIVATE);
         ttPoint = pointPrefs.getInt("int",0);    //消費されるまで今回得たポイントを記録しておく
+
+        //Sensorが呼び出されなかったら今回は歩いてないことにする
+        if(ttPhone < 0)
+            ttPhone = ltPhone;
 
         //今回歩いた歩数を出す
         int n;
@@ -58,6 +68,8 @@ public class StepCount
 
         ttStep += n;
         ttPoint += n;
+
+        isRead = true;
         //ttPoint = 0;
     }
 

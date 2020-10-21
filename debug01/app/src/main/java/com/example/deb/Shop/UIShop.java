@@ -72,10 +72,12 @@ public class UIShop extends Object
 
         //ウィンドウと選択肢
         window = new MessageWindow(2);
+
         yeswnd = new MessageWindow(3);
         yeswnd.setPosition(new Vector2(-yeswnd.getSize().x / 2,yeswnd.getPosition().y));
         nownd = new MessageWindow(3);
         nownd.setPosition(new Vector2(nownd.getSize().x / 2,nownd.getPosition().y));
+
         yes = new ChoiseBack(4);
         yes.setPosition(yeswnd.getPosition());
         no = new ChoiseBack(5);
