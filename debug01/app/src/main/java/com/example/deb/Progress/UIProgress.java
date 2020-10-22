@@ -7,7 +7,7 @@ import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.StepScene;
-import com.example.deb.Step.PlayerStep;
+//import com.example.deb.Step.PlayerStep;
 import com.example.deb.Step.UIStep;
 import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
@@ -26,7 +26,7 @@ public class UIProgress extends Object
     private GameWay boss_icom;
     private GameWay player_icom;
     private UIStep uiStep;
-    private PlayerStep playerStep;
+    //private PlayerStep playerStep;
 
     private  static int MAX=0;
 
@@ -52,7 +52,7 @@ public class UIProgress extends Object
             bossstep=0;
         }
 
-        playerStep=new PlayerStep();
+        //playerStep=new PlayerStep();
 
         way = new GameWay(0);
         player_icom = new GameWay(1);

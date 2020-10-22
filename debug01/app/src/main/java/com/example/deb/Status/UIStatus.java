@@ -8,6 +8,7 @@ import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Object.Figure;
+import com.example.deb.Object.HeroStatus;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.ShopScene;
 import com.example.deb.System.StepCount;
@@ -29,7 +30,9 @@ public class UIStatus extends Object
     private StatusButton shop;
 
     private Figure point;
-    private static SharedPreferences pointPrefs;
+    private Figure stLv;
+    private Figure stHp;
+    private Figure stAt;
 
     public UIStatus()
     {
@@ -50,21 +53,33 @@ public class UIStatus extends Object
         shop = new StatusButton(2);
 
         //ポイント(数値)
-        pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
+        SharedPreferences pointPrefs= GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
         int p = pointPrefs.getInt("int",0) + StepCount.getTtPoint() / 10;  //今回歩いた歩数から今回得られるポイントを取得
         if(StepCount.getTtPoint() % 10 > 4)    //四捨五入
             p++;
         StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
 
         //ポイントの変更をすぐ保存しておく
-        SharedPreferences .Editor editor = pointPrefs.edit();
+        SharedPreferences.Editor editor = pointPrefs.edit();
         editor.putInt("int",p);
         editor.apply();
 
         point = new Figure(p,1);
         point.setSize(new Vector2(100.0f,100.0f));
         point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 100.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
-        //point.setValue(0);
+
+        //ステータス(数値)
+        stLv = new Figure(HeroStatus.getLv(),1);
+        stLv.setSize(new Vector2(level.getSize().y,level.getSize().y));
+        stLv.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stLv.getSize().x / 2,level.getPosition().y));
+
+        stHp = new Figure(HeroStatus.getHp(),1);
+        stHp.setSize(new Vector2(hitPoint.getSize().y,hitPoint.getSize().y));
+        stHp.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stHp.getSize().x / 2,hitPoint.getPosition().y));
+
+        stAt = new Figure(HeroStatus.getAttack(),1);
+        stAt.setSize(new Vector2(attack.getSize().y,attack.getSize().y));
+        stAt.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stAt.getSize().x / 2,attack.getPosition().y));
     }
 
     @Override
@@ -91,6 +106,11 @@ public class UIStatus extends Object
 
         //ポイント
         point.draw();
+
+        //status数値
+        stLv.draw();
+        stHp.draw();
+        stAt.draw();
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Object.HeroStatus;
 import com.example.deb.System.StepCount;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     {
         //アプリが中断された時の処理
         StepCount.save();
+        HeroStatus.save();
 
         super.onPause();
     }

@@ -8,6 +8,7 @@ import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Object.Figure;
+import com.example.deb.Object.HeroStatus;
 import com.example.deb.Object.Item;
 import com.example.deb.Scene.StatusScene;
 import com.example.deb.System.Vector2;
@@ -153,6 +154,20 @@ public class UIShop extends Object
                     touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
             {
                 isWindow = false;
+                switch(itemSelect)
+                {
+                    case 0:
+                        point.setValue(point.getValue() - 200);
+                        HeroStatus.setHealCnt(HeroStatus.getHealCnt() + 1);
+                        break;
+                    case 1:
+                        point.setValue(point.getValue() - 300);
+                        HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
+                        break;
+                }
+                SharedPreferences.Editor editor = pointPrefs.edit();
+                editor.putInt("int",point.getValue());
+                editor.apply();
             }
             //買わない
             if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
@@ -190,7 +205,22 @@ public class UIShop extends Object
             if(touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
                     touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2)
             {
-                isWindow = true;
+                switch(itemSelect)
+                {
+                    case 0:
+                        if(point.getValue() >= 200)
+                            isWindow = true;
+                        //else
+
+                        break;
+                    case 1:
+                        if(point.getValue() >= 300)
+                            isWindow = true;
+                        //else
+
+                        break;
+
+                }
             }
         }
     }

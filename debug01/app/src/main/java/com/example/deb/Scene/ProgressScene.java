@@ -1,5 +1,9 @@
 package com.example.deb.Scene;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.deb.Activity.GameActivity;
 import com.example.deb.BG.BGProgress;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Progress.UIProgress;
@@ -14,12 +18,11 @@ public class ProgressScene extends BaseScene
     private BGProgress bgProgress;
     private UIProgress uiProgress;
 
-    private int step;
+    private SharedPreferences nextEncountPrefs;  //次の遭遇までの歩数
+
+    private int step;       //今回歩いた歩数
 
     private Random random;      //乱数
-    private float encounter;
-    private int count;
-    private int stepCount;
 
     public ProgressScene()
     {
@@ -32,46 +35,46 @@ public class ProgressScene extends BaseScene
         list.add(uiProgress);
 
         step = StepCount.getTtStep();
-        encounter = 0.0f;
-        count = 0;
-        stepCount = 0;
+
+        nextEncountPrefs = GameActivity.getActivity().getSharedPreferences("encount", Context.MODE_PRIVATE);
+        int road = nextEncountPrefs.getInt("int",0);
+
+        //次の敵までの距離が決まってなかったら設定する
+        if(road == 0)
+        {
+            //歩数は確実に0になるのでエンカウントの最大値と最小値を出しておき、最小値以上なら遭遇までに何歩歩いたかを求めればよい
+            //次の敵までの距離を出しておき、そこに接触したら戦闘になる。
+            //最小値1000 : 最大値10000で今回は計算してみる
+
+            int min = 1000;
+            int max = 10000;
+            road = min + random.nextInt(max - min);
+        }
+        road -= step;
+        if(road < 0)
+        {
+            //今回で戦闘が始まる
+            road = 0;
+        }
+        //次の敵までの値を忘れずに保存しておく
+        SharedPreferences.Editor editor = nextEncountPrefs.edit();
+        editor.putInt("int",road);
+        editor.apply();
     }
 
     @Override
     public void uninit()
     {
 
-        StepCount.resetTtStep();
+        StepCount.resetTtStep();        //今回歩いた歩数リセット
         super.uninit();
     }
 
     @Override
     public void update()
     {
-        count++;
-
-        //20fに1度歩数計を進める
-        if(count % 20 == 0)
-        {
-            if(step > 0)
-            {
-                step--;
-                stepCount++;
-                //20歩で1度エンカウント確率を上げていく
-                if(stepCount % 20 == 0)
-                    encounter += (float)random.nextInt(5) * 0.01f;     //200歩で大体1/3くらいになる
-
-                //バトル発生確率
-                float b = encounter * count / 200;
-
-                if(b * (float)random.nextInt(100) > 15.0f)
-                {
-                    //バトルするぞ
-                    BaseScene.setnextScene(new BattleScene());
-                    step = 0;
-                }
-            }
-        }
+        //戦闘に入るまで少しくらいタイムラグが欲しい
+        //10000歩でも10秒くらいで、1000歩でも5秒くらいほしい
 
         super.update();
     }

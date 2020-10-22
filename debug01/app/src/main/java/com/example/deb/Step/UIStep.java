@@ -24,7 +24,7 @@ public class UIStep extends Object
     private Game_stepword walk2;
     private Figure step;
     private Figure step1;
-    private  PlayerStep playerStep;
+    //private  PlayerStep playerStep;
 
 
     public  UIStep()

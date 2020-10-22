@@ -29,35 +29,35 @@ public class Status extends Object
             case 1:
                 //黒攻撃力 ステータス画面想定
                 setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f - size.y));
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 2:
                 //黒HP ステータス画面想定
                 setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f - size.y));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f));
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 3:
                 //白レベル ゲーム画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 7));
+                setSize(new Vector2(160.0f,40.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 9.0f));
                 texStartPoint = new Vector2(0.5f,0.0f);
                 texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 4:
                 //白攻撃力 ゲーム画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 6));
+                setSize(new Vector2(160.0f,40.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 3.5f));
                 texStartPoint = new Vector2(0.5f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
                 return;
             case 5:
                 //白HP ゲーム画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,-GameActivity.getBaseHei() / 2 + size.y * 5));
+                setSize(new Vector2(160.0f,40.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 6.25f));
                 texStartPoint = new Vector2(0.5f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
                 return;

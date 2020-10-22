@@ -77,4 +77,5 @@ public class Figure extends Object
     //ゲッターとセッター
     public void setValue(int num)   {value = num;}
     public int getValue()           {return value;}
+    public int getDigit()           {return digit;}
 }
