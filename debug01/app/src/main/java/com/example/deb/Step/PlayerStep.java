@@ -17,15 +17,17 @@ public class PlayerStep extends Object
     public  PlayerStep()
     {
         uistep = new UIStep();
+    if (UIProgress.getbossstep()==0)
+    {
+        kyori=40.0f;
+    }
+    else
+    {
+        kyori =UIProgress.getMAX() / UIProgress.getbossstep();
+        kyori=GameActivity.getBaseWid() / kyori;
+        kyori = kyori + 40.0f;
+    }
 
-        kyorihosuu=GameActivity.getBaseWid() / 2/UIProgress.getbossstep();
-
-        kyorihosuu=kyorihosuu*100;
-        kyorihosuu = (float)Math.floor(kyorihosuu);
-        kyorihosuu=kyorihosuu/100;
-
-            kyori = (float) kyorihosuu / 100;
-            kyori= (float) (kyori/1.69);
     }
 
     @Override
