@@ -3,6 +3,8 @@ package com.example.deb.UI;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.R;
+import com.example.deb.Step.PlayerStep;
+import com.example.deb.Step.UIStep;
 import com.example.deb.System.Texture;
 import com.example.deb.System.Vector2;
 
@@ -18,6 +20,7 @@ public class GameWay extends Object
         super();
         setLayer(Layer.LAYER_BUTTON);
 
+
         switch (num)
         {
             case 0:
@@ -30,7 +33,7 @@ public class GameWay extends Object
             case 1:
                 //player_icom (青)
                 setSize(new Vector2(80.0f,80.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y/0.28f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x /0.1f/*PlayerStep.getkyori()*/ , GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,0.5f);
                 return;
@@ -55,6 +58,5 @@ public class GameWay extends Object
         texture = new Texture();
         texture.loadTexture(GameActivity.getCntxt(), R.drawable.game_pl_bo_way);
     }
-
 
 }

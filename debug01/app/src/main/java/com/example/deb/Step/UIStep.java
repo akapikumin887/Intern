@@ -6,11 +6,13 @@ import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Object.Figure;
+import com.example.deb.Progress.UIProgress;
 import com.example.deb.Scene.ProgressScene;
 import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.Game_stepword;
+import com.example.deb.UI.HpBar;
 
 public class UIStep extends Object
 {
@@ -22,8 +24,8 @@ public class UIStep extends Object
     private Game_stepword walk2;
     private Figure step;
     private Figure step1;
+    private  PlayerStep playerStep;
 
-    private  static  int MAX=0;
 
     public  UIStep()
     {
@@ -50,15 +52,9 @@ public class UIStep extends Object
         step.setSize(new Vector2(250.0f,250.0f));
         step.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.17f));
 
+        UIProgress.getbossstep();
 
-        int bossstep;
-        MAX=10;
-        bossstep=MAX-StepCount.getAll();
-        if (bossstep<=0)
-        {
-            bossstep=0;
-        }
-        step1 = new Figure(bossstep,1);
+        step1 = new Figure(UIProgress.getbossstep(),1);
         step1.setSize(new Vector2(250.0f,250.0f));
         step1.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.086f));
 
