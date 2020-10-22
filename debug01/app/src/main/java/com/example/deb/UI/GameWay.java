@@ -3,7 +3,8 @@ package com.example.deb.UI;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.R;
-//import com.example.deb.Step.PlayerStep;
+import com.example.deb.Step.PlayerStep;
+import com.example.deb.Step.PlayerStep;
 import com.example.deb.Step.UIStep;
 import com.example.deb.System.Texture;
 import com.example.deb.System.Vector2;
@@ -33,14 +34,11 @@ public class GameWay extends Object
             case 1:
                 //player_icom (青)
                 setSize(new Vector2(80.0f,80.0f));
-<<<<<<< HEAD
+
                 //setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x /PlayerStep.getkyori() , GameActivity.getBaseHei() / 2 - size.y/0.28f));
-=======
 
                 //setPosition(new Vector2(-GameActivity.getBaseWid() /2 + size.x /PlayerStep.getkyori() , GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + PlayerStep.getkyori() , GameActivity.getBaseHei() / 2 - size.y/0.28f));
-
->>>>>>> e70036d9858f53d2ec59871a83c89105d9538024
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,0.5f);
                 return;

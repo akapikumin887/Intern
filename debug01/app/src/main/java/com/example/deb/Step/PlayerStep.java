@@ -36,6 +36,6 @@ public class PlayerStep extends Object
 
     }
 
-    public static float getkyorihosuu(){return kyorihosuu;}
+    //public static float getkyorihosuu(){return kyorihosuu;}
     public static float getkyori(){return kyori;}
 }
