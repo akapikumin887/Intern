@@ -23,9 +23,8 @@ public class PlayerStep extends Object
     }
     else
     {
-        kyori =UIProgress.getMAX() / UIProgress.getbossstep();
-        kyori=GameActivity.getBaseWid() / kyori;
-        kyori = kyori + 40.0f;
+        kyori = (float)UIProgress.getMAX() / (float)UIProgress.getbossstep();
+        kyori = (GameActivity.getBaseWid() - 80.0f) / kyori;
     }
 
     }
