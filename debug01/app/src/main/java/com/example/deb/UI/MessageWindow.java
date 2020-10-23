@@ -28,35 +28,35 @@ public class MessageWindow extends Object
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,0.0f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 1:
                 //ptを消費してlevelをあげますか？ ショップ想定
                 setSize(new Vector2(200.0f,200.0f));
                 setPosition(new Vector2());
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 2:
                 //ptを消費してアイテムを購入しますか？ ショップ想定
                 setSize(new Vector2(GameActivity.getBaseWid() - 100.0f,400.0f));
                 setPosition(new Vector2());
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 3:
                 //横長無地 ショップ想定
                 setSize(new Vector2(GameActivity.getBaseWid() / 5 * 2,200.0f));
                 setPosition(new Vector2(0.0f,-400.0f));
                 texStartPoint = new Vector2(0.5f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 4:
                 //横長 進行画面想定
-                setSize(new Vector2(GameActivity.getBaseWid() - 10.0f,400.0f));
+                setSize(new Vector2(GameActivity.getBaseWid() - 10.0f,(GameActivity.getBaseWid() - 10.0f) / 2.0f));
                 setPosition(new Vector2(0.0f, -GameActivity.getBaseHei() / 2 + size.y / 1.8f));
                 texStartPoint = new Vector2(0.5f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
         }
 
     }

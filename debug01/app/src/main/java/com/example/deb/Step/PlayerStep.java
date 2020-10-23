@@ -11,31 +11,22 @@ public class PlayerStep extends Object
 {
     private  UIStep uistep;
     private UIProgress uiProgress;
-    private static float kyorihosuu;
     private static float kyori;
 
     public  PlayerStep()
     {
         uistep = new UIStep();
-    if (UIProgress.getbossstep()==0)
-    {
-        kyori=40.0f;
-    }
-    else
-    {
-        kyori =UIProgress.getMAX() / UIProgress.getbossstep();
-        kyori=GameActivity.getBaseWid() / kyori;
-        kyori = kyori + 40.0f;
-    }
+        if (UIProgress.getbossstep()==0)
+        {
+            kyori=40.0f;
+        }
+        else
+        {
+            kyori = (float)UIProgress.getMAX() / (float)UIProgress.getbossstep();
+            kyori = (GameActivity.getBaseWid() - 80.0f) / kyori;
+        }
 
     }
 
-    @Override
-    public void update()
-    {
-
-    }
-
-    //public static float getkyorihosuu(){return kyorihosuu;}
     public static float getkyori(){return kyori;}
 }

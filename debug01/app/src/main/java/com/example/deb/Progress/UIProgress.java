@@ -7,7 +7,7 @@ import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.StepScene;
-//import com.example.deb.Step.PlayerStep;
+import com.example.deb.Step.PlayerStep;
 import com.example.deb.Step.PlayerStep;
 import com.example.deb.Step.UIStep;
 import com.example.deb.System.StepCount;

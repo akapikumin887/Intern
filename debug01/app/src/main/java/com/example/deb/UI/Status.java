@@ -25,42 +25,42 @@ public class Status extends Object
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f + size.y));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 1:
                 //黒攻撃力 ステータス画面想定
                 setSize(new Vector2(200.0f,50.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f - size.y));
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 2:
                 //黒HP ステータス画面想定
                 setSize(new Vector2(200.0f,50.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f));
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 3:
                 //白レベル ゲーム画面想定
                 setSize(new Vector2(160.0f,40.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 9.0f));
                 texStartPoint = new Vector2(0.5f,0.0f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 4:
                 //白攻撃力 ゲーム画面想定
                 setSize(new Vector2(160.0f,40.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 3.5f));
                 texStartPoint = new Vector2(0.5f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
             case 5:
                 //白HP ゲーム画面想定
                 setSize(new Vector2(160.0f,40.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.3f,-GameActivity.getBaseHei() / 2 + size.y * 6.25f));
                 texStartPoint = new Vector2(0.5f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
-                return;
+                break;
 
         }
 

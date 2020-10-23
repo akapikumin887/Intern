@@ -23,35 +23,35 @@ public class Game_stepword extends Object {
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x, GameActivity.getBaseHei() / 2 - size.y / 0.5f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.75f, 0.3333f);
-                return;
+                break;
             case 1:
                 //ボスまで
                 setSize(new Vector2(200.0f, 200.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x, GameActivity.getBaseHei() / 2 - size.y / 0.2f));
                 texStartPoint = new Vector2(0.0f, 0.3333f);
                 texSize = new Vector2(1.0f, 0.3333f);
-                return;
+                break;
             case 2:
                 //あと
                 setSize(new Vector2(80.0f, 80.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x , GameActivity.getBaseHei() / 2 - size.y / 0.2f));
                 texStartPoint = new Vector2(0.0f, 0.6666f);
                 texSize = new Vector2(0.5f, 0.3333f);
-                return;
+                break;
             case 3:
                 //歩1
                 setSize(new Vector2(150.0f, 150.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/0.23f, GameActivity.getBaseHei() / 2 - size.y / 0.25f));
                 texStartPoint = new Vector2(0.5f, 0.6666f);
                 texSize = new Vector2(0.25f, 0.3333f);
-                return;
+                break;
             case 4:
                 //歩2
                 setSize(new Vector2(150.0f, 150.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/0.23f, GameActivity.getBaseHei() / 2 - size.y / 0.13f));
                 texStartPoint = new Vector2(0.5f, 0.6666f);
                 texSize = new Vector2(0.25f, 0.3333f);
-                return;
+                break;
         }
     }
 
