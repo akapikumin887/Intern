@@ -25,21 +25,21 @@ public class HomeButton extends Object
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y * 2.2f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,1.0f);
-                return;
+                break;
             case 1:
                 //設定ボタン
                 setSize(new Vector2(120.0f,120.0f));
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 1.8f, GameActivity.getBaseHei() / 2 - size.y));
                 texStartPoint = new Vector2(0.25f,0.0f);
                 texSize = new Vector2(0.25f,1.0f);
-                return;
+                break;
             case 2:
                 //冒険ボタン
                 setSize(new Vector2(550.0f,250.0f));
                 setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y / 2 + 100.0f));
                 texStartPoint = new Vector2(0.5f,0.0f);
                 texSize = new Vector2(0.5f,1.0f);
-                return;
+                break;
         }
     }
 

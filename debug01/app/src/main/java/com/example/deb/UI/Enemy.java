@@ -29,7 +29,7 @@ public class Enemy extends Object
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.2f,0.3333f);
                 isBoss = false;
-                return;
+                break;
             case 1:
                 //敵02 角が生えたやつ
                 setSize(new Vector2(GameActivity.getBaseWid() / 2,GameActivity.getBaseWid() / 2));
@@ -37,7 +37,7 @@ public class Enemy extends Object
                 texStartPoint = new Vector2(0.2f,0.0f);
                 texSize = new Vector2(0.2f,0.3333f);
                 isBoss = false;
-                return;
+                break;
             case 2:
                 //ボス01 動く
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,GameActivity.getBaseWid() / 3 * 2));
@@ -45,7 +45,7 @@ public class Enemy extends Object
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.25f,0.3333f);
                 isBoss = true;
-                return;
+                break;
         }
         animCnt = 0;
     }

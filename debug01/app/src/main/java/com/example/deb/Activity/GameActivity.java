@@ -22,6 +22,7 @@ import com.example.deb.Scene.HomeScene;
 import com.example.deb.System.FPSManager;
 import com.example.deb.BG.BGTitle;
 import com.example.deb.System.StepCount;
+import com.example.deb.UI.BattleText;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.Enemy;
 import com.example.deb.UI.GameWay;
@@ -215,6 +216,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             GameWay.loadTexture();
             Game_stepword.loadTexture();
             Coffin.loadTexture();
+            BattleText.loadTexture();
         }
         //battle
         {

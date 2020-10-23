@@ -29,21 +29,21 @@ public class GameWay extends Object
                 setPosition(new Vector2(GameActivity.getBaseWid() / 2 -GameActivity.getBaseWid() / 2,GameActivity.getBaseHei() / 2 - size.y / 0.7f));
                 texStartPoint = new Vector2(0.0f,0.5f);
                 texSize = new Vector2(1.0f,0.5f);
-                return;
+                break;
             case 1:
                 //player_icom (青)
                 setSize(new Vector2(80.0f,80.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 2 + PlayerStep.getkyori() , GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.25f,0.5f);
-                return;
+                break;
             case 2:
                 //boss_icom(赤)
                 setSize(new Vector2(80.0f,80.0f));
                 setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 2, GameActivity.getBaseHei() / 2 - size.y/0.28f));
                 texStartPoint = new Vector2(0.25f,0.0f);
                 texSize = new Vector2(0.25f,0.5f);
-                return;
+                break;
         }
     }
 
