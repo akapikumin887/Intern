@@ -7,26 +7,51 @@ import com.example.deb.BaseClass.Object;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.HeroStatus;
 import com.example.deb.System.Vector2;
+import com.example.deb.UI.BattleText;
 import com.example.deb.UI.Enemy;
 import com.example.deb.UI.HpBar;
+import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
 
 public class UIBattle extends Object
 {
+    //ステータスの文字
     private Status lv;
     private Status hp;
     private Status at;
 
+    //ステータスの値
     private Figure stLv;
     private Figure stHp;
     private Figure stAt;
 
+    //敵と敵のHPゲージ
     private Enemy boss;
     private HpBar redBar;
     private HpBar greenBar;
 
+    //敵のHP表示を簡単にするための変数たち
     private float phoneLeftWidth;
-    private float remnantsHp;      //緑のhpの長さ 名前変更予定
+    private float remnantsHp;
+
+    //メッセージウィンドウとボタン
+    private MessageWindow window;
+    private BattleCommand attack;
+    private BattleCommand heal;
+
+    //ウィンドウに表示される文章
+    private BattleText[] text;
+    private final int TEXT_MAX = 4;
+    private int nowTextNum; //今のテキストの数 updateで増える
+    private int textNum;    //テキスト描画の数
+
+    //戦闘テキストを描画しやすくするための変数たち
+    private Vector2 textBasePos;
+    private float wndTop;
+
+    //ログ関係
+    private int count;
+    private boolean isLog;
 
     public UIBattle()
     {
@@ -34,10 +59,12 @@ public class UIBattle extends Object
         setLayer(Layer.LAYER_BUTTON);
         phoneLeftWidth = -GameActivity.getBaseWid() / 2;
 
+        //ステータスの文字
         lv = new Status(3);
         at = new Status(4);
         hp = new Status(5);
 
+        //ステータスの値
         stLv = new Figure(HeroStatus.getLv(),0);
         stLv.setSize(new Vector2(lv.getSize().y,lv.getSize().y));
         stLv.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,lv.getPosition().y - lv.getSize().y));
@@ -48,12 +75,43 @@ public class UIBattle extends Object
         stAt.setSize(new Vector2(at.getSize().y,at.getSize().y));
         stAt.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,at.getPosition().y - at.getSize().y));
 
+        //敵の残りHP 100分率
         remnantsHp = 1.0f;
 
+        //敵のHPバー
         redBar = new HpBar(1);
         greenBar = new HpBar(0);
 
+        //敵
         boss = new Enemy(2);
+
+        //メッセージウィンドウとボタン
+        window = new MessageWindow(4);
+        attack = new BattleCommand(0);
+        attack.setPosition(new Vector2(-attack.getSize().x / 2 - 50.0f,window.getPosition().y + window.getSize().y / 2 + attack.getSize().y / 1.5f));
+        heal   = new BattleCommand(1);
+        heal.setPosition(new Vector2(attack.getSize().x / 2 + 50.0f,window.getPosition().y + window.getSize().y / 2 + attack.getSize().y / 1.5f));
+
+        //テキストの1行目
+        textBasePos = new Vector2(GameActivity.getBaseWid() / 6,((GameActivity.getBaseWid() / 3 * 2) / 16) * 1.5f);
+        wndTop = window.getPosition().y + window.getSize().y / 2;
+
+        //テキスト4行の初期化
+        text = new BattleText[4];
+
+        for(int i = 0; i < TEXT_MAX; i++)
+        {
+            text[i] = new BattleText(i);
+            text[i].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * (i + 1)));
+
+        }
+        //初めは2行から開始
+        textNum = 2;
+        nowTextNum = 1;
+
+        //初期化
+        count = 0;
+        isLog = false;
     }
 
     @Override
@@ -63,11 +121,32 @@ public class UIBattle extends Object
         stLv.update();
         stHp.update();
         stAt.update();
+
+        count++;
+        if(count > 40)
+        {
+            if(nowTextNum <= textNum)
+                nowTextNum = count / 40;
+
+            if(isLog && count > 200 && HeroStatus.getHp() <= 0)
+            {
+                isLog = false;
+                text[0] = new BattleText(1);
+                text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                textNum = 1;
+                nowTextNum = 1;
+            }
+
+        }
     }
 
     @Override
     public void draw()
     {
+        window.draw();
+        attack.draw();
+        heal.draw();
+
         lv.draw();
         hp.draw();
         at.draw();
@@ -80,6 +159,11 @@ public class UIBattle extends Object
 
         redBar.draw();
         greenBar.draw();
+
+        for(int i = 0; i < nowTextNum; i++)
+        {
+            text[i].draw();
+        }
     }
 
     @Override
@@ -93,6 +177,65 @@ public class UIBattle extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
+            //ログが流れていない時にコマンドが押せる
+            if(isLog)
+            {
+                //たたかう
+                if(touchPos.x < attack.getPosition().x + attack.getSize().x / 2 && touchPos.x > attack.getPosition().x - attack.getSize().x / 2 &&
+                        touchPos.y < attack.getPosition().y + attack.getSize().y / 2 && touchPos.y > attack.getPosition().y - attack.getSize().y / 2)
+                {
+                    text[0] = new BattleText(2);
+                    text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                    text[1] = new BattleText(3);
+                    text[1].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 2.0f));
+                    text[2] = new BattleText(4);
+                    text[2].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 3.0f));
+                    text[3] = new BattleText(5);
+                    text[3].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 4.0f));
+
+                    textNum = 4;
+                    nowTextNum = 1;
+                    count = 0;
+
+//                stHp.setValue(stHp.getValue() - 3);
+//                if(remnantsHp > 0.0f)
+//                {
+//                    remnantsHp -= 0.1f;
+//                    greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
+//                    greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
+//                    greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
+//
+//                }
+                }
+
+                //回復
+                if(touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
+                        touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2)
+                {
+                    text[0] = new BattleText(6);
+                    text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                    text[1] = new BattleText(7);
+                    text[1].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 2.0f));
+                    text[2] = new BattleText(4);
+                    text[2].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 3.0f));
+                    text[3] = new BattleText(5);
+                    text[3].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 4.0f));
+
+                    textNum = 4;
+                    nowTextNum = 1;
+
+//                stHp.setValue(stHp.getValue() + 3);
+//                if(remnantsHp < 1.0f)
+//                {
+//                    remnantsHp += 0.1f;
+//                    greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
+//                    greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
+//                    greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
+//
+//                }
+                }
+
+            }
 
         }
     }

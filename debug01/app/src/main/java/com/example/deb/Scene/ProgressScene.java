@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BG.BGProgress;
 import com.example.deb.BaseClass.BaseScene;
+import com.example.deb.Object.EnemyStatus;
 import com.example.deb.Progress.UIProgress;
 import com.example.deb.System.StepCount;
 
@@ -55,6 +56,7 @@ public class ProgressScene extends BaseScene
         {
             //今回で戦闘が始まる
             road = 0;
+            EnemyStatus enemy = new EnemyStatus();
         }
         //次の敵までの値を忘れずに保存しておく
         SharedPreferences.Editor editor = nextEncountPrefs.edit();
