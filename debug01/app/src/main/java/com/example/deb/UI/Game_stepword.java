@@ -19,15 +19,15 @@ public class Game_stepword extends Object {
         switch (num) {
             case 0:
                 //総歩数
-                setSize(new Vector2(200.0f, 200.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x, GameActivity.getBaseHei() / 2 - size.y / 0.5f));
+                setSize(new Vector2(450.0f, 150.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/2, GameActivity.getBaseHei() / 2 - size.y / 0.35f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.75f, 0.3333f);
                 break;
             case 1:
                 //ボスまで
-                setSize(new Vector2(200.0f, 200.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x, GameActivity.getBaseHei() / 2 - size.y / 0.2f));
+                setSize(new Vector2(600.0f, 150.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/2, GameActivity.getBaseHei() / 2 - size.y / 0.15f));
                 texStartPoint = new Vector2(0.0f, 0.3333f);
                 texSize = new Vector2(1.0f, 0.3333f);
                 break;

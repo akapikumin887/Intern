@@ -12,7 +12,6 @@ import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
 import com.example.deb.UI.Game_stepword;
-import com.example.deb.UI.HpBar;
 
 public class UIStep extends Object
 {
@@ -49,14 +48,14 @@ public class UIStep extends Object
 
         //歩数 ここからはそのうち消す
         step = new Figure(StepCount.getAll(),1);
-        step.setSize(new Vector2(250.0f,250.0f));
-        step.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.17f));
+        step.setSize(new Vector2(150.0f,150.0f));
+        step.setPosition(new Vector2(walk1.getSize().x/2+80.0f,GameActivity.getBaseHei() / 2 - size.y / 0.165f));
 
         UIProgress.getbossstep();
 
         step1 = new Figure(UIProgress.getbossstep(),1);
-        step1.setSize(new Vector2(250.0f,250.0f));
-        step1.setPosition(new Vector2(walk1.getSize().x/2+40.0f,GameActivity.getBaseHei() / 2 - size.y / 0.086f));
+        step1.setSize(new Vector2(150.0f,150.0f));
+        step1.setPosition(new Vector2(walk1.getSize().x/2+80.0f,GameActivity.getBaseHei() / 2 - size.y / 0.0865f));
 
     }
 
@@ -70,7 +69,7 @@ public class UIStep extends Object
         //ボスまで
         bossword.draw();
         //あと
-        word_agter.draw();
+        //word_agter.draw();
         //歩1
         walk1.draw();
         //歩2
@@ -79,6 +78,7 @@ public class UIStep extends Object
         step.draw();
 
         step1.draw();
+
     }
 
     @Override

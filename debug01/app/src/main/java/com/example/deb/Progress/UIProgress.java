@@ -8,6 +8,7 @@ import com.example.deb.BaseClass.Object;
 import com.example.deb.Scene.HomeScene;
 import com.example.deb.Scene.StepScene;
 import com.example.deb.Step.PlayerStep;
+import com.example.deb.Step.PlayerStep;
 import com.example.deb.Step.UIStep;
 import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
@@ -28,7 +29,7 @@ public class UIProgress extends Object
     private UIStep uiStep;
     private PlayerStep playerStep;
 
-    private  static int MAX=1000;
+    private  static int MAX=5000;
 
     private static int bossstep;
 

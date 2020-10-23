@@ -33,7 +33,9 @@ public class UIShop extends Object
     private Item heal;
     private Item resurrection;
 
-    private ItemName itemName;
+    private ItemName yasai;
+    private ItemName eiyou;
+    private ItemName buki;
 
     private MessageWindow window;
     private MessageWindow yeswnd;
@@ -68,8 +70,12 @@ public class UIShop extends Object
         heal = new Item(0.5f);
         resurrection = new Item(0.75f);
 
-        //アイテム名
-        itemName = new ItemName();
+        //野菜ジュース
+        yasai = new ItemName(0);
+        //栄養ドリンク
+        eiyou = new ItemName(1);
+        //武器強化
+        buki  = new ItemName(2);
 
         //ウィンドウと選択肢
         window = new MessageWindow(2);
@@ -112,13 +118,18 @@ public class UIShop extends Object
         {
             case 0:
                 heal.draw();
+                yasai.draw();
                 break;
             case 1:
                 resurrection.draw();
+                eiyou.draw();
+                break;
+            case 2:
+                buki.draw();
                 break;
         }
 
-        itemName.draw();
+
 
         //ウィンドウ表示(選んだ時のみ)
         if(isWindow)
