@@ -56,7 +56,7 @@ public class ProgressScene extends BaseScene
         {
             //今回で戦闘が始まる
             road = 0;
-            EnemyStatus enemy = new EnemyStatus();
+            //EnemyStatus enemy = new EnemyStatus();
         }
         //次の敵までの値を忘れずに保存しておく
         SharedPreferences.Editor editor = nextEncountPrefs.edit();
