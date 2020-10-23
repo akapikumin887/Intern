@@ -15,7 +15,14 @@ public class StatusScene extends BaseScene
     private UIStatus uiStatus;
     private HeroUI heroStatus;
 
+    //中断して戻ってもhomeに行かないようにしたい
     public StatusScene()
+    {
+        init();
+    }
+
+    @Override
+    public void init()
     {
         //背景
         bgStatus = new BGStShGp();

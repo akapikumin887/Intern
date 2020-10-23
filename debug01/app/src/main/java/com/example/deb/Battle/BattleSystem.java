@@ -14,7 +14,7 @@ public class BattleSystem
         hAt = HeroStatus.getAttack();
         eDef = EnemyStatus.getEnemyDef();
 
-        int damage = (hAt * 4 - eDef * 3) + (random.nextInt(7) - 3);
+        int damage = (hAt * 3 - eDef * 4) + (random.nextInt(7) - 3);
 
         if(damage <= 0)
             damage = 1;
@@ -40,7 +40,7 @@ public class BattleSystem
         if(HeroStatus.getHp() + heal > HeroStatus.getMaxHp())
             heal = HeroStatus.getMaxHp() - HeroStatus.getHp();
 
-        //回復するので1つ消費
+        //回復するので1つ消費 このままだと2つ使う
         HeroStatus.setHealCnt(HeroStatus.getHealCnt() - 1);
         return heal;
     }

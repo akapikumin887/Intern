@@ -92,12 +92,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume()
     {
+        super.onResume();
+
         //起動したときや復帰した時の処理
         BaseScene scene = BaseScene.getScene();
         if(scene != null)
             scene.init();
 
-        super.onResume();
+        View view = this.getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     @Override

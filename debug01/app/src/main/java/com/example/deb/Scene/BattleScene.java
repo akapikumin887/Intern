@@ -26,6 +26,7 @@ public class BattleScene extends BaseScene
     public void update()
     {
         //if(EnemyStatus)
+        super.update();
     }
 
 

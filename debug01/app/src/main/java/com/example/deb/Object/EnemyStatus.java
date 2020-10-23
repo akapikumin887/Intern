@@ -14,7 +14,7 @@ public class EnemyStatus
     private static SharedPreferences[] statusPrefs; //敵のステータスを格納しておく
 
 //マクロ定義
-    private static final int STATUS_TYPE_MAX = 5;   //hp at def 討伐数 ボス討伐数
+    private static final int STATUS_TYPE_MAX = 6;   //hp at def 討伐数 ボス討伐数
 
     public EnemyStatus()
     {
@@ -22,14 +22,14 @@ public class EnemyStatus
         Random random = new Random();
         int eAddStatus = 0;
 
-        for(int i = 0; i < status[3]; i++)
+        for(int i = 0; i < status[4] + 1; i++)
         {
             eAddStatus += random.nextInt(5);
         }
 
-        status[0] = 30 * (status[4] + 1) + eAddStatus;
-        status[1] = 5 + (status[4] * 3);
-        status[2] = 5 + (status[4] * 3);
+        status[0] = status[3] = 30 * (status[5] + 1) + eAddStatus;
+        status[1] = 5 + (status[5] * 3);
+        status[2] = 5 + (status[5] * 3);
 
         save();
     }
@@ -40,15 +40,17 @@ public class EnemyStatus
         statusPrefs[0] = GameActivity.getActivity().getSharedPreferences("Ehp", Context.MODE_PRIVATE);       //敵の体力
         statusPrefs[1] = GameActivity.getActivity().getSharedPreferences("Eat", Context.MODE_PRIVATE);       //敵の攻撃力
         statusPrefs[2] = GameActivity.getActivity().getSharedPreferences("Edef", Context.MODE_PRIVATE);      //敵の防御力
-        statusPrefs[3] = GameActivity.getActivity().getSharedPreferences("Edead", Context.MODE_PRIVATE);     //敵の倒された数
-        statusPrefs[4] = GameActivity.getActivity().getSharedPreferences("EBdead", Context.MODE_PRIVATE);    //ボスの倒された数
+        statusPrefs[3] = GameActivity.getActivity().getSharedPreferences("EMhp", Context.MODE_PRIVATE);      //敵の最大体力
+        statusPrefs[4] = GameActivity.getActivity().getSharedPreferences("Edead", Context.MODE_PRIVATE);     //敵の倒された数
+        statusPrefs[5] = GameActivity.getActivity().getSharedPreferences("EBdead", Context.MODE_PRIVATE);    //ボスの倒された数
 
         status = new int[STATUS_TYPE_MAX];
         status[0] = statusPrefs[0].getInt("int",0);     //体力
         status[1] = statusPrefs[1].getInt("int",0);     //攻撃力
         status[2] = statusPrefs[2].getInt("int",0);     //防御力
-        status[3] = statusPrefs[3].getInt("int",0);     //討伐数
-        status[4] = statusPrefs[4].getInt("int",0);     //ボス討伐数
+        status[3] = statusPrefs[3].getInt("int",0);     //MaxHP
+        status[4] = statusPrefs[4].getInt("int",0);     //討伐数
+        status[5] = statusPrefs[5].getInt("int",0);     //ボス討伐数
     }
 
     public static void save()
@@ -72,5 +74,7 @@ public class EnemyStatus
     public static int  getEnemyDef(){return status[2];}
     public static void setEnemyDef(int def){status[2] = def;}
 
+    public static int  getEnemyMaxHp(){return status[3];}
+    public static void setEnemyMaxHp(int max){status[3] = max;}
 
 }

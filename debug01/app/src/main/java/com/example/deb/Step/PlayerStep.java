@@ -18,7 +18,7 @@ public class PlayerStep extends Object
         uistep = new UIStep();
         if (UIProgress.getbossstep()==0)
         {
-            kyori=40.0f;
+            kyori=0.0f;
         }
         else
         {

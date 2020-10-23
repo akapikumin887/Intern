@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Object.EnemyStatus;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.HeroStatus;
 import com.example.deb.System.Vector2;
@@ -44,6 +45,7 @@ public class UIBattle extends Object
     private final int TEXT_MAX = 4;
     private int nowTextNum; //今のテキストの数 updateで増える
     private int textNum;    //テキスト描画の数
+    private int lastTextNum;//カウントの変化を確認する
 
     //戦闘テキストを描画しやすくするための変数たち
     private Vector2 textBasePos;
@@ -52,6 +54,20 @@ public class UIBattle extends Object
     //ログ関係
     private int count;
     private boolean isLog;
+
+    //何の行動をしたかを管理
+    private enum Action
+    {
+        ACTION_ATTACK,
+        ACTION_HEAL,
+        ACTION_ENEMY_ATTACK,
+        ACTION_ATTACK_APPO,
+        ACTION_HEAL_APPO,
+        ACTION_ENEMY_ATTACK_APPO,
+        ACTION_NONE;
+    }
+
+    private Action action;
 
     public UIBattle()
     {
@@ -107,11 +123,12 @@ public class UIBattle extends Object
         }
         //初めは2行から開始
         textNum = 2;
-        nowTextNum = 1;
+        nowTextNum = lastTextNum = 1;
 
         //初期化
         count = 0;
         isLog = false;
+        action = Action.ACTION_NONE;
     }
 
     @Override
@@ -125,16 +142,67 @@ public class UIBattle extends Object
         count++;
         if(count > 40)
         {
-            if(nowTextNum <= textNum)
+            if(nowTextNum < textNum)
                 nowTextNum = count / 40;
 
-            if(isLog && count > 200 && HeroStatus.getHp() <= 0)
+            //重すぎる
+
+            //行動のタイミングを把握する
+            if(nowTextNum != lastTextNum)
             {
-                isLog = false;
-                text[0] = new BattleText(1);
-                text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
-                textNum = 1;
-                nowTextNum = 1;
+                int num;
+                switch (action)
+                {
+                    case ACTION_ATTACK:
+                        num = BattleSystem.playerAttack();
+                        EnemyStatus.setEnemyHp(EnemyStatus.getEnemyHp() - num);
+                        remnantsHp = (float)EnemyStatus.getEnemyHp() / (float)EnemyStatus.getEnemyMaxHp();
+                        greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
+                        greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
+                        greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
+                        action = Action.ACTION_ENEMY_ATTACK;
+                        break;
+                    case ACTION_ENEMY_ATTACK:
+                        num = BattleSystem.enemyAttack();
+                        stHp.setValue(stHp.getValue() - num);
+                        HeroStatus.setHp(HeroStatus.getHp() - num);
+                        action = Action.ACTION_NONE;
+                        break;
+                    case ACTION_HEAL:
+                        num = BattleSystem.playerHeal();
+                        stHp.setValue(stHp.getValue() + num);
+                        HeroStatus.setHp(HeroStatus.getHp() + num);
+                        action = Action.ACTION_ENEMY_ATTACK;
+                        break;
+                    case ACTION_ATTACK_APPO:
+                        action = Action.ACTION_ATTACK;
+                        break;
+                    case ACTION_HEAL_APPO:
+                        action = Action.ACTION_HEAL;
+                        break;
+                    case ACTION_ENEMY_ATTACK_APPO:
+                        action = Action.ACTION_ENEMY_ATTACK;
+                        break;
+                }
+
+                lastTextNum = nowTextNum;
+            }
+            //自分と相手の行動が終わったタイミング
+            if(isLog && count > 200)
+            {
+                //自分が死んでいるとき
+                if(HeroStatus.getHp() <= 0)
+                {
+
+                }
+                else
+                {
+                    isLog = false;
+                    text[0] = new BattleText(1);
+                    text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                    textNum = 1;
+                    nowTextNum = 1;
+                }
             }
 
         }
@@ -178,7 +246,7 @@ public class UIBattle extends Object
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
             //ログが流れていない時にコマンドが押せる
-            if(isLog)
+            if(!isLog)
             {
                 //たたかう
                 if(touchPos.x < attack.getPosition().x + attack.getSize().x / 2 && touchPos.x > attack.getPosition().x - attack.getSize().x / 2 &&
@@ -196,6 +264,8 @@ public class UIBattle extends Object
                     textNum = 4;
                     nowTextNum = 1;
                     count = 0;
+                    isLog = true;
+                    action = Action.ACTION_ATTACK_APPO;
 
 //                stHp.setValue(stHp.getValue() - 3);
 //                if(remnantsHp > 0.0f)
@@ -223,6 +293,10 @@ public class UIBattle extends Object
 
                     textNum = 4;
                     nowTextNum = 1;
+                    count = 0;
+                    isLog = true;
+                    action = Action.ACTION_HEAL_APPO;
+
 
 //                stHp.setValue(stHp.getValue() + 3);
 //                if(remnantsHp < 1.0f)

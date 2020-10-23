@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Object.EnemyStatus;
 import com.example.deb.R;
 import com.example.deb.Scene.BattleScene;
 import com.example.deb.Scene.ProgressScene;
@@ -68,6 +69,7 @@ public class UITitle extends Object
             {
                 //デバッグ用 はてなを押したらバトル画面へ
                 BaseScene.setnextScene(new BattleScene());
+                EnemyStatus enemy = new EnemyStatus();
             }
 
             if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&

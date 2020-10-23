@@ -13,6 +13,7 @@ import com.example.deb.BG.BGProgress;
 import com.example.deb.BG.BGStShGp;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Battle.BattleCommand;
+import com.example.deb.Object.EnemyStatus;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.HeroStatus;
 import com.example.deb.Object.Item;
@@ -64,6 +65,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         FPSManager.init();
         StepCount.init();
         HeroStatus.init();
+        EnemyStatus.init();
     }
 
     @Override
