@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BaseScene
 {
@@ -16,7 +17,7 @@ public class BaseScene
 
 //protected
     //リスト ここでシーン内のオブジェクトを管理する
-    protected List<Object> list = new ArrayList<Object>();
+    protected List<Object> list = new CopyOnWriteArrayList<Object>();
 
     //コンストラクタ
     public BaseScene() {}

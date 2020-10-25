@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import com.example.deb.Activity.GameActivity;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
+import com.example.deb.Battle.BattleSystem;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.HeroStatus;
 import com.example.deb.Scene.HomeScene;
@@ -14,6 +15,7 @@ import com.example.deb.Scene.ShopScene;
 import com.example.deb.System.StepCount;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.ChoiseBack;
+import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
 import com.example.deb.UI.StatusButton;
 
@@ -24,6 +26,13 @@ public class UIStatus extends Object
     private Status hitPoint;
 
     private ChoiseBack back;
+    private ChoiseBack yes;
+    private ChoiseBack no;
+
+    private MessageWindow window;
+    private MessageWindow yeswnd;
+    private MessageWindow nownd;
+    private boolean isWindow;
 
     private StatusButton pt;
     private StatusButton lvUp;
@@ -33,6 +42,7 @@ public class UIStatus extends Object
     private Figure stLv;
     private Figure stHp;
     private Figure stAt;
+
 
     public UIStatus()
     {
@@ -46,6 +56,20 @@ public class UIStatus extends Object
 
         //戻る
         back = new ChoiseBack(2);
+
+        //ウィンドウと選択肢
+        window = new MessageWindow(1);
+
+        yeswnd = new MessageWindow(3);
+        yeswnd.setPosition(new Vector2(-yeswnd.getSize().x / 2,yeswnd.getPosition().y));
+        nownd = new MessageWindow(3);
+        nownd.setPosition(new Vector2(nownd.getSize().x / 2,nownd.getPosition().y));
+
+        yes = new ChoiseBack(4);
+        yes.setPosition(yeswnd.getPosition());
+        no = new ChoiseBack(5);
+        no.setPosition(nownd.getPosition());
+
 
         //ボタン
         pt = new StatusButton(0);
@@ -80,6 +104,8 @@ public class UIStatus extends Object
         stAt = new Figure(HeroStatus.getAttack(),1);
         stAt.setSize(new Vector2(attack.getSize().y,attack.getSize().y));
         stAt.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stAt.getSize().x / 2,attack.getPosition().y));
+
+        isWindow = false;
     }
 
     @Override
@@ -111,6 +137,15 @@ public class UIStatus extends Object
         stLv.draw();
         stHp.draw();
         stAt.draw();
+
+        if(isWindow)
+        {
+            window.draw();
+            yeswnd.draw();
+            nownd.draw();
+            yes.draw();
+            no.draw();
+        }
     }
 
     @Override
@@ -124,18 +159,48 @@ public class UIStatus extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //Home遷移
-            if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                    touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+            if(isWindow)
             {
-                BaseScene.setnextScene(new HomeScene());
-            }
+                //はい
+                if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
+                        touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
+                {
+                    BattleSystem.playerGrow();
+                    stLv.setValue(HeroStatus.getLv());
+                    stHp.setValue(HeroStatus.getHp());
+                    stAt.setValue(HeroStatus.getAt());
 
-            //ショップ遷移
-            if(touchPos.x < shop.getPosition().x + shop.getSize().x / 2 && touchPos.x > shop.getPosition().x - shop.getSize().x / 2 &&
-                    touchPos.y < shop.getPosition().y + shop.getSize().y / 2 && touchPos.y > shop.getPosition().y - shop.getSize().y / 2)
+                    isWindow = false;
+                }
+                //いいえ
+                if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
+                        touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
+                {
+                    isWindow = false;
+                }
+            }
+            else
             {
-                BaseScene.setnextScene(new ShopScene());
+                //Home遷移
+                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new HomeScene());
+                }
+
+                //ショップ遷移
+                if(touchPos.x < shop.getPosition().x + shop.getSize().x / 2 && touchPos.x > shop.getPosition().x - shop.getSize().x / 2 &&
+                        touchPos.y < shop.getPosition().y + shop.getSize().y / 2 && touchPos.y > shop.getPosition().y - shop.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new ShopScene());
+                }
+
+                //レベルアップ
+                if(touchPos.x < lvUp.getPosition().x + lvUp.getSize().x / 2 && touchPos.x > lvUp.getPosition().x - lvUp.getSize().x / 2 &&
+                        touchPos.y < lvUp.getPosition().y + lvUp.getSize().y / 2 && touchPos.y > lvUp.getPosition().y - lvUp.getSize().y / 2)
+                {
+                    isWindow = true;
+                }
             }
 
         }

@@ -27,15 +27,15 @@ public class Enemy extends Object
                 setSize(new Vector2(GameActivity.getBaseWid() / 2,GameActivity.getBaseWid() / 2));
                 setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 5));
                 texStartPoint = new Vector2();
-                texSize = new Vector2(0.2f,0.3333f);
+                texSize = new Vector2(0.25f,0.3333f);
                 isBoss = false;
                 break;
             case 1:
                 //敵02 角が生えたやつ
                 setSize(new Vector2(GameActivity.getBaseWid() / 2,GameActivity.getBaseWid() / 2));
                 setPosition(new Vector2(0.0f,GameActivity.getBaseHei() / 5));
-                texStartPoint = new Vector2(0.2f,0.0f);
-                texSize = new Vector2(0.2f,0.3333f);
+                texStartPoint = new Vector2(0.25f,0.0f);
+                texSize = new Vector2(0.25f,0.3333f);
                 isBoss = false;
                 break;
             case 2:

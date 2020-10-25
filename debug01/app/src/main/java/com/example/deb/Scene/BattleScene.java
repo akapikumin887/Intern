@@ -4,6 +4,7 @@ import com.example.deb.BG.BGBattle;
 import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.Battle.UIBattle;
 import com.example.deb.Object.HeroStatus;
+import com.example.deb.UI.Enemy;
 
 public class BattleScene extends BaseScene
 {
@@ -11,7 +12,9 @@ public class BattleScene extends BaseScene
 
     private UIBattle uiBattle;
 
-    public BattleScene()
+    private Enemy boss;
+
+    public BattleScene(int num)
     {
         bgBattle = new BGBattle();
         list.add(bgBattle);
@@ -19,13 +22,16 @@ public class BattleScene extends BaseScene
         uiBattle = new UIBattle();
         list.add(uiBattle);
 
+        //敵
+        boss = new Enemy(num);
+        list.add(boss);
+
         HeroStatus.setIsBattle(true);
     }
 
     @Override
     public void update()
     {
-        //if(EnemyStatus)
         super.update();
     }
 

@@ -3,10 +3,12 @@ package com.example.deb.Battle;
 import android.view.MotionEvent;
 
 import com.example.deb.Activity.GameActivity;
+import com.example.deb.BaseClass.BaseScene;
 import com.example.deb.BaseClass.Object;
 import com.example.deb.Object.EnemyStatus;
 import com.example.deb.Object.Figure;
 import com.example.deb.Object.HeroStatus;
+import com.example.deb.Scene.ProgressScene;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.BattleText;
 import com.example.deb.UI.Enemy;
@@ -26,8 +28,7 @@ public class UIBattle extends Object
     private Figure stHp;
     private Figure stAt;
 
-    //敵と敵のHPゲージ
-    private Enemy boss;
+    //敵のHPゲージ
     private HpBar redBar;
     private HpBar greenBar;
 
@@ -98,9 +99,6 @@ public class UIBattle extends Object
         redBar = new HpBar(1);
         greenBar = new HpBar(0);
 
-        //敵
-        boss = new Enemy(2);
-
         //メッセージウィンドウとボタン
         window = new MessageWindow(4);
         attack = new BattleCommand(0);
@@ -134,7 +132,6 @@ public class UIBattle extends Object
     @Override
     public void update()
     {
-        boss.update();
         stLv.update();
         stHp.update();
         stAt.update();
@@ -144,8 +141,6 @@ public class UIBattle extends Object
         {
             if(nowTextNum < textNum)
                 nowTextNum = count / 40;
-
-            //重すぎる
 
             //行動のタイミングを把握する
             if(nowTextNum != lastTextNum)
@@ -160,7 +155,16 @@ public class UIBattle extends Object
                         greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
                         greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
                         greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
-                        action = Action.ACTION_ENEMY_ATTACK;
+
+                        if(EnemyStatus.getEnemyHp() == 0)
+                        {
+                            //textNum = 1;
+                            BaseScene.setnextScene(new ProgressScene());
+                        }
+                        else
+                        {
+                            action = Action.ACTION_ENEMY_ATTACK;
+                        }
                         break;
                     case ACTION_ENEMY_ATTACK:
                         num = BattleSystem.enemyAttack();
@@ -223,8 +227,6 @@ public class UIBattle extends Object
         stHp.draw();
         stAt.draw();
 
-        boss.draw();
-
         redBar.draw();
         greenBar.draw();
 
@@ -266,16 +268,6 @@ public class UIBattle extends Object
                     count = 0;
                     isLog = true;
                     action = Action.ACTION_ATTACK_APPO;
-
-//                stHp.setValue(stHp.getValue() - 3);
-//                if(remnantsHp > 0.0f)
-//                {
-//                    remnantsHp -= 0.1f;
-//                    greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
-//                    greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
-//                    greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
-//
-//                }
                 }
 
                 //回復
@@ -296,21 +288,14 @@ public class UIBattle extends Object
                     count = 0;
                     isLog = true;
                     action = Action.ACTION_HEAL_APPO;
-
-
-//                stHp.setValue(stHp.getValue() + 3);
-//                if(remnantsHp < 1.0f)
-//                {
-//                    remnantsHp += 0.1f;
-//                    greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
-//                    greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
-//                    greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
-//
-//                }
                 }
 
             }
+            else
+            {
+                //戻るボタン
 
+            }
         }
     }
 }

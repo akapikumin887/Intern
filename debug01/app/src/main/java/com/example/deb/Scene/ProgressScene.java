@@ -47,8 +47,8 @@ public class ProgressScene extends BaseScene
             //次の敵までの距離を出しておき、そこに接触したら戦闘になる。
             //最小値1000 : 最大値10000で今回は計算してみる
 
-            int min = 1000;
             int max = 10000;
+            int min = 1000;
             road = min + random.nextInt(max - min);
         }
         road -= step;

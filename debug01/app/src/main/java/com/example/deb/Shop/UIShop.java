@@ -62,7 +62,7 @@ public class UIShop extends Object
         shopbutton.setPosition(new Vector2(0.0f,back.getPosition().y - shopbutton.getSize().y * 1.5f));
 
         pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
-        point = new Figure(pointPrefs.getInt("int",0),1);
+        point = new Figure(pointPrefs.getInt("int",1000),1);
         point.setSize(new Vector2(100.0f,100.0f));
         point.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - 100.0f,GameActivity.getBaseHei() / 2 - point.getSize().y * 1.5f));
 

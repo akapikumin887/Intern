@@ -24,14 +24,14 @@ public class MessageWindow extends Object
         {
             case 0:
                 //ptを消費して武器の強化を行いますか？ ショップ想定
-                setSize(new Vector2(200.0f,200.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,0.0f));
+                setSize(new Vector2(GameActivity.getBaseWid() - 100.0f,400.0f));
+                setPosition(new Vector2());
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.5f,0.3333f);
                 break;
             case 1:
-                //ptを消費してlevelをあげますか？ ショップ想定
-                setSize(new Vector2(200.0f,200.0f));
+                //ptを消費してlevelをあげますか？ ステータス画面想定
+                setSize(new Vector2(GameActivity.getBaseWid() - 100.0f,400.0f));
                 setPosition(new Vector2());
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);

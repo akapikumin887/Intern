@@ -77,4 +77,7 @@ public class EnemyStatus
     public static int  getEnemyMaxHp(){return status[3];}
     public static void setEnemyMaxHp(int max){status[3] = max;}
 
+    public static int  getEnemyDeadCount(){return status[4];}
+    public static void setEnemyDeadCount(int dc){status[4] = dc;}
+
 }

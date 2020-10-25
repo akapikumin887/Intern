@@ -1,7 +1,6 @@
 package com.example.deb.Activity;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
@@ -33,6 +32,7 @@ import com.example.deb.UI.HomeButton;
 import com.example.deb.UI.HpBar;
 import com.example.deb.UI.ItemName;
 import com.example.deb.UI.MessageWindow;
+import com.example.deb.UI.ShopText;
 import com.example.deb.UI.Status;
 import com.example.deb.UI.StatusButton;
 
@@ -129,8 +129,31 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         }
         GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
 
-        load();
+/*
+        LoadAnimation load = new LoadAnimation();
+        Thread subload = new Thread(load);
 
+        NowLoading nld = new NowLoading();
+        Thread subnld = new Thread(nld);
+
+        subload.start();
+        subnld.start();
+
+
+
+        try {
+            subload.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            subnld.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+*/
+
+        load();
         //シーン設定、上書きは直接行うつもり
         BaseScene.setScene(new HomeScene());
     }
@@ -196,6 +219,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             HeroUI.loadTexture();
             ChoiseBack.loadTexture();
             MessageWindow.loadTexture();
+            ShopText.loadTexture();
         }
         //title
         {

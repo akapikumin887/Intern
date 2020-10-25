@@ -63,7 +63,6 @@ public class ChoiseBack extends Object
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(0.75f,0.3333f);
                 break;
-
         }
 
     }

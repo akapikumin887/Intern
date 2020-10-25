@@ -16,6 +16,8 @@ public class BattleSystem
 
         int damage = (hAt * 3 - eDef * 4) + (random.nextInt(7) - 3);
 
+        if(damage > EnemyStatus.getEnemyHp())
+            damage = EnemyStatus.getEnemyHp();
         if(damage <= 0)
             damage = 1;
         //EnemyStatus.setEnemyHp(EnemyStatus.getEnemyHp() - damage);
@@ -52,5 +54,17 @@ public class BattleSystem
         //蘇生するので1つ消費
         HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() - 1);
         return (int)hp;
+    }
+
+    public static void playerGrow()
+    {
+        HeroStatus.setLv(HeroStatus.getLv() + 1);
+        HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.1f));
+        HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.1f));
+    }
+
+    public static void enemyGrow()
+    {
+        EnemyStatus.setEnemyDeadCount(EnemyStatus.getEnemyDeadCount() + 1);
     }
 }

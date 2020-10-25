@@ -68,7 +68,7 @@ public class UITitle extends Object
                     touchPos.y < hint.getPosition().y + hint.getSize().y / 2 && touchPos.y > hint.getPosition().y - hint.getSize().y / 2)
             {
                 //デバッグ用 はてなを押したらバトル画面へ
-                BaseScene.setnextScene(new BattleScene());
+                BaseScene.setnextScene(new BattleScene(1));
                 EnemyStatus enemy = new EnemyStatus();
             }
 
