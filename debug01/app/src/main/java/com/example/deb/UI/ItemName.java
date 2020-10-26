@@ -25,7 +25,7 @@ public class ItemName extends Object
                 case 0:
                     //野菜ジュース
                     setSize(new Vector2(800.0f, 80.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,GameActivity.getBaseHei()/2 -size.y/0.2f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,-GameActivity.getBaseHei()/2 -size.y/1.0f));
                     texStartPoint = new Vector2();
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
