@@ -51,7 +51,7 @@ public class UIStep extends Object
         step.setPosition(new Vector2(walk1.getSize().x/2+80.0f,GameActivity.getBaseHei() / 2 - size.y / 0.165f));
 
         //ボスまでの歩数
-        step1 = new Figure(UIProgress.getBossStep(),1);
+        step1 = new Figure(ProgressScene.getBossStep(),1);
         step1.setSize(new Vector2(150.0f,150.0f));
         step1.setPosition(new Vector2(walk1.getSize().x/2+80.0f,GameActivity.getBaseHei() / 2 - size.y / 0.0865f));
 

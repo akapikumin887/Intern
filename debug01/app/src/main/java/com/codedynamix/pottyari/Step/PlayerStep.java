@@ -2,7 +2,7 @@ package com.codedynamix.pottyari.Step;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.Object;
-import com.codedynamix.pottyari.Progress.UIProgress;
+import com.codedynamix.pottyari.Scene.ProgressScene;
 
 public class PlayerStep extends Object
 {
@@ -12,13 +12,13 @@ public class PlayerStep extends Object
     public  PlayerStep()
     {
         uistep = new UIStep();
-        if (UIProgress.getBossStep() == 0)
+        if (ProgressScene.getBossStep() == 0)
         {
             kyori=0.0f;
         }
         else
         {
-            kyori = (float)UIProgress.getMAX() / (float)UIProgress.getBossStep();
+            kyori = (float)ProgressScene.getMAX() / (float)ProgressScene.getBossStep();
             kyori = (GameActivity.getBaseWid() - 80.0f) / kyori;
         }
 
