@@ -1,22 +1,10 @@
 package com.codedynamix.pottyari.Shop;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
-import com.codedynamix.pottyari.Activity.GameActivity;
-import com.codedynamix.pottyari.BaseClass.BaseScene;
-import com.codedynamix.pottyari.BaseClass.Object;
-import com.codedynamix.pottyari.Object.Figure;
-import com.codedynamix.pottyari.Object.HeroStatus;
-import com.codedynamix.pottyari.Object.Item;
-import com.codedynamix.pottyari.Scene.StatusScene;
-import com.codedynamix.pottyari.System.Vector2;
-import com.codedynamix.pottyari.UI.ChoiseBack;
-import com.codedynamix.pottyari.UI.ItemName;
-import com.codedynamix.pottyari.UI.MessageWindow;
-import com.codedynamix.pottyari.UI.Reinforcement;
-import com.codedynamix.pottyari.UI.StatusButton;
 
 
 public class UIShop extends Object

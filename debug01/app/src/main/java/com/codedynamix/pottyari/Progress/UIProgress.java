@@ -28,10 +28,6 @@ public class UIProgress extends Object
     private UIStep uiStep;
     private PlayerStep playerStep;
 
-    private  static int MAX = 100000;
-
-    private static int bossStep;
-
     public UIProgress()
     {
         super();
@@ -42,13 +38,6 @@ public class UIProgress extends Object
 
         messageWindow = new MessageWindow(4);
         back = new ChoiseBack(2);
-
-        bossStep = MAX - StepCount.getAll();
-
-        if (bossStep <= 0)
-        {
-            bossStep = 0;
-        }
 
         playerStep=new PlayerStep();
 
@@ -105,6 +94,4 @@ public class UIProgress extends Object
             }
         }
     }
-    public static int getBossStep(){return bossStep;}
-    public static int getMAX(){return MAX;}
 }
