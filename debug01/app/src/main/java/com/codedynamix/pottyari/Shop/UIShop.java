@@ -15,7 +15,9 @@ import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.ItemName;
 import com.codedynamix.pottyari.UI.MessageWindow;
+import com.codedynamix.pottyari.UI.Reinforcement;
 import com.codedynamix.pottyari.UI.StatusButton;
+
 
 public class UIShop extends Object
 {
@@ -32,6 +34,8 @@ public class UIShop extends Object
 
     private Item heal;
     private Item resurrection;
+
+    private Reinforcement reinforcement;
 
     private ItemName yasai;
     private ItemName eiyou;
@@ -70,6 +74,9 @@ public class UIShop extends Object
         heal = new Item(0.5f);
         resurrection = new Item(0.75f);
 
+        //武器強化
+        reinforcement=new Reinforcement();
+
         //野菜ジュース
         yasai = new ItemName(0);
         //栄養ドリンク
@@ -102,8 +109,9 @@ public class UIShop extends Object
         //左右ボタン
         if(itemSelect != 0)
             left.draw();
-        if(itemSelect != Item.getItemMax() - 1)
+        if(itemSelect != 2)
             right.draw();
+
 
         //戻るボタン
         back.draw();
@@ -125,6 +133,7 @@ public class UIShop extends Object
                 eiyou.draw();
                 break;
             case 2:
+                reinforcement.draw();
                 buki.draw();
                 break;
         }
@@ -157,82 +166,94 @@ public class UIShop extends Object
 
         Vector2 touchPos = new Vector2(event.getX() * ratio.x - GameActivity.getBaseWid() / 2,(-event.getY() * ratio.y + GameActivity.getBaseHei() / 2));
 
-        //windowが出ているときのみ
-        if(isWindow)
+        if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //買う
-            if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
-                    touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
+            //windowが出ているときのみ
+            if(isWindow)
             {
-                isWindow = false;
-                switch(itemSelect)
+                //買う
+                if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
+                        touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
                 {
-                    case 0:
-                        point.setValue(point.getValue() - 200);
-                        HeroStatus.setHealCnt(HeroStatus.getHealCnt() + 1);
-                        break;
-                    case 1:
-                        point.setValue(point.getValue() - 300);
-                        HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
-                        break;
+                    isWindow = false;
+                    switch(itemSelect)
+                    {
+                        case 0:
+                            point.setValue(point.getValue() - 200);
+                            HeroStatus.setHealCnt(HeroStatus.getHealCnt() + 1);
+                            break;
+                        case 1:
+                            point.setValue(point.getValue() - 300);
+                            HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
+                            break;
+                        case 2:
+                            point.setValue(point.getValue() - 400);
+                            HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
+                            break;
+                    }
+                    SharedPreferences.Editor editor = pointPrefs.edit();
+                    editor.putInt("int",point.getValue());
+                    editor.apply();
                 }
-                SharedPreferences.Editor editor = pointPrefs.edit();
-                editor.putInt("int",point.getValue());
-                editor.apply();
-            }
-            //買わない
-            if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
-                    touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
-            {
-                isWindow = false;
-            }
-        }
-        else
-        {
-            //Status遷移
-            if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                    touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
-            {
-                BaseScene.setnextScene(new StatusScene());
-            }
-
-            //左ボタン
-            if(touchPos.x < left.getPosition().x + left.getSize().x / 2 && touchPos.x > left.getPosition().x - left.getSize().x / 2 &&
-                    touchPos.y < left.getPosition().y + left.getSize().y / 2 && touchPos.y > left.getPosition().y - left.getSize().y / 2)
-            {
-                if(itemSelect != 0)
-                    itemSelect--;
-            }
-
-            //右ボタン
-            if(touchPos.x < right.getPosition().x + right.getSize().x / 2 && touchPos.x > right.getPosition().x - right.getSize().x / 2 &&
-                    touchPos.y < right.getPosition().y + right.getSize().y / 2 && touchPos.y > right.getPosition().y - right.getSize().y / 2)
-            {
-                if(itemSelect != Item.getItemMax() - 1)
-                    itemSelect++;
-            }
-
-            //アイテム購入
-            if(touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
-                    touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2)
-            {
-                switch(itemSelect)
+                //買わない
+                if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
+                        touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
                 {
-                    case 0:
-                        if(point.getValue() >= 200)
-                            isWindow = true;
-                        //else
-
-                        break;
-                    case 1:
-                        if(point.getValue() >= 300)
-                            isWindow = true;
-                        //else
-
-                        break;
-
+                    isWindow = false;
                 }
             }
+            else
+            {
+                //Status遷移
+                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new StatusScene());
+                }
+
+                //左ボタン
+                if(touchPos.x < left.getPosition().x + left.getSize().x / 2 && touchPos.x > left.getPosition().x - left.getSize().x / 2 &&
+                        touchPos.y < left.getPosition().y + left.getSize().y / 2 && touchPos.y > left.getPosition().y - left.getSize().y / 2)
+                {
+                    if(itemSelect >=1&&itemSelect<3)
+                    {
+                        itemSelect--;
+                    }
+                }
+
+                //右ボタン
+                if(touchPos.x < right.getPosition().x + right.getSize().x / 2 && touchPos.x > right.getPosition().x - right.getSize().x / 2 &&
+                        touchPos.y < right.getPosition().y + right.getSize().y / 2 && touchPos.y > right.getPosition().y - right.getSize().y / 2)
+                {
+                    if (itemSelect >=0&&itemSelect<2)
+                    {
+                        itemSelect++;
+                    }
+                }
+
+                //アイテム購入
+                if(touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
+                        touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2)
+                {
+                    switch(itemSelect)
+                    {
+                        case 0:
+                            if(point.getValue() >= 200)
+                                isWindow = true;
+                            //else
+
+                            break;
+                        case 1:
+                            if(point.getValue() >= 300)
+                                isWindow = true;
+                            //else
+
+                            break;
+
+                    }
+                }
+            }
+
         }
     }
 }

@@ -4,12 +4,12 @@ package com.codedynamix.pottyari.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-
 import android.view.MotionEvent;
 
 import com.codedynamix.pottyari.BG.BGBattle;
 import com.codedynamix.pottyari.BG.BGProgress;
 import com.codedynamix.pottyari.BG.BGStShGp;
+import com.codedynamix.pottyari.BG.BGTitle;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.Battle.BattleCommand;
 import com.codedynamix.pottyari.Object.EnemyStatus;
@@ -20,7 +20,6 @@ import com.codedynamix.pottyari.Progress.Coffin;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.System.FPSManager;
-import com.codedynamix.pottyari.BG.BGTitle;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.UI.BattleText;
 import com.codedynamix.pottyari.UI.ChoiseBack;
@@ -32,6 +31,7 @@ import com.codedynamix.pottyari.UI.HomeButton;
 import com.codedynamix.pottyari.UI.HpBar;
 import com.codedynamix.pottyari.UI.ItemName;
 import com.codedynamix.pottyari.UI.MessageWindow;
+import com.codedynamix.pottyari.UI.Reinforcement;
 import com.codedynamix.pottyari.UI.ShopText;
 import com.codedynamix.pottyari.UI.Status;
 import com.codedynamix.pottyari.UI.StatusButton;
@@ -242,6 +242,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //shop
         {
             ItemName.loadTexture();
+            Reinforcement.loadTexture();
         }
         //game
         {

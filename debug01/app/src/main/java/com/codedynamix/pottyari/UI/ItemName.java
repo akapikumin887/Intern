@@ -15,10 +15,6 @@ public class ItemName extends Object
 
     public ItemName(int num)
     {
-       /* super();
-        setLayer(Layer.LAYER_BUTTON);
-        setSize(new Vector2(400.0f,200.0f));
-        setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y * 1.5f));*/
             super();
             setLayer(Layer.LAYER_BUTTON);
             switch (num) {
@@ -33,14 +29,14 @@ public class ItemName extends Object
                     //栄養ドリンク
                     setSize(new Vector2(800.0f, 120.0f));
                     setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
-                    texStartPoint = new Vector2(0.333f,0.333f);
+                    texStartPoint = new Vector2(0.0f,0.333f);
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
                 case 2:
                     //武器強化
-                    setSize(new Vector2(500.0f, 50.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x, 50.0f + size.y));
-                    texStartPoint = new Vector2(0.666f,0.666f);
+                    setSize(new Vector2(800.0f, 120.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.7f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
+                    texStartPoint = new Vector2(0.0f,0.666f);
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
             }
@@ -57,4 +53,5 @@ public class ItemName extends Object
         texture = new Texture();
         texture.loadTexture(GameActivity.getCntxt(), R.drawable.shoptext);
     }
+
 }
