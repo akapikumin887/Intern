@@ -37,6 +37,9 @@ public class ProgressScene extends BaseScene
     {
         random = new Random();
 
+        step = StepCount.getTtStep();
+        isBoss = false;
+
         nextEncountPrefs = GameActivity.getActivity().getSharedPreferences("encount", Context.MODE_PRIVATE);
         int road = nextEncountPrefs.getInt("int",0);
 
@@ -50,8 +53,9 @@ public class ProgressScene extends BaseScene
             //次の敵までの距離を出しておき、そこに接触したら戦闘になる。
             //最小値1000 : 最大値10000で今回は計算してみる
 
-            int max = 10000;
-            int min = 1000;
+            //デバッグで500歩以上1000歩以下で戦闘に入るようにしておく
+            int max = 1000;
+            int min = 500;
             road = min + random.nextInt(max - min);
 
             //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
@@ -62,32 +66,30 @@ public class ProgressScene extends BaseScene
             }
         }
 
-        //進めた歩数をbossStepに渡してあげる
         bossStep = MAX;
 
-        if(road < step)
-            startStep += road;
-        else
-            startStep += step;
+        //進めた歩数をbossStepに渡してあげる
+        if(!HeroStatus.getIsBattle())
+        {
+            if(road < step)
+                startStep += road;
+            else
+                startStep += step;
+            road -= step;
+        }
 
         bossStep -= startStep;
 
         if (bossStep <= 0)
-        {
             bossStep = 0;
-        }
-
-        if(!HeroStatus.getIsBattle())
-            road -= step;
 
         if(road < 0)
         {
             if(!HeroStatus.getIsBattle())
             {
                 if(bossStep == 0)
-                {
                     isBoss = true;
-                }
+
                 //今回で戦闘が始まる
                 canBattle = true;
                 road = 0;
@@ -96,7 +98,7 @@ public class ProgressScene extends BaseScene
             else
             {
                 //既に戦闘が始まっている
-
+                canBattle = false;
             }
         }
 
@@ -106,10 +108,6 @@ public class ProgressScene extends BaseScene
 
         uiProgress = new UIProgress();
         list.add(uiProgress);
-
-        step = StepCount.getTtStep();
-        isBoss = false;
-
 
         //次の敵までの値を忘れずに保存しておく
         SharedPreferences.Editor editor = nextEncountPrefs.edit();
@@ -141,7 +139,7 @@ public class ProgressScene extends BaseScene
         if(count > 120)
         {
             //バトル開始
-            if(!HeroStatus.getIsBattle())
+            if(canBattle)
             {
                 if(isBoss)
                 {

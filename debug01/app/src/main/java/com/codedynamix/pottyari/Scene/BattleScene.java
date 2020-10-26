@@ -46,7 +46,8 @@ public class BattleScene extends BaseScene
     @Override
     public void back()
     {
-        BaseScene.setnextScene(new ProgressScene());
+        if(!uiBattle.getIsLog())
+            BaseScene.setnextScene(new ProgressScene());
     }
 
 }

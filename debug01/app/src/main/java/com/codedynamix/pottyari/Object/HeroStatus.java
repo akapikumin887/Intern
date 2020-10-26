@@ -53,7 +53,7 @@ public class HeroStatus
             editor.putInt("int",status[i]);
             editor.apply();
         }
-        editor = statusPrefs[STATUS_TYPE_MAX + 1].edit();
+        editor = statusPrefs[STATUS_TYPE_MAX].edit();
         editor.putBoolean("boolean",isBattle);
         editor.apply();
     }
