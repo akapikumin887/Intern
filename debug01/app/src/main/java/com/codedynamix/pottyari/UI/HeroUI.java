@@ -23,7 +23,8 @@ public class HeroUI extends Object
     @Override
     public void draw()
     {
-        texture.draw(pos,size,rotate,reverse,new Vector2(0.6667f,0.0f),new Vector2(0.3333f,1.0f),color);
+        if(texture != null)
+            texture.draw(pos,size,rotate,reverse,new Vector2(0.6667f,0.0f),new Vector2(0.3333f,1.0f),color);
     }
 
 

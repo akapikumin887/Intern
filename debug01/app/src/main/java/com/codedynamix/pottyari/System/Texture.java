@@ -35,6 +35,7 @@ public class Texture
     //テクスチャのロード シーン移行時には必ず呼びたい
     public void loadTexture(Context context, int resId)
     {
+        //pngやjpegの画像をbitmapに戻す
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resId, options);
         if(bitmap == null)
             return;

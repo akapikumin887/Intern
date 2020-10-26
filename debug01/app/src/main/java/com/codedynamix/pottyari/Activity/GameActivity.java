@@ -20,6 +20,8 @@ import com.codedynamix.pottyari.Progress.Coffin;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.System.FPSManager;
+import com.codedynamix.pottyari.System.LoadAnimation;
+import com.codedynamix.pottyari.System.NowLoading;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.UI.BattleText;
 import com.codedynamix.pottyari.UI.ChoiseBack;
@@ -106,6 +108,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             //glをもらってきたものに上書きする
             gl10 = gl;
         }
+        load();
     }
 
     @Override
@@ -134,30 +137,32 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         }
         GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
 
-/*
-        LoadAnimation load = new LoadAnimation();
-        Thread subload = new Thread(load);
+        //ローディングシーンを作成、そこでアニメーション用の画像読み込み
+        //↑と同時にゲーム内で使う画像も別スレッドで読み込み開始
+        //ローディングシーンのUpdateの中でリソースの読み込みを終了が確認でき次第setsceneで始まる
 
-        NowLoading nld = new NowLoading();
-        Thread subnld = new Thread(nld);
+//        LoadAnimation load = new LoadAnimation();
+//        Thread subload = new Thread(load);
 
-        subload.start();
-        subnld.start();
+//        NowLoading nld = new NowLoading();
+//        Thread subnld = new Thread(nld);
 
+//        subload.start();
 
+//        queueEvent(subnld);
 
-        try {
-            subload.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            subnld.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-        load();
+//        try {
+//            subload.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            subnld.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+//        load();
 
         //シーン設定、上書きは直接行うつもり
         BaseScene.setScene(new HomeScene());

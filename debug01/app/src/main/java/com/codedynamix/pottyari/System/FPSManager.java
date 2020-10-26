@@ -7,9 +7,9 @@ import java.util.LinkedList;
 
 public class FPSManager
 {
-    private static final int FPS = 60;                  //目標fps
-    private static final long FRAME = (1000 << 16) / FPS;     //1フレームの理論値 ミリ秒換算
-    private static LinkedList<Long> elapsedTimeList;    //1フレームを60つ保存してfpsを求めるためのコンテナ
+    private static final int FPS = 60;                          //目標fps
+    private static final long FRAME = (1000 << 16) / FPS;       //1フレームの理論値 ミリ秒換算
+    private static LinkedList<Long> elapsedTimeList;            //1フレームを60つ保存してfpsを求めるためのコンテナ
 
     private static long nowTime;        //現在経過時間
     private static long oldTime;        //過去経過時間

@@ -36,11 +36,7 @@ public class LoadAnimation implements Runnable
     @Override
     public void run()
     {
-        NowLoading loading = new NowLoading();
-        Thread loadThread = new Thread(loading);
-        loadThread.start();
-
-        while(loadThread.isAlive())
+        //while(/*ロードが終わるまで*/)
         {
             FPSManager.calcFPS();
 
