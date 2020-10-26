@@ -11,6 +11,7 @@ import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.BattleText;
+import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.HpBar;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Status;
@@ -39,6 +40,9 @@ public class UIBattle extends Object
     private MessageWindow window;
     private BattleCommand attack;
     private BattleCommand heal;
+
+    //戻るボタン
+    private ChoiseBack back;
 
     //ウィンドウに表示される文章
     private BattleText[] text;
@@ -128,6 +132,9 @@ public class UIBattle extends Object
         isLog = false;
         isFinish = false;
         action = Action.ACTION_NONE;
+
+        //戻る
+        back = new ChoiseBack(2);
     }
 
     @Override
@@ -248,6 +255,9 @@ public class UIBattle extends Object
         redBar.draw();
         greenBar.draw();
 
+        //戻るボタン
+        back.draw();
+
         for(int i = 0; i < nowTextNum; i++)
         {
             text[i].draw();
@@ -308,11 +318,16 @@ public class UIBattle extends Object
                     isLog = true;
                     action = Action.ACTION_HEAL_APPO;
                 }
-
+                //戻るボタン
+                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new ProgressScene());
+                }
             }
             else
             {
-                //戻るボタン
+
 
             }
         }
