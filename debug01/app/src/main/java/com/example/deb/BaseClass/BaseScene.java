@@ -2,7 +2,6 @@ package com.example.deb.BaseClass;
 
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

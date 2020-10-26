@@ -11,7 +11,6 @@ import com.example.deb.Object.HeroStatus;
 import com.example.deb.Scene.ProgressScene;
 import com.example.deb.System.Vector2;
 import com.example.deb.UI.BattleText;
-import com.example.deb.UI.Enemy;
 import com.example.deb.UI.HpBar;
 import com.example.deb.UI.MessageWindow;
 import com.example.deb.UI.Status;
@@ -143,6 +142,7 @@ public class UIBattle extends Object
                 nowTextNum = count / 40;
 
             //行動のタイミングを把握する
+            //HPバーの減るタイミングとテキストの出るタイミングがおかしい
             if(nowTextNum != lastTextNum)
             {
                 int num;

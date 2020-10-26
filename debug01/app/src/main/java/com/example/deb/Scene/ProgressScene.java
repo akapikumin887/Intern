@@ -22,6 +22,8 @@ public class ProgressScene extends BaseScene
     private SharedPreferences nextEncountPrefs;  //次の遭遇までの歩数
 
     private int step;       //今回歩いた歩数
+    private boolean isBattle;
+    private int count;
 
     private Random random;      //乱数
 
@@ -35,7 +37,10 @@ public class ProgressScene extends BaseScene
         uiProgress = new UIProgress();
         list.add(uiProgress);
 
-        step = StepCount.getTtStep();
+        //step = StepCount.getTtStep();
+        step = 10000;
+
+        isBattle = false;
 
         nextEncountPrefs = GameActivity.getActivity().getSharedPreferences("encount", Context.MODE_PRIVATE);
         int road = nextEncountPrefs.getInt("int",0);
@@ -51,17 +56,31 @@ public class ProgressScene extends BaseScene
             int min = 1000;
             road = min + random.nextInt(max - min);
         }
-        road -= step;
+
+        if(!isBattle)
+            road -= step;
+
         if(road < 0)
         {
-            //今回で戦闘が始まる
-            road = 0;
-            //EnemyStatus enemy = new EnemyStatus();
+            if(!isBattle)
+            {
+                //今回で戦闘が始まる
+                road = 0;
+                isBattle = true;
+                EnemyStatus enemy = new EnemyStatus();
+            }
+            else
+            {
+                //既に戦闘が始まっている
+
+            }
         }
         //次の敵までの値を忘れずに保存しておく
         SharedPreferences.Editor editor = nextEncountPrefs.edit();
         editor.putInt("int",road);
         editor.apply();
+
+        count = 0;
     }
 
     @Override
@@ -77,6 +96,11 @@ public class ProgressScene extends BaseScene
     {
         //戦闘に入るまで少しくらいタイムラグが欲しい
         //10000歩でも10秒くらいで、1000歩でも5秒くらいほしい
+        if(isBattle)
+            count++;
+
+        if(count > 60)
+            BaseScene.setnextScene(new BattleScene(0));
 
         super.update();
     }
