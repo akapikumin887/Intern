@@ -24,15 +24,15 @@ public class ItemName extends Object
             switch (num) {
                 case 0:
                     //野菜ジュース
-                    setSize(new Vector2(800.0f, 80.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,-GameActivity.getBaseHei()/2 -size.y/1.0f));
+                    setSize(new Vector2(800.0f, 120.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
                     texStartPoint = new Vector2();
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
                 case 1:
                     //栄養ドリンク
-                    setSize(new Vector2(500.0f, 50.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,GameActivity.getBaseHei() /2-size.y));
+                    setSize(new Vector2(800.0f, 120.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
                     texStartPoint = new Vector2(0.333f,0.333f);
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
