@@ -91,6 +91,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     {
         super.onResume();
 
+        //歩数取得の権限をもらっていたら
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED)
+        {
+            //センサーマネージャを取得
+            sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+            //センサマネージャから TYPE_STEP_COUNTER についての情報を取得する
+            stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            //リスナー設定
+            sensorManager.registerListener (this, stepConterSensor,
+                    SensorManager.SENSOR_DELAY_FASTEST);
+        }
+
         //起動したときや復帰した時の処理
         BaseScene scene = BaseScene.getScene();
         if(scene != null)

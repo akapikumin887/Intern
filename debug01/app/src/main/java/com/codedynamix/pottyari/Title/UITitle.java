@@ -1,5 +1,6 @@
 package com.codedynamix.pottyari.Title;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
@@ -9,9 +10,12 @@ import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Scene.BattleScene;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
+import com.codedynamix.pottyari.System.TestService;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
+
+import static androidx.core.content.ContextCompat.startForegroundService;
 
 public class UITitle extends Object
 {
@@ -75,6 +79,14 @@ public class UITitle extends Object
             {
                 //プレイヤーを押したらステータス確認画面へ
                 BaseScene.setnextScene(new StatusScene());
+            }
+
+            if(touchPos.x < setting.getPosition().x + setting.getSize().x / 2 && touchPos.x > setting.getPosition().x - setting.getSize().x / 2 &&
+                    touchPos.y < setting.getPosition().y + setting.getSize().y / 2 && touchPos.y > setting.getPosition().y - setting.getSize().y / 2)
+            {
+                //サービスを開始してみたい
+                Intent intent = new Intent(GameActivity.getActivity().getApplication(), TestService.class);
+                startForegroundService(GameActivity.getCntxt(),intent);
             }
         }
     }

@@ -102,6 +102,7 @@ public class ProgressScene extends BaseScene
             }
         }
 
+        //値が間違いなく狂ってる
 
         bgProgress = new BGProgress();
         list.add(bgProgress);
@@ -118,6 +119,9 @@ public class ProgressScene extends BaseScene
         editor = stepPrefs.edit();
         editor.putInt("int",startStep);
         editor.apply();
+
+        //step側も上書き保存
+        StepCount.save();
 
         count = 0;
     }

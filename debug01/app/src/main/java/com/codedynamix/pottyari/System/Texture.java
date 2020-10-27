@@ -32,7 +32,7 @@ public class Texture
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
     }
 
-    //テクスチャのロード シーン移行時には必ず呼びたい
+    //テクスチャのロード GLRenderのスレッド以外で呼び出すと失敗するので注意
     public void loadTexture(Context context, int resId)
     {
         //pngやjpegの画像をbitmapに戻す
@@ -41,6 +41,7 @@ public class Texture
             return;
 
         // テクスチャ生成用に、縦横それぞれを2の冪乗にリサイズ
+        //2のべき数にこだわる理由はおそらく軽量化だと思われる
         texSize.x = bitmap.getWidth();
         texSize.y = bitmap.getHeight();
 

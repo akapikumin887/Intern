@@ -19,6 +19,7 @@ import com.codedynamix.pottyari.Object.Item;
 import com.codedynamix.pottyari.Progress.Coffin;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.HomeScene;
+import com.codedynamix.pottyari.Scene.LoadScene;
 import com.codedynamix.pottyari.System.FPSManager;
 import com.codedynamix.pottyari.System.LoadAnimation;
 import com.codedynamix.pottyari.System.NowLoading;
@@ -70,7 +71,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
         setRenderer(this);
         FPSManager.init();
-        StepCount.init();
+        //StepCount.init();
         HeroStatus.init();
         EnemyStatus.init();
     }
@@ -108,7 +109,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             //glをもらってきたものに上書きする
             gl10 = gl;
         }
-        load();
     }
 
     @Override
@@ -141,31 +141,8 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //↑と同時にゲーム内で使う画像も別スレッドで読み込み開始
         //ローディングシーンのUpdateの中でリソースの読み込みを終了が確認でき次第setsceneで始まる
 
-//        LoadAnimation load = new LoadAnimation();
-//        Thread subload = new Thread(load);
-
-//        NowLoading nld = new NowLoading();
-//        Thread subnld = new Thread(nld);
-
-//        subload.start();
-
-//        queueEvent(subnld);
-
-//        try {
-//            subload.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            subnld.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-//        load();
-
-        //シーン設定、上書きは直接行うつもり
-        BaseScene.setScene(new HomeScene());
+        if(BaseScene.getScene() == null)
+            BaseScene.setScene(new LoadScene(this));
     }
 
     @Override

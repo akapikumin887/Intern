@@ -82,8 +82,8 @@ public class UIStep extends Object
     @Override
     public void update()
     {
-        super.update();
         step.setValue(StepCount.getAll());
+        super.update();
     }
 
     @Override

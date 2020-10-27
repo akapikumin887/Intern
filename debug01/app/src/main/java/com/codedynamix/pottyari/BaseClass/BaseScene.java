@@ -1,5 +1,6 @@
 package com.codedynamix.pottyari.BaseClass;
 
+import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import java.util.List;
@@ -26,7 +27,10 @@ public class BaseScene
     {
         //拡張型for文 list内の全要素を参照できる
         for(Object o : list)
+        {
             o.uninit();
+            o = null;
+        }
         list.clear();
     }
 
@@ -83,7 +87,7 @@ public class BaseScene
         }
     }
 
-    public static BaseScene getScene(){return nowScene;}
+   public static BaseScene getScene(){return nowScene;}
 
     public static BaseScene getnextScene(){return nextScene;}
     public static void setnextScene(BaseScene scene){nextScene = scene;}

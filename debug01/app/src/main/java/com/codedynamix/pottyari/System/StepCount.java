@@ -10,6 +10,7 @@ public class StepCount
     private static int ttPhone;       //今回携帯側で管理している歩数
     private static int ltPhone;       //前回携帯側で管理していた歩数
     private static int lastTime;      //前回起動したときに何歩歩いていたか
+    private static int thisTime;      //今回起動したときに前回から何歩歩いたか
     private static int all;           //今までで何歩歩いたか
 
     private static int ttPoint;       //歩いた際に得られるポイント
@@ -26,8 +27,8 @@ public class StepCount
     public static void init()
     {
         //既に呼び出していたら省略する
-        if(isRead)
-            return;
+//        if(isRead)
+//            return;
 
         //保存した情報の読み込み
         phonePrefs = GameActivity.getActivity().getSharedPreferences("phoneStep", Context.MODE_PRIVATE);
@@ -42,35 +43,31 @@ public class StepCount
         pointPrefs = GameActivity.getActivity().getSharedPreferences("countPoint", Context.MODE_PRIVATE);
         ttPoint = pointPrefs.getInt("int",0);    //消費されるまで今回得たポイントを記録しておく
 
+
         //Sensorが呼び出されなかったら今回は歩いてないことにする
         if(ttPhone < 0)
             ttPhone = ltPhone;
 
-        //今回歩いた歩数を出す
-        int n;
-
         if(ttPhone < ltPhone)
-            n = ttPhone + ltPhone;  //再起動時の譲歩
+        {
+            thisTime = ttPhone;  //再起動時の譲歩
+        }
         else
         {
-            if(ltPhone == 0)    //初回起動時は0歩スタートでなければならない
-                n = 0;
+            if(ltPhone == 0)     //初回起動時は0歩スタートでなければならない
+                thisTime = 0;
             else
-                n = ttPhone - ltPhone;  //一般的にはここを通る
+                thisTime = ttPhone - ltPhone;  //一般的にはここを通る
         }
 
-        //デバッグ用
-        if(n < 0)
-            n = 0;
 
         //このアプリを起動してから今までの総歩数を出す
-        all = n + lastTime;
+        all = thisTime + lastTime;
 
-        ttStep += n;
-        ttPoint += n;
+        ttStep += thisTime;
+        ttPoint += thisTime;
 
         isRead = true;
-        //ttPoint = 0;
     }
 
     public static void save()

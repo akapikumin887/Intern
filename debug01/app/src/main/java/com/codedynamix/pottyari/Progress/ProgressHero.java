@@ -43,7 +43,9 @@ public class ProgressHero extends Object
     @Override
     public void draw()
     {
-        texture.draw(pos,size,rotate,reverse, texAnim,TEX_SIZE,color);
+        if(texture != null)
+            if(texture.texId != 0)
+                texture.draw(pos,size,rotate,reverse, texAnim,TEX_SIZE,color);
     }
 
     public static void loadTexture()
