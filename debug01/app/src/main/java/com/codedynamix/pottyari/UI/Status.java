@@ -21,22 +21,22 @@ public class Status extends Object
         {
             case 0:
                 //黒レベル ステータス画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f + size.y));
+                setSize(new Vector2(280.0f,70.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,120.0f + size.y/0.4f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.5f,0.3333f);
                 break;
             case 1:
                 //黒攻撃力 ステータス画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f - size.y));
+                setSize(new Vector2(280.0f,70.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2,120.0f - size.y/0.4f));
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(0.5f,0.3333f);
                 break;
             case 2:
                 //黒HP ステータス画面想定
-                setSize(new Vector2(200.0f,50.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,50.0f));
+                setSize(new Vector2(280.0f,70.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/4,120.0f));
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(0.5f,0.3333f);
                 break;

@@ -35,7 +35,7 @@ public class StatusScene extends BaseScene
         //勇者
         heroStatus = new HeroUI();
         list.add(heroStatus);
-        heroStatus.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,0.0f));
+        heroStatus.setPosition(new Vector2(-GameActivity.getBaseWid() / 5,0.0f));
         heroStatus.setSize(new Vector2(600.0f,600.0f));
     }
 

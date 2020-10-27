@@ -28,15 +28,15 @@ public class StatusButton extends Object
                 break;
             case 1:
                 //lvUp ステータス画面想定
-                setSize(new Vector2(400.0f,150.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 2,50.0f- size.y * 2.0f));
+                setSize(new Vector2(450.0f,200.0f));
+                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 2.3f,-GameActivity.getBaseHei() / 2 + size.y/0.5f));
                 texStartPoint = new Vector2(0.0f,0.3334f);
                 texSize = new Vector2(1.0f,0.3333f);
                 break;
             case 2:
                 //ショップ ステータス画面想定
                 setSize(new Vector2(800.0f,220.0f));
-                setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y / 2 + 100.0f));
+                setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y / 1.2f));
                 texStartPoint = new Vector2(0.0f,0.6667f);
                 texSize = new Vector2(1.0f,0.3333f);
                 break;
