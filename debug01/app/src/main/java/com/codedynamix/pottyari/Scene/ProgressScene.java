@@ -125,8 +125,6 @@ public class ProgressScene extends BaseScene
     @Override
     public void uninit()
     {
-
-
         StepCount.resetTtStep();        //今回歩いた歩数リセット
         super.uninit();
     }

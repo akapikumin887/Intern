@@ -9,7 +9,6 @@ import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.Scene.StepScene;
 import com.codedynamix.pottyari.Step.PlayerStep;
 import com.codedynamix.pottyari.Step.UIStep;
-import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.GameWay;
@@ -37,6 +36,7 @@ public class UIProgress extends Object
         coffin = new Coffin();
 
         messageWindow = new MessageWindow(4);
+
         back = new ChoiseBack(2);
 
         playerStep=new PlayerStep();

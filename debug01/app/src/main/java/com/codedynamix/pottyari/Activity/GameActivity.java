@@ -20,9 +20,6 @@ import com.codedynamix.pottyari.Progress.Coffin;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.System.FPSManager;
-import com.codedynamix.pottyari.System.LoadAnimation;
-import com.codedynamix.pottyari.System.NowLoading;
-import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.UI.BattleText;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.Enemy;
@@ -37,6 +34,7 @@ import com.codedynamix.pottyari.UI.Reinforcement;
 import com.codedynamix.pottyari.UI.ShopText;
 import com.codedynamix.pottyari.UI.Status;
 import com.codedynamix.pottyari.UI.StatusButton;
+import com.codedynamix.pottyari.UI.Waku;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -70,7 +68,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
         setRenderer(this);
         FPSManager.init();
-        StepCount.init();
+        //StepCount.init();
         HeroStatus.init();
         EnemyStatus.init();
     }
@@ -238,6 +236,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         {
             BGTitle.loadTexture();
             HomeButton.loadTexture();
+            Waku.loadTexture();
         }
         //status
         {
