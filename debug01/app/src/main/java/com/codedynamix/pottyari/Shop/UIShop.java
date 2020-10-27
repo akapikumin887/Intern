@@ -16,6 +16,7 @@ import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.ItemName;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Reinforcement;
+import com.codedynamix.pottyari.UI.ShopText;
 import com.codedynamix.pottyari.UI.StatusButton;
 
 
@@ -41,6 +42,10 @@ public class UIShop extends Object
     private ItemName eiyou;
     private ItemName buki;
 
+    private ShopText pt;
+    private ShopText not_enough;
+    private ShopText possession;
+
     private MessageWindow window;
     private MessageWindow yeswnd;
     private MessageWindow nownd;
@@ -63,6 +68,7 @@ public class UIShop extends Object
         //ポイントとショップ
         pointbutton = new StatusButton(0);
         shopbutton = new StatusButton(2);
+        shopbutton.setSize(new Vector2(760.0f,190.0f));
         shopbutton.setPosition(new Vector2(0.0f,back.getPosition().y - shopbutton.getSize().y * 1.5f));
 
         pointPrefs = GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
@@ -83,6 +89,13 @@ public class UIShop extends Object
         eiyou = new ItemName(1);
         //武器強化
         buki  = new ItemName(2);
+
+        //消費ｐｔ
+        pt  =   new ShopText(0);
+        //pt不足
+        not_enough  =   new ShopText(1);
+        //所持数
+        possession  =   new ShopText(2);
 
         //ウィンドウと選択肢
         window = new MessageWindow(2);
@@ -121,16 +134,21 @@ public class UIShop extends Object
         shopbutton.draw();
         point.draw();
 
+        pt.draw();
+
+
         //アイテムボタン
         switch(itemSelect)
         {
             case 0:
                 heal.draw();
                 yasai.draw();
+                possession.draw();
                 break;
             case 1:
                 resurrection.draw();
                 eiyou.draw();
+                possession.draw();
                 break;
             case 2:
                 reinforcement.draw();

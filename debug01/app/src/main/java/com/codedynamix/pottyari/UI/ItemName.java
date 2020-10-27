@@ -20,22 +20,22 @@ public class ItemName extends Object
             switch (num) {
                 case 0:
                     //野菜ジュース
-                    setSize(new Vector2(800.0f, 120.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
+                    setSize(new Vector2(750.0f, 150.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.1f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
                     texStartPoint = new Vector2();
-                    texSize = new Vector2(1.0f, 0.3333f);
+                    texSize = new Vector2(0.92f, 0.3333f);
                     break;
                 case 1:
                     //栄養ドリンク
-                    setSize(new Vector2(800.0f, 120.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
+                    setSize(new Vector2(750.0f, 150.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.3f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
                     texStartPoint = new Vector2(0.0f,0.333f);
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
                 case 2:
                     //武器強化
-                    setSize(new Vector2(800.0f, 120.0f));
-                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.7f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
+                    setSize(new Vector2(750.0f, 150.0f));
+                    setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x/2.5f,-GameActivity.getBaseHei()/2 +size.y/0.3f));
                     texStartPoint = new Vector2(0.0f,0.666f);
                     texSize = new Vector2(1.0f, 0.3333f);
                     break;
