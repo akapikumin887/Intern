@@ -50,6 +50,7 @@ public class Texture
         int dst_wid = 2, dst_hei = 2;
         while(dst_wid < texSize.x) dst_wid *= 2;
         while(dst_hei < texSize.y) dst_hei *= 2;
+
         bitmap = Bitmap.createScaledBitmap(bitmap, dst_wid, dst_hei, true);
         if(bitmap == null)
             return;

@@ -48,7 +48,7 @@ public class TestService extends Service
                     .setContentTitle(title)
                     // android標準アイコンから
                     .setSmallIcon(android.R.drawable.ic_media_play)
-                    .setContentText("MediaPlay")
+                    .setContentText("歩数計測中...")
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent)
                     .setWhen(System.currentTimeMillis())
