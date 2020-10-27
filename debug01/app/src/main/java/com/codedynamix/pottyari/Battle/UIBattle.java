@@ -135,6 +135,7 @@ public class UIBattle extends Object
 
         //戻る
         back = new ChoiseBack(2);
+        back.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,GameActivity.getBaseHei() / 2 - size.y/0.5f));
     }
 
     @Override

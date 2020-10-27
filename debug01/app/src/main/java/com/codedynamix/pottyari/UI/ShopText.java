@@ -23,8 +23,8 @@ public class ShopText extends Object
         {
             case 0:
                 //pt
-                setSize(new Vector2(200.0f,200.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 2,0.0f));
+                setSize(new Vector2(100.0f,100.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x / 1.5f,GameActivity.getBaseHei() / 2- size.y/0.185f));
                 texStartPoint = new Vector2();
                 texSize = new Vector2(0.125f,0.25f);
                 break;
@@ -37,9 +37,9 @@ public class ShopText extends Object
                 break;
             case 2:
                 //所持数
-                setSize(new Vector2(120.0f,120.0f));
-                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x,GameActivity.getBaseHei() / 2 - size.y));
-                texStartPoint = new Vector2(0.0f,0.75f);
+                setSize(new Vector2(360.0f,120.0f));
+                setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/2,-GameActivity.getBaseHei() / 2+ size.y/0.6f));
+                texStartPoint = new Vector2(0.0f,0.5f);
                 texSize = new Vector2(0.375f,0.25f);
                 break;
         }

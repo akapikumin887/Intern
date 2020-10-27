@@ -7,13 +7,16 @@ import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.BaseClass.Object;
 import com.codedynamix.pottyari.Object.EnemyStatus;
+import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Scene.BattleScene;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
+import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.TestService;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
+import com.codedynamix.pottyari.UI.Waku;
 
 import static androidx.core.content.ContextCompat.startForegroundService;
 
@@ -25,6 +28,9 @@ public class UITitle extends Object
 
     HeroUI heroTitle;
 
+    private Waku waku;
+    private Figure step;
+
     public UITitle()
     {
         super();
@@ -34,9 +40,16 @@ public class UITitle extends Object
         setting = new HomeButton(1);
         adventure = new HomeButton(2);
 
+        waku=new Waku();
+
         heroTitle = new HeroUI();
         heroTitle.setSize(new Vector2(800.0f,800.0f));
         heroTitle.setPosition(new Vector2(0.0f,100.0f));
+
+        //歩数
+        step = new Figure(StepCount.getAll(),1);
+        step.setSize(new Vector2(100.0f,100.0f));
+        step.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/0.18f,GameActivity.getBaseHei() / 2 - size.y/1.0f));
     }
 
     @Override
@@ -46,6 +59,15 @@ public class UITitle extends Object
         hint.draw();
         setting.draw();
         adventure.draw();
+        waku.draw();
+        step.draw();
+    }
+
+    @Override
+    public void update()
+    {
+        super.update();
+        step.setValue(StepCount.getAll());
     }
 
 

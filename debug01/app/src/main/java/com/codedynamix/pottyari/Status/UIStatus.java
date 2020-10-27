@@ -95,15 +95,15 @@ public class UIStatus extends Object
         //ステータス(数値)
         stLv = new Figure(HeroStatus.getLv(),1);
         stLv.setSize(new Vector2(level.getSize().y,level.getSize().y));
-        stLv.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stLv.getSize().x / 2,level.getPosition().y));
+        stLv.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stLv.getSize().x / 2,level.getPosition().y/1.4f));
 
         stHp = new Figure(HeroStatus.getHp(),1);
         stHp.setSize(new Vector2(hitPoint.getSize().y,hitPoint.getSize().y));
-        stHp.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stHp.getSize().x / 2,hitPoint.getPosition().y));
+        stHp.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stHp.getSize().x / 2,hitPoint.getPosition().y/2-30.0f));
 
         stAt = new Figure(HeroStatus.getAttack(),1);
         stAt.setSize(new Vector2(attack.getSize().y,attack.getSize().y));
-        stAt.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stAt.getSize().x / 2,attack.getPosition().y));
+        stAt.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - stAt.getSize().x / 2,attack.getPosition().y/0.4f));
 
         isWindow = false;
     }

@@ -36,7 +36,7 @@ public class HomeButton extends Object
             case 2:
                 //冒険ボタン
                 setSize(new Vector2(550.0f,250.0f));
-                setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y / 2 + 100.0f));
+                setPosition(new Vector2(0.0f,-GameActivity.getBaseHei() / 2 + size.y / 1.2f));
                 texStartPoint = new Vector2(0.5f,0.0f);
                 texSize = new Vector2(0.5f,1.0f);
                 break;
