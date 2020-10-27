@@ -56,7 +56,9 @@ public class Game_stepword extends Object {
     }
 
     @Override
-    public void draw() {
+    public void draw()
+    {
+        if(texture == null) return;
         texture.draw(pos, size, rotate, reverse, texStartPoint, texSize, color);
     }
 

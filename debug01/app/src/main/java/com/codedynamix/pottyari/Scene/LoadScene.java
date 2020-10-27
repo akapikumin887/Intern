@@ -19,8 +19,7 @@ public class LoadScene extends BaseScene
         count = 0;
         //別スレッドでテクスチャロードをやっておき、その間にアニメーションを垂れ流して置く
         NowLoading nld = new NowLoading();
-        Thread subnld = new Thread(nld);
-        surface.queueEvent(subnld);
+        surface.queueEvent(nld);
 
         anim = new ProgressHero();
         list.add(anim);

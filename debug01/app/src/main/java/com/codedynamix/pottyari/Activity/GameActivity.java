@@ -37,6 +37,8 @@ import com.codedynamix.pottyari.UI.Status;
 import com.codedynamix.pottyari.UI.StatusButton;
 import com.codedynamix.pottyari.UI.Waku;
 
+import java.util.Random;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -81,7 +83,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //OpenGLの初期化
         {
             //背景色のクリア
-            gl.glClearColor(0.5f,1.0f,0.5f,1.0f);
+            gl.glClearColor(0.0f,0.0f,0.0f,1.0f);
 
             // アルファブレンド有効
             gl.glEnable(GL10.GL_BLEND);
@@ -134,10 +136,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             BASE_HEI = (float)height * BASE_WID / width;
         }
         GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
-
-        //ローディングシーンを作成、そこでアニメーション用の画像読み込み
-        //↑と同時にゲーム内で使う画像も別スレッドで読み込み開始
-        //ローディングシーンのUpdateの中でリソースの読み込みを終了が確認でき次第setsceneで始まる
 
         if(BaseScene.getScene() == null)
             BaseScene.setScene(new LoadScene(this));

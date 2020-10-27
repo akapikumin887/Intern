@@ -16,8 +16,6 @@ import com.codedynamix.pottyari.R;
 
 public class TestService extends Service
 {
-
-
     @Override
     public void onCreate()
     {

@@ -35,6 +35,8 @@ public class Texture
     //テクスチャのロード GLRenderのスレッド以外で呼び出すと失敗するので注意
     public void loadTexture(Context context, int resId)
     {
+        //if(texId != 0) return;
+
         //pngやjpegの画像をbitmapに戻す
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resId, options);
         if(bitmap == null)

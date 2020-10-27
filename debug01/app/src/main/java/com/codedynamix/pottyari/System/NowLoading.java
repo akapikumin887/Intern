@@ -23,6 +23,7 @@ import com.codedynamix.pottyari.UI.Reinforcement;
 import com.codedynamix.pottyari.UI.ShopText;
 import com.codedynamix.pottyari.UI.Status;
 import com.codedynamix.pottyari.UI.StatusButton;
+import com.codedynamix.pottyari.UI.Waku;
 
 public class NowLoading implements Runnable
 {
@@ -51,6 +52,7 @@ public class NowLoading implements Runnable
         {
             BGTitle.loadTexture();
             HomeButton.loadTexture();
+            Waku.loadTexture();
         }
         //status
         {

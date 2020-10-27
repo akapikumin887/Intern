@@ -49,6 +49,7 @@ public class GameWay extends Object
     @Override
     public void draw()
     {
+        if(texture == null) return;
         texture.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
     }
 
