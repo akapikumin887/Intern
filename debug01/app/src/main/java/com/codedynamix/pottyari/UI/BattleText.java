@@ -29,54 +29,58 @@ public class BattleText extends Object
             case 1:
                 //どうする？
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.09f);
+                texStartPoint = new Vector2(0.0f,0.083f);
                 break;
             case 2:
                 //勇者の攻撃
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.18f);
+                texStartPoint = new Vector2(0.0f,0.166f);
                 break;
             case 3:
                 //ダメージ与えた
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.27f);
+                texStartPoint = new Vector2(0.0f,0.249f);
                 break;
             case 4:
                 //相手の攻撃
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.36f);
+                texStartPoint = new Vector2(0.0f,0.332f);
                 break;
             case 5:
                 //ダメージを受けた
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.45f);
+                texStartPoint = new Vector2(0.0f,0.415f);
                 break;
             case 6:
                 //野菜ジュースを飲んだ
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.54f);
+                texStartPoint = new Vector2(0.0f,0.498f);
                 break;
             case 7:
                 //回復した
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.63f);
+                texStartPoint = new Vector2(0.0f,0.581f);
                 break;
             case 8:
                 //生き返った
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.72f);
+                texStartPoint = new Vector2(0.0f,0.664f);
                 break;
             case 9:
                 //死んでしまった
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.81f);
+                texStartPoint = new Vector2(0.0f,0.747f);
                 break;
             case 10:
                 //敵を倒した
                 setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
-                texStartPoint = new Vector2(0.0f,0.91f);
+                texStartPoint = new Vector2(0.0f,0.830f);
                 break;
-
+            case 11:
+                //野菜ジュースが足りない
+                setSize(new Vector2(GameActivity.getBaseWid() / 3 * 2,(GameActivity.getBaseWid() / 3 * 2) / 16));
+                texStartPoint = new Vector2(0.0f,0.913f);
+                break;
         }
         texSize = new Vector2(1.0f,0.09f);
 

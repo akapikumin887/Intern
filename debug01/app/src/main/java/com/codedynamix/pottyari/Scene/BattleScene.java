@@ -32,6 +32,7 @@ public class BattleScene extends BaseScene
     @Override
     public void update()
     {
+        super.update();
         if(!HeroStatus.getIsBattle())
             list.remove(enemy);
     }

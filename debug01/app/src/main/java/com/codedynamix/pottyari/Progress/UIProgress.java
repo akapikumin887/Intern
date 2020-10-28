@@ -50,7 +50,7 @@ public class UIProgress extends Object
         boss_icom = new GameWay(2);
 
         exclamation = new Exclamation();
-        exclamation.setPosition(new Vector2(0.0f,progsHero.getPosition().y +progsHero.getSize().y / 2));
+        exclamation.setPosition(new Vector2(0.0f,progsHero.getPosition().y + progsHero.getSize().y / 1.5f));
     }
 
 

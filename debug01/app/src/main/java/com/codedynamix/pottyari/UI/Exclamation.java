@@ -14,7 +14,7 @@ public class Exclamation extends Object
     {
         super();
         setLayer(Layer.LAYER_CHARE);
-        setSize(new Vector2(200.0f,200.0f));
+        setSize(new Vector2(100.0f,100.0f));
     }
 
     @Override

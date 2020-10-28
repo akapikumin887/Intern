@@ -13,7 +13,6 @@ import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
 import com.codedynamix.pottyari.System.StService;
 import com.codedynamix.pottyari.System.StepCount;
-import com.codedynamix.pottyari.System.TestService;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
@@ -87,14 +86,6 @@ public class UITitle extends Object
             {
                 //冒険する を押したらゲーム画面へ
                 BaseScene.setnextScene(new ProgressScene());
-            }
-
-            if(touchPos.x < hint.getPosition().x + hint.getSize().x / 2 && touchPos.x > hint.getPosition().x - hint.getSize().x / 2 &&
-                    touchPos.y < hint.getPosition().y + hint.getSize().y / 2 && touchPos.y > hint.getPosition().y - hint.getSize().y / 2)
-            {
-                //デバッグ用 はてなを押したらバトル画面へ
-                BaseScene.setnextScene(new BattleScene(1));
-                EnemyStatus.setEnemy();
             }
 
             if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&

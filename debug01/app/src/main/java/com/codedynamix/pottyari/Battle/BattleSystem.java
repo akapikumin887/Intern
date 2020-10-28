@@ -20,7 +20,6 @@ public class BattleSystem
             damage = EnemyStatus.getEnemyHp();
         if(damage <= 0)
             damage = 1;
-        //EnemyStatus.setEnemyHp(EnemyStatus.getEnemyHp() - damage);
         return damage;
     }
 
@@ -32,7 +31,6 @@ public class BattleSystem
 
         int damage = eAt / 2 + (random.nextInt(3) - 1);
 
-        //HeroStatus.setHp(HeroStatus.getHp() - damage);
         return damage;
     }
 

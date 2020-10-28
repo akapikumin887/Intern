@@ -91,11 +91,13 @@ public class UIStatus extends Object
 
 
         StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
+        StepCount.save();           //念を入れて保存
 
         //ポイントの変更をすぐ保存しておく
         SharedPreferences.Editor editor = pointPrefs.edit();
         editor.putInt("int",p);
         editor.apply();
+
 
         point = new Figure(p,1);
         point.setSize(new Vector2(100.0f,100.0f));

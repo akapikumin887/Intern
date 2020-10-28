@@ -174,6 +174,7 @@ public class UIBattle extends Object
                         text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
 
                         action = Action.ACTION_NONE;
+                        HeroStatus.setIsBattle(false);
                         isFinish = true;
                         count = 0;
                     }
@@ -236,7 +237,6 @@ public class UIBattle extends Object
         if(isFinish && count > 90)
         {
             BaseScene.setnextScene(new ProgressScene());
-            HeroStatus.setIsBattle(false);
         }
     }
 

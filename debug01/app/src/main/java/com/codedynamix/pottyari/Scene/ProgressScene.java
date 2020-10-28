@@ -71,8 +71,8 @@ public class ProgressScene extends BaseScene
         if(road == 0)
         {
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            int max = 10000;
-            int min = 1000;
+            int max = 3;
+            int min = 1;
             road = min + random.nextInt(max - min);
 
             //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
@@ -150,14 +150,14 @@ public class ProgressScene extends BaseScene
             //！が出てから60カウント後に戦闘開始
             if(isBoss)
             {
-                Random random = new Random();
-
                 BaseScene.setnextScene(new BattleScene(2));
                 HeroStatus.setIsBattle(true);
             }
             else
             {
-                BaseScene.setnextScene(new BattleScene(ENEMY_TYPE - 1));
+                Random random = new Random();
+
+                BaseScene.setnextScene(new BattleScene(random.nextInt(ENEMY_TYPE - 1)));
                 HeroStatus.setIsBattle(true);
             }
         }
