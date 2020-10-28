@@ -34,7 +34,7 @@ public class HeroStatus
         status[0] = statusPrefs[0].getInt("int",1);
         status[1] = statusPrefs[1].getInt("int",30);
         status[2] = statusPrefs[2].getInt("int",9);
-        status[3] = statusPrefs[3].getInt("int",1);
+        status[3] = statusPrefs[3].getInt("int",3);
         status[4] = statusPrefs[4].getInt("int",30);
         status[5] = statusPrefs[5].getInt("int",0);
         status[6] = statusPrefs[6].getInt("int",0);

@@ -30,8 +30,8 @@ public class ShopText extends Object
                 break;
             case 1:
                 //ptが足りません
-                setSize(new Vector2(200.0f,200.0f));
-                setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x / 2,0.0f));
+                setSize(new Vector2(600.0f,100.0f));
+                setPosition(new Vector2());
                 texStartPoint = new Vector2(0.0f,0.25f);
                 texSize = new Vector2(1.0f,0.25f);
                 break;
