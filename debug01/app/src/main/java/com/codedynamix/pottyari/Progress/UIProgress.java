@@ -5,12 +5,15 @@ import android.view.MotionEvent;
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.BaseClass.Object;
+import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Scene.HomeScene;
+import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StepScene;
 import com.codedynamix.pottyari.Step.PlayerStep;
 import com.codedynamix.pottyari.Step.UIStep;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
+import com.codedynamix.pottyari.UI.Exclamation;
 import com.codedynamix.pottyari.UI.GameWay;
 import com.codedynamix.pottyari.UI.MessageWindow;
 
@@ -26,6 +29,7 @@ public class UIProgress extends Object
     private GameWay player_icom;
     private UIStep uiStep;
     private PlayerStep playerStep;
+    private Exclamation exclamation;
 
     public UIProgress()
     {
@@ -44,14 +48,20 @@ public class UIProgress extends Object
         way = new GameWay(0);
         player_icom = new GameWay(1);
         boss_icom = new GameWay(2);
+
+        exclamation = new Exclamation();
+        exclamation.setPosition(new Vector2(0.0f,progsHero.getPosition().y +progsHero.getSize().y / 2));
     }
 
 
     @Override
     public void draw()
     {
-        progsHero.draw();
-        //coffin.draw();
+        //勇者が死んでいたらもちろん背景は動かない
+        if(HeroStatus.getHp() <= 0)
+            coffin.draw();
+        else
+            progsHero.draw();
 
         messageWindow.draw();
         back.draw();
@@ -60,6 +70,8 @@ public class UIProgress extends Object
         boss_icom.draw();
         player_icom.draw();
 
+        if(ProgressScene.getIsBattle())
+            exclamation.draw();
     }
 
     @Override

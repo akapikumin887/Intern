@@ -11,6 +11,7 @@ import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Scene.BattleScene;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
+import com.codedynamix.pottyari.System.StService;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.TestService;
 import com.codedynamix.pottyari.System.Vector2;
@@ -93,7 +94,7 @@ public class UITitle extends Object
             {
                 //デバッグ用 はてなを押したらバトル画面へ
                 BaseScene.setnextScene(new BattleScene(1));
-                EnemyStatus enemy = new EnemyStatus();
+                EnemyStatus.setEnemy();
             }
 
             if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&
@@ -107,7 +108,7 @@ public class UITitle extends Object
                     touchPos.y < setting.getPosition().y + setting.getSize().y / 2 && touchPos.y > setting.getPosition().y - setting.getSize().y / 2)
             {
                 //サービスを開始してみたい
-                Intent intent = new Intent(GameActivity.getActivity().getApplication(), TestService.class);
+                Intent intent = new Intent(GameActivity.getActivity().getApplication(), StService.class);
                 startForegroundService(GameActivity.getCntxt(),intent);
             }
         }

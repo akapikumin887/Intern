@@ -2,6 +2,7 @@ package com.codedynamix.pottyari.BG;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.Object;
+import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.R;
 import com.codedynamix.pottyari.System.Texture;
 import com.codedynamix.pottyari.System.Vector2;
@@ -41,8 +42,11 @@ public class BGProgress extends Object
     @Override
     public void update()
     {
-        pos.x += 0.5f;
-        loopPos.x += 0.5f;
+        if(HeroStatus.getHp() > 0)
+        {
+            pos.x += 0.5f;
+            loopPos.x += 0.5f;
+        }
 
         if(pos.x - size.x / 2 > GameActivity.getBaseWid() / 2)
             pos.x = loopPos.x - size.x;

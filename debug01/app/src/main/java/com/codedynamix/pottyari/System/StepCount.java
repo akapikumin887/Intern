@@ -9,8 +9,6 @@ public class StepCount
 {
     private static int ttPhone;       //今回携帯側で管理している歩数
     private static int ltPhone;       //前回携帯側で管理していた歩数
-    private static int lastTime;      //前回起動したときに何歩歩いていたか
-    private static int thisTime;      //今回起動したときに前回から何歩歩いたか
     private static int all;           //今までで何歩歩いたか
 
     private static int ttPoint;       //歩いた際に得られるポイント
@@ -22,13 +20,12 @@ public class StepCount
     private static SharedPreferences thisStepPrefs;
     private static SharedPreferences pointPrefs;
 
-    private static boolean isRead = false;
-
+    //onSensorChangedが降るたびに呼び出されるのめっちゃめんどいどうしよう
+    //基本的には起動時に呼び出されるので、2度目以降は呼び出されない前提で書くのもあり
     public static void init()
     {
-        //既に呼び出していたら省略する
-//        if(isRead)
-//            return;
+        //前回と今回で何歩歩いていたか
+        int thisTime,lastTime;
 
         //保存した情報の読み込み
         phonePrefs = GameActivity.getActivity().getSharedPreferences("phoneStep", Context.MODE_PRIVATE);
@@ -66,8 +63,6 @@ public class StepCount
 
         ttStep += thisTime;
         ttPoint += thisTime;
-
-        isRead = true;
     }
 
     public static void save()
@@ -77,9 +72,19 @@ public class StepCount
         editor.putInt("int",all);
         editor.apply();
 
-        editor = phonePrefs.edit();
-        editor.putInt("int", ttPhone);
-        editor.apply();
+        if(ttPhone < 0)
+        {
+            //読み込み失敗していたら次回たくさん稼げてもらう
+            editor = phonePrefs.edit();
+            editor.putInt("int", ltPhone);
+            editor.apply();
+        }
+        else
+        {
+            editor = phonePrefs.edit();
+            editor.putInt("int", ttPhone);
+            editor.apply();
+        }
 
         editor = thisStepPrefs.edit();
         editor.putInt("int",ttStep);

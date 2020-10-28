@@ -19,6 +19,8 @@ import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Status;
 import com.codedynamix.pottyari.UI.StatusButton;
 
+import static java.lang.Math.round;
+
 public class UIStatus extends Object
 {
     private Status level;
@@ -76,11 +78,18 @@ public class UIStatus extends Object
         lvUp = new StatusButton(1);
         shop = new StatusButton(2);
 
+
         //ポイント(数値)
         SharedPreferences pointPrefs= GameActivity.getActivity().getSharedPreferences("point", Context.MODE_PRIVATE);
         int p = pointPrefs.getInt("int",0) + StepCount.getTtPoint() / 10;  //今回歩いた歩数から今回得られるポイントを取得
         if(StepCount.getTtPoint() % 10 > 4)    //四捨五入
             p++;
+
+        //ポイント計算中
+        int pp = pointPrefs.getInt("int",0);
+        int pt = round((float)StepCount.getTtPoint() * 0.1f) * 10;
+
+
         StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
 
         //ポイントの変更をすぐ保存しておく

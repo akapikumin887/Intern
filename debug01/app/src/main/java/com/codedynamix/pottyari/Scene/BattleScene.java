@@ -12,7 +12,7 @@ public class BattleScene extends BaseScene
 
     private UIBattle uiBattle;
 
-    private Enemy boss;
+    private Enemy enemy;
 
     public BattleScene(int num)
     {
@@ -23,8 +23,8 @@ public class BattleScene extends BaseScene
         list.add(uiBattle);
 
         //敵
-        boss = new Enemy(num);
-        list.add(boss);
+        enemy = new Enemy(num);
+        list.add(enemy);
 
         HeroStatus.setIsBattle(true);
     }
@@ -32,15 +32,8 @@ public class BattleScene extends BaseScene
     @Override
     public void update()
     {
-        super.update();
-    }
-
-
-    @Override
-    public void uninit()
-    {
-
-        super.uninit();
+        if(!HeroStatus.getIsBattle())
+            list.remove(enemy);
     }
 
     @Override

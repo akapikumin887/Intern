@@ -16,7 +16,36 @@ public class EnemyStatus
 //マクロ定義
     private static final int STATUS_TYPE_MAX = 6;   //hp at def 討伐数 ボス討伐数
 
-    public EnemyStatus()
+    //保存した情報の呼び出し
+    public static void init()
+    {
+        statusPrefs = new SharedPreferences[STATUS_TYPE_MAX];
+        statusPrefs[0] = GameActivity.getActivity().getSharedPreferences("Ehp", Context.MODE_PRIVATE);       //敵の体力
+        statusPrefs[1] = GameActivity.getActivity().getSharedPreferences("Eat", Context.MODE_PRIVATE);       //敵の攻撃力
+        statusPrefs[2] = GameActivity.getActivity().getSharedPreferences("Edef", Context.MODE_PRIVATE);      //敵の防御力
+        statusPrefs[3] = GameActivity.getActivity().getSharedPreferences("EMhp", Context.MODE_PRIVATE);      //敵の最大体力
+        statusPrefs[4] = GameActivity.getActivity().getSharedPreferences("Edead", Context.MODE_PRIVATE);     //敵の倒された数
+        statusPrefs[5] = GameActivity.getActivity().getSharedPreferences("EBdead", Context.MODE_PRIVATE);    //ボスの倒された数
+
+        status = new int[STATUS_TYPE_MAX];
+
+        for(int i = 0; i < STATUS_TYPE_MAX; i++)
+            status[i] = statusPrefs[i].getInt("int",0);
+    }
+
+    public static void save()
+    {
+        SharedPreferences.Editor editor;
+        //値を保存しておく
+        for(int i = 0; i < STATUS_TYPE_MAX; i++)
+        {
+            editor = statusPrefs[i].edit();
+            editor.putInt("int",status[i]);
+            editor.apply();
+        }
+    }
+
+    public static void setEnemy()
     {
         //敵が沸いた時の敵のステータス設定
         Random random = new Random();
@@ -32,37 +61,6 @@ public class EnemyStatus
         status[2] = 5 + (status[5] * 3);
 
         save();
-    }
-
-    public static void init()
-    {
-        statusPrefs = new SharedPreferences[STATUS_TYPE_MAX];
-        statusPrefs[0] = GameActivity.getActivity().getSharedPreferences("Ehp", Context.MODE_PRIVATE);       //敵の体力
-        statusPrefs[1] = GameActivity.getActivity().getSharedPreferences("Eat", Context.MODE_PRIVATE);       //敵の攻撃力
-        statusPrefs[2] = GameActivity.getActivity().getSharedPreferences("Edef", Context.MODE_PRIVATE);      //敵の防御力
-        statusPrefs[3] = GameActivity.getActivity().getSharedPreferences("EMhp", Context.MODE_PRIVATE);      //敵の最大体力
-        statusPrefs[4] = GameActivity.getActivity().getSharedPreferences("Edead", Context.MODE_PRIVATE);     //敵の倒された数
-        statusPrefs[5] = GameActivity.getActivity().getSharedPreferences("EBdead", Context.MODE_PRIVATE);    //ボスの倒された数
-
-        status = new int[STATUS_TYPE_MAX];
-        status[0] = statusPrefs[0].getInt("int",0);     //体力
-        status[1] = statusPrefs[1].getInt("int",0);     //攻撃力
-        status[2] = statusPrefs[2].getInt("int",0);     //防御力
-        status[3] = statusPrefs[3].getInt("int",0);     //MaxHP
-        status[4] = statusPrefs[4].getInt("int",0);     //討伐数
-        status[5] = statusPrefs[5].getInt("int",0);     //ボス討伐数
-    }
-
-    public static void save()
-    {
-        SharedPreferences.Editor editor;
-        //値を保存しておく
-        for(int i = 0; i < STATUS_TYPE_MAX; i++)
-        {
-            editor = statusPrefs[i].edit();
-            editor.putInt("int",status[i]);
-            editor.apply();
-        }
     }
 
     public static int  getEnemyHp(){return status[0];}

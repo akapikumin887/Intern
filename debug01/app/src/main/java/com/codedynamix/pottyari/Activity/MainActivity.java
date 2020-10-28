@@ -26,7 +26,7 @@ import com.codedynamix.pottyari.System.StepCount;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
-    GameActivity gameActivity;
+    private GameActivity gameActivity;
 
     //歩数取得用
     private SensorManager sensorManager;
@@ -34,11 +34,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 //マクロ定義
     private static final int PERMISSION_REQUEST_CODE = 1;
+    private final int ERROR_CODE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        StepCount.setTtPhone(ERROR_CODE);   //この値から変化がなかったら読み込み失敗扱いにする
 
         //SDKVer29以降だと歩数にも権限リクエストがいる
         if(Build.VERSION.SDK_INT >= 29)
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
                     //リスナー設定
                     sensorManager.registerListener (this, stepConterSensor,
-                            SensorManager.SENSOR_DELAY_FASTEST);
+                            SensorManager.SENSOR_DELAY_UI);
                 }
         }
         else
@@ -70,20 +73,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
             //リスナー設定
             sensorManager.registerListener (this, stepConterSensor,
-                    SensorManager.SENSOR_DELAY_FASTEST);
+                    SensorManager.SENSOR_DELAY_UI);
         }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Window window = getWindow();
-        //window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //移動するviewを設定する
         gameActivity = new GameActivity(this,this);
         setContentView(gameActivity);
 
-        View view = this.getWindow().getDecorView();
-        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        View view = this.getWindow().getDecorView();
+//        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
     }
 
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
             //リスナー設定
             sensorManager.registerListener (this, stepConterSensor,
-                    SensorManager.SENSOR_DELAY_FASTEST);
+                    SensorManager.SENSOR_DELAY_UI);
         }
 
         //起動したときや復帰した時の処理
@@ -109,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(scene != null)
             scene.init();
 
-        View view = this.getWindow().getDecorView();
-        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        View view = this.getWindow().getDecorView();
+//        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         gameActivity.onResume();
     }
@@ -130,11 +133,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause()
     {
         //アプリが中断された時の処理
-        StepCount.save();
-        HeroStatus.save();
+        //StepCount.save();
+        //HeroStatus.save();
 
 
-        gameActivity.onPause();
+        //gameActivity.onPause();
         super.onPause();
     }
 
@@ -193,13 +196,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     stepConterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
                     //リスナー設定
                     sensorManager.registerListener (this, stepConterSensor,
-                            SensorManager.SENSOR_DELAY_FASTEST);
+                            SensorManager.SENSOR_DELAY_UI);
                 }
                 else
                 {
                     //ダメだった時の処理
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("このアプリには歩数を利用するため、許可してください。").setPositiveButton("OK", new DialogInterface.OnClickListener()
+                    builder.setMessage("このアプリには歩数を利用するため、許可しないとゲームを楽しめない可能性がございます。").setPositiveButton("OK", new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int id)
                         {

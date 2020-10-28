@@ -24,6 +24,7 @@ import com.codedynamix.pottyari.System.FPSManager;
 import com.codedynamix.pottyari.UI.BattleText;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.Enemy;
+import com.codedynamix.pottyari.UI.Exclamation;
 import com.codedynamix.pottyari.UI.GameWay;
 import com.codedynamix.pottyari.UI.Game_stepword;
 import com.codedynamix.pottyari.UI.HeroUI;
@@ -58,7 +59,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public static int surfaceHei;
 
     //ロードを何度も行わないように確認する
-    private boolean isLoad;
+    private static boolean isLoad;
 
     //コンストラクタ
     public GameActivity(Context context, MainActivity activity)
@@ -69,6 +70,8 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
         isLoad = false;
 
+
+        //activity.onSensorChanged();
         setRenderer(this);
         FPSManager.init();
         //StepCount.init();
@@ -129,10 +132,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         // 現在選択されている行列(射影行列)に、単位行列をセット
         gl.glLoadIdentity();
         // 平行投影用のパラメータをセット
-        if(BASE_WID == 0) {
+        if(BASE_WID == 0)
+        {
             BASE_WID = (float)width * BASE_HEI / height;
         }
-        else {
+        else
+        {
             BASE_HEI = (float)height * BASE_WID / width;
         }
         GLU.gluOrtho2D(gl, -BASE_WID / 2, BASE_WID / 2, -BASE_HEI / 2, BASE_HEI / 2);
@@ -192,11 +197,12 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         BaseScene.getScene().draw();
     }
 
-    private void load()
+    public static void load()
     {
-        if(isLoad)
-            return;
-
+        //animation
+        {
+            ProgressHero.loadTexture();
+        }
         //common
         {
             BGStShGp.loadTexture();
@@ -226,11 +232,11 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //game
         {
             BGProgress.loadTexture();
-            ProgressHero.loadTexture();
             GameWay.loadTexture();
             Game_stepword.loadTexture();
             Coffin.loadTexture();
             BattleText.loadTexture();
+            Exclamation.loadTexture();
         }
         //battle
         {
@@ -239,7 +245,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             BattleCommand.loadTexture();
             Enemy.loadTexture();
         }
-
         isLoad = true;
     }
 
@@ -250,4 +255,5 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public static float getBaseHei(){return BASE_HEI;}
     public static float getSurfaceWid(){return surfaceWid;}
     public static float getSurfaceHei(){return surfaceHei;}
+    public static boolean getIsLoad(){return isLoad;}
 }

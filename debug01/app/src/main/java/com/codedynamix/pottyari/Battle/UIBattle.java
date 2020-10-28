@@ -146,8 +146,11 @@ public class UIBattle extends Object
         stAt.update();
 
         count++;
+
+        //コマンドが動くまでの間
         if(count > 40)
         {
+            //敵を倒していなかったら
             if(!isFinish)
             {
                 cCount++;
@@ -157,8 +160,7 @@ public class UIBattle extends Object
             if(nowTextNum < textNum)
                 nowTextNum++;
 
-            //HPバーの減るタイミングとテキストの出るタイミングがおかしい
-            //一応調整はできたけどこれでいいかは不明
+            //actionでテキストと同時にほかのUI操作
             int num;
             switch (action)
             {
@@ -209,7 +211,6 @@ public class UIBattle extends Object
                     break;
             }
 
-
             //自分と相手の行動が終わったタイミング
             if(cCount > 3)
             {
@@ -220,6 +221,7 @@ public class UIBattle extends Object
                 }
                 else
                 {
+                    //1行目に どうする 描画
                     isLog = false;
                     text[0] = new BattleText(1);
                     text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
@@ -304,20 +306,27 @@ public class UIBattle extends Object
                 if(touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
                         touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2)
                 {
-                    text[0] = new BattleText(6);
-                    text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
-                    text[1] = new BattleText(7);
-                    text[1].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 2.0f));
-                    text[2] = new BattleText(4);
-                    text[2].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 3.0f));
-                    text[3] = new BattleText(5);
-                    text[3].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 4.0f));
+                    if(HeroStatus.getHealCnt() <= 0)
+                    {
 
-                    textNum = 4;
-                    nowTextNum = 1;
-                    cCount = 0;
-                    isLog = true;
-                    action = Action.ACTION_HEAL_APPO;
+                    }
+                    else
+                    {
+                        text[0] = new BattleText(6);
+                        text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                        text[1] = new BattleText(7);
+                        text[1].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 2.0f));
+                        text[2] = new BattleText(4);
+                        text[2].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 3.0f));
+                        text[3] = new BattleText(5);
+                        text[3].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 4.0f));
+
+                        textNum = 4;
+                        nowTextNum = 1;
+                        cCount = 0;
+                        isLog = true;
+                        action = Action.ACTION_HEAL_APPO;
+                    }
                 }
                 //戻るボタン
                 if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
