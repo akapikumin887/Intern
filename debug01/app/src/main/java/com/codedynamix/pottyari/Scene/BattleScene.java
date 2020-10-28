@@ -29,6 +29,7 @@ public class BattleScene extends BaseScene
         HeroStatus.setIsBattle(true);
     }
 
+
     @Override
     public void update()
     {
