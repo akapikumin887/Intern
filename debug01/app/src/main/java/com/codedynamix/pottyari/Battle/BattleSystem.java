@@ -63,6 +63,12 @@ public class BattleSystem
         HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.2f));
     }
 
+    public static void weaponGrow()
+    {
+        HeroStatus.setWeaponLv(HeroStatus.getWeaponLv() + 1);
+        HeroStatus.setWp((int)((float)HeroStatus.getWp() * 1.1f));
+    }
+
     public static void enemyGrow()
     {
         EnemyStatus.setEnemyDeadCount(EnemyStatus.getEnemyDeadCount() + 1);
