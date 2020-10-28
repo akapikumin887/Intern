@@ -5,17 +5,22 @@ import android.view.MotionEvent;
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.BaseClass.Object;
+import com.codedynamix.pottyari.Object.EnemyStatus;
+import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Object.HeroStatus;
+import com.codedynamix.pottyari.Scene.BattleScene;
 import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StepScene;
 import com.codedynamix.pottyari.Step.PlayerStep;
 import com.codedynamix.pottyari.Step.UIStep;
 import com.codedynamix.pottyari.System.Vector2;
+import com.codedynamix.pottyari.UI.BattleMark;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.Exclamation;
 import com.codedynamix.pottyari.UI.GameWay;
 import com.codedynamix.pottyari.UI.MessageWindow;
+import com.codedynamix.pottyari.UI.Status;
 
 public class UIProgress extends Object
 {
@@ -30,6 +35,17 @@ public class UIProgress extends Object
     private UIStep uiStep;
     private PlayerStep playerStep;
     private Exclamation exclamation;
+    private BattleMark battleMark;
+
+    //ステータスの文字
+    private Status lv;
+    private Status hp;
+    private Status at;
+
+    //ステータスの値
+    private Figure stLv;
+    private Figure stHp;
+    private Figure stAt;
 
     public UIProgress()
     {
@@ -42,6 +58,7 @@ public class UIProgress extends Object
         messageWindow = new MessageWindow(4);
 
         back = new ChoiseBack(2);
+        battleMark=new BattleMark();
 
         playerStep=new PlayerStep();
 
@@ -51,6 +68,22 @@ public class UIProgress extends Object
 
         exclamation = new Exclamation();
         exclamation.setPosition(new Vector2(0.0f,progsHero.getPosition().y +progsHero.getSize().y / 2));
+
+        //ステータスの文字
+        lv = new Status(3);
+        at = new Status(4);
+        hp = new Status(5);
+
+        //ステータスの値
+        stLv = new Figure(HeroStatus.getLv(),0);
+        stLv.setSize(new Vector2(lv.getSize().y,lv.getSize().y));
+        stLv.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,lv.getPosition().y - lv.getSize().y));
+        stHp = new Figure(HeroStatus.getHp(),0);
+        stHp.setSize(new Vector2(hp.getSize().y,hp.getSize().y));
+        stHp.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,hp.getPosition().y - hp.getSize().y));
+        stAt = new Figure(HeroStatus.getAttack(),0);
+        stAt.setSize(new Vector2(at.getSize().y,at.getSize().y));
+        stAt.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,at.getPosition().y - at.getSize().y));
     }
 
 
@@ -66,18 +99,35 @@ public class UIProgress extends Object
         messageWindow.draw();
         back.draw();
 
+        if (HeroStatus.getIsBattle())
+        {
+            battleMark.draw();
+        }
+
         way.draw();
         boss_icom.draw();
         player_icom.draw();
 
         if(ProgressScene.getIsBattle())
             exclamation.draw();
+
+        lv.draw();
+        hp.draw();
+        at.draw();
+
+        stLv.draw();
+        stHp.draw();
+        stAt.draw();
     }
 
     @Override
     public void update()
     {
         progsHero.update();
+
+        stLv.update();
+        stHp.update();
+        stAt.update();
     }
 
     @Override
@@ -103,6 +153,17 @@ public class UIProgress extends Object
                     touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
             {
                 BaseScene.setnextScene(new StepScene());
+            }
+
+            //Battle遷移
+            if(touchPos.x < battleMark.getPosition().x + battleMark.getSize().x / 2 && touchPos.x > battleMark.getPosition().x - battleMark.getSize().x / 2 &&
+                    touchPos.y < battleMark.getPosition().y + battleMark.getSize().y / 2 && touchPos.y > battleMark.getPosition().y - battleMark.getSize().y / 2)
+            {
+                if (HeroStatus.getIsBattle())
+                {
+                    BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyType()));
+                    EnemyStatus.init();
+                }
             }
         }
     }

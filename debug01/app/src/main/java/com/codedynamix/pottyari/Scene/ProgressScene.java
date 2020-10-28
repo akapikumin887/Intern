@@ -10,7 +10,6 @@ import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Progress.UIProgress;
 import com.codedynamix.pottyari.System.StepCount;
-import com.codedynamix.pottyari.UI.Exclamation;
 
 import java.util.Random;
 
@@ -34,6 +33,8 @@ public class ProgressScene extends BaseScene
 
     private Random random;      //乱数
     private static boolean isBattle;
+
+    private static int enemyType;
 
 //マクロ定義
     private final int ENEMY_TYPE = 2;
@@ -71,8 +72,8 @@ public class ProgressScene extends BaseScene
         if(road == 0)
         {
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            int max = 10000;
-            int min = 1000;
+            int max = /*10000*/5;
+            int min = /*1000*/3;
             road = min + random.nextInt(max - min);
 
             //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
@@ -151,12 +152,13 @@ public class ProgressScene extends BaseScene
             if(isBoss)
             {
                 Random random = new Random();
-
+                enemyType=2;
                 BaseScene.setnextScene(new BattleScene(2));
                 HeroStatus.setIsBattle(true);
             }
             else
             {
+                enemyType=ENEMY_TYPE - 1;
                 BaseScene.setnextScene(new BattleScene(ENEMY_TYPE - 1));
                 HeroStatus.setIsBattle(true);
             }
@@ -170,5 +172,7 @@ public class ProgressScene extends BaseScene
     public static int getBossStep(){return bossStep;}
     public static int getMAX(){return MAX;}
     public static boolean getIsBattle(){return isBattle;}
+
+    public static int getEnemyType(){return enemyType;}
 
 }

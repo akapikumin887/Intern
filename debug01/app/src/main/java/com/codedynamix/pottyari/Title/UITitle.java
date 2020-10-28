@@ -6,14 +6,11 @@ import android.view.MotionEvent;
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.BaseClass.Object;
-import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Object.Figure;
-import com.codedynamix.pottyari.Scene.BattleScene;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
 import com.codedynamix.pottyari.System.StService;
 import com.codedynamix.pottyari.System.StepCount;
-import com.codedynamix.pottyari.System.TestService;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
@@ -87,14 +84,6 @@ public class UITitle extends Object
             {
                 //冒険する を押したらゲーム画面へ
                 BaseScene.setnextScene(new ProgressScene());
-            }
-
-            if(touchPos.x < hint.getPosition().x + hint.getSize().x / 2 && touchPos.x > hint.getPosition().x - hint.getSize().x / 2 &&
-                    touchPos.y < hint.getPosition().y + hint.getSize().y / 2 && touchPos.y > hint.getPosition().y - hint.getSize().y / 2)
-            {
-                //デバッグ用 はてなを押したらバトル画面へ
-                BaseScene.setnextScene(new BattleScene(1));
-                EnemyStatus.setEnemy();
             }
 
             if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&

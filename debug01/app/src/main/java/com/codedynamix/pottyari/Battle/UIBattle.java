@@ -97,11 +97,15 @@ public class UIBattle extends Object
         stAt.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,at.getPosition().y - at.getSize().y));
 
         //敵の残りHP 100分率
-        remnantsHp = 1.0f;
+        remnantsHp = (float)EnemyStatus.getEnemyHp() / (float)EnemyStatus.getEnemyMaxHp();
 
         //敵のHPバー
         redBar = new HpBar(1);
         greenBar = new HpBar(0);
+        greenBar.setSize(new Vector2(GameActivity.getBaseWid() * remnantsHp, greenBar.getSize().y));
+        greenBar.setPosition(new Vector2(phoneLeftWidth + greenBar.getSize().x * 0.5f, greenBar.getPosition().y));
+        greenBar.setTexSize(new Vector2( remnantsHp,0.3333f));
+
 
         //メッセージウィンドウとボタン
         window = new MessageWindow(4);
@@ -227,6 +231,8 @@ public class UIBattle extends Object
                     text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
                     textNum = 1;
                     nowTextNum = 1;
+
+                    EnemyStatus.save();
                 }
             }
 
