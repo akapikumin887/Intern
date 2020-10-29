@@ -72,7 +72,9 @@ public class ProgressScene extends BaseScene
         if(road == 0)
         {
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            
+
+            int max = 5;
+            int min = 1;
             road = min + random.nextInt(max - min);
 
             //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
