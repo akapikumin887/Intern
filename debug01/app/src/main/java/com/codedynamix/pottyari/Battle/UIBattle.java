@@ -181,9 +181,9 @@ public class UIBattle extends Object
                         text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
 
                         action = Action.ACTION_NONE;
-                        HeroStatus.setIsBattle(false);
                         isFinish = true;
                         count = 0;
+                        HeroStatus.setIsBattle(false);
                         BattleSystem.enemyGrow();
                     }
                     else
@@ -262,10 +262,9 @@ public class UIBattle extends Object
                     textNum = 1;
                     nowTextNum = 1;
                 }
-                EnemyStatus.save();
-                HeroStatus.save();
             }
-
+            EnemyStatus.save();
+            HeroStatus.save();
         }
 
         //敵を倒してログが流れてから120f経過したらシーンが勝手に変わる

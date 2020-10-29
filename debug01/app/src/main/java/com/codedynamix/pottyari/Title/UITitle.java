@@ -1,7 +1,10 @@
 package com.codedynamix.pottyari.Title;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.MotionEvent;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
@@ -18,11 +21,12 @@ import com.codedynamix.pottyari.UI.HomeButton;
 import com.codedynamix.pottyari.UI.Waku;
 
 import static androidx.core.content.ContextCompat.startForegroundService;
+import static com.codedynamix.pottyari.Activity.GameActivity.getActivity;
 
 public class UITitle extends Object
 {
     private HomeButton hint;
-    private HomeButton setting;
+    private HomeButton stop;
     private HomeButton adventure;
 
     private HeroUI heroTitle;
@@ -38,7 +42,7 @@ public class UITitle extends Object
         setLayer(Layer.LAYER_BUTTON);
 
         hint = new HomeButton(0);
-        setting = new HomeButton(1);
+        stop = new HomeButton(1);
         adventure = new HomeButton(2);
 
         waku=new Waku();
@@ -63,7 +67,7 @@ public class UITitle extends Object
     {
         heroTitle.draw();
         hint.draw();
-        setting.draw();
+        stop.draw();
         adventure.draw();
         waku.draw();
         step.draw();
@@ -103,13 +107,30 @@ public class UITitle extends Object
                 BaseScene.setnextScene(new StatusScene());
             }
 
-            if(touchPos.x < setting.getPosition().x + setting.getSize().x / 2 && touchPos.x > setting.getPosition().x - setting.getSize().x / 2 &&
-                    touchPos.y < setting.getPosition().y + setting.getSize().y / 2 && touchPos.y > setting.getPosition().y - setting.getSize().y / 2)
+            if(touchPos.x < stop.getPosition().x + stop.getSize().x / 2 && touchPos.x > stop.getPosition().x - stop.getSize().x / 2 &&
+                    touchPos.y < stop.getPosition().y + stop.getSize().y / 2 && touchPos.y > stop.getPosition().y - stop.getSize().y / 2)
             {
                 //サービスを終了
                 if(GameActivity.getIntent() != null)
                 {
-                    GameActivity.getActivity().stopService(GameActivity.getIntent());
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("注意")
+                            .setMessage("アプリの常駐状態を解除します。\n歩数の取得が不安定になることが予想されますがよろしいですか？")
+                            .setPositiveButton("はい", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    getActivity().stopService(GameActivity.getIntent());
+                                    GameActivity.setIntent(null);
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage("次回アプリ起動の際には常駐状態に戻ります。")
+                                            .setPositiveButton("わかった", null)
+                                            .show();
+                                }
+                            })
+                            .setNegativeButton("いいえ", null)
+                            .show();
                 }
             }
         }

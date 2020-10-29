@@ -203,8 +203,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 else
                 {
                     new AlertDialog.Builder(getActivity())
-                            .setMessage("このアプリには歩数を利用するため、\nゲームを楽しめない可能性がございます。")
-                            .setPositiveButton("OK", null)
+                            .setMessage("このアプリには歩数を利用するため、\n機能が正常に作動しない可能性がございます。")
+                            .setPositiveButton("わかった", null)
                             .show();
                 }
             }

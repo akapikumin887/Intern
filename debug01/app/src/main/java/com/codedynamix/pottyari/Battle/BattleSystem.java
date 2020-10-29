@@ -14,7 +14,7 @@ public class BattleSystem
         hAt = HeroStatus.getAttack();
         eDef = EnemyStatus.getEnemyDef();
 
-        int damage = (hAt * 3 - eDef * 4) + (random.nextInt(7) - 3);
+        int damage = (hAt * 3 - eDef * 6) + (random.nextInt(7) - 3);
 
         if(damage > EnemyStatus.getEnemyHp())
             damage = EnemyStatus.getEnemyHp();

@@ -28,10 +28,11 @@ public class ProgressScene extends BaseScene
     private int step;       //今回歩いた歩数
     private int count;      //updateカウンタ
 
-    private  static int MAX = 20;
+    private static int MAX = 20;
+    private static SharedPreferences maxPrefs;
     private static int bossStep;
+    private int road;
 
-    private Random random;      //乱数
     private static boolean isBattle;
 
     private static int enemyType;
@@ -41,13 +42,11 @@ public class ProgressScene extends BaseScene
 
     public ProgressScene()
     {
-        random = new Random();
-
         step = StepCount.getTtStep();   //今回歩いた歩数
         isBoss = false;
 
         nextEncountPrefs = GameActivity.getActivity().getSharedPreferences("encount", Context.MODE_PRIVATE);
-        int road = nextEncountPrefs.getInt("int",0);        //次の敵までの距離
+        road = nextEncountPrefs.getInt("int",-1);        //次の敵までの距離
 
         stepPrefs = GameActivity.getActivity().getSharedPreferences("step", Context.MODE_PRIVATE);
         int startStep = stepPrefs.getInt("int",0);   //スタート地点から何歩進んだか
@@ -59,6 +58,10 @@ public class ProgressScene extends BaseScene
             //近くの敵と歩いた歩数で小さいほうが加算される
             startStep += Math.min(road, step);
             road -= step;               //敵と戦っていない間なので歩数も進める
+
+//            //敵にたどり着いたらその位置で止まる
+//            if(road < 0)
+//                road = 0;
         }
 
         //ボスまでの歩数を最大値から歩いた分だけ減らして求める
@@ -70,9 +73,12 @@ public class ProgressScene extends BaseScene
 
         //次の敵までの距離が決まってなかったら設定する
         if(road == 0)
+        //if(road == -1)
         {
+            Random random = new Random();
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            
+            int max = 3;
+            int min = 1;
             road = min + random.nextInt(max - min);
 
             //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
@@ -84,7 +90,8 @@ public class ProgressScene extends BaseScene
         }
 
         //敵とエンカウント
-        if(road < 0)
+        if(road == 0)
+        //if(road < 0)
         {
             if(bossStep == 0)
                 isBoss = true;
@@ -140,6 +147,7 @@ public class ProgressScene extends BaseScene
             {
                 isBattle = true;
                 count = 0;
+                //road = -1;
             }
         }
 
@@ -161,6 +169,8 @@ public class ProgressScene extends BaseScene
                 BaseScene.setnextScene(new BattleScene(enemyType));
                 HeroStatus.setIsBattle(true);
             }
+//            road = 0;   //歩数をリセットして次の敵に備える
+//            EnemyStatus.setEnemy();
         }
     }
 
