@@ -100,7 +100,7 @@ public class UIProgress extends Object
         messageWindow.draw();
         back.draw();
 
-        if (HeroStatus.getIsBattle())
+        if (HeroStatus.getIsBattle() && HeroStatus.getHp() > 0)
         {
             battleMark.draw();
         }
@@ -160,7 +160,7 @@ public class UIProgress extends Object
             if(touchPos.x < battleMark.getPosition().x + battleMark.getSize().x / 2 && touchPos.x > battleMark.getPosition().x - battleMark.getSize().x / 2 &&
                     touchPos.y < battleMark.getPosition().y + battleMark.getSize().y / 2 && touchPos.y > battleMark.getPosition().y - battleMark.getSize().y / 2)
             {
-                if (HeroStatus.getIsBattle())
+                if (HeroStatus.getIsBattle() && HeroStatus.getHp() > 0)
                 {
                     BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyType()));
                     EnemyStatus.init();

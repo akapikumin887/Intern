@@ -2,6 +2,7 @@ package com.codedynamix.pottyari.Activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.view.MotionEvent;
@@ -58,6 +59,8 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
 
     //ロードを何度も行わないように確認する
     private static boolean isLoad;
+
+    private static Intent intent;
 
     //コンストラクタ
     public GameActivity(Context context, MainActivity activity)
@@ -255,4 +258,6 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
     public static float getSurfaceWid(){return surfaceWid;}
     public static float getSurfaceHei(){return surfaceHei;}
     public static boolean getIsLoad(){return isLoad;}
+    public static Intent getIntent(){return intent;}
+    public static void setIntent(Intent inte){intent = inte;}
 }

@@ -33,6 +33,7 @@ public class Figure extends Object
     @Override
     public void draw()
     {
+        if(texture == null) return;
         int v = value;
         int cnt = 0;
         float x = pos.x;

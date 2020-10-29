@@ -31,6 +31,10 @@ public class BattleSystem
 
         int damage = eAt / 2 + (random.nextInt(3) - 1);
 
+        //体力がマイナスいかないように調整
+        if(HeroStatus.getHp() < damage)
+            damage = HeroStatus.getHp();
+
         return damage;
     }
 
@@ -40,7 +44,7 @@ public class BattleSystem
         if(HeroStatus.getHp() + heal > HeroStatus.getMaxHp())
             heal = HeroStatus.getMaxHp() - HeroStatus.getHp();
 
-        //回復するので1つ消費 このままだと2つ使う
+        //回復するので1つ消費
         HeroStatus.setHealCnt(HeroStatus.getHealCnt() - 1);
         return heal;
     }
@@ -57,14 +61,43 @@ public class BattleSystem
     public static void playerGrow()
     {
         HeroStatus.setLv(HeroStatus.getLv() + 1);
-        HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.1f));
-        HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.2f));
+
+        if(HeroStatus.getLv() >= 80)
+        {
+            HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.03f));
+            HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.02f));
+
+            //99レベルの時にhpを999にしたいという謎のこだわり
+            if(HeroStatus.getLv() == 99)
+                HeroStatus.setHp((int)((float)HeroStatus.getHp() + 5));
+        }
+        else if(HeroStatus.getLv() >= 40)
+        {
+            HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.02f));
+            HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.02f));
+        }
+        else if(HeroStatus.getLv() >= 25)
+        {
+            HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.04f));
+            HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.05f));
+        }
+        else if(HeroStatus.getLv() >= 10)
+        {
+            HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.07f));
+            HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.1f));
+        }
+        else
+        {
+            HeroStatus.setHp((int)((float)HeroStatus.getHp() * 1.1f));
+            HeroStatus.setAt((int)((float)HeroStatus.getAt() * 1.2f));
+        }
+
     }
 
     public static void weaponGrow()
     {
         HeroStatus.setWeaponLv(HeroStatus.getWeaponLv() + 1);
-        HeroStatus.setWp((int)((float)HeroStatus.getWp() * 1.1f));
+        HeroStatus.setWp((int)((float)HeroStatus.getWp() + 3));
     }
 
     public static void enemyGrow()

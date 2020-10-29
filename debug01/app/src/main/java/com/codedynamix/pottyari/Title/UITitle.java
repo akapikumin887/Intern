@@ -7,6 +7,7 @@ import com.codedynamix.pottyari.Activity.GameActivity;
 import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.BaseClass.Object;
 import com.codedynamix.pottyari.Object.Figure;
+import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
 import com.codedynamix.pottyari.System.StService;
@@ -20,11 +21,13 @@ import static androidx.core.content.ContextCompat.startForegroundService;
 
 public class UITitle extends Object
 {
-    HomeButton hint;
-    HomeButton setting;
-    HomeButton adventure;
+    private HomeButton hint;
+    private HomeButton setting;
+    private HomeButton adventure;
 
-    HeroUI heroTitle;
+    private HeroUI heroTitle;
+
+    private ProgressHero progHero;
 
     private Waku waku;
     private Figure step;
@@ -44,6 +47,11 @@ public class UITitle extends Object
         heroTitle.setSize(new Vector2(800.0f,800.0f));
         heroTitle.setPosition(new Vector2(0.0f,100.0f));
 
+        //アニメーション勇者
+        progHero = new ProgressHero();
+        progHero.setSize(new Vector2(100.0f,100.0f));
+        progHero.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + progHero.getSize().x,GameActivity.getBaseHei() / 2 - progHero.getSize().y));
+
         //歩数
         step = new Figure(StepCount.getAll(),1);
         step.setSize(new Vector2(100.0f,100.0f));
@@ -59,12 +67,14 @@ public class UITitle extends Object
         adventure.draw();
         waku.draw();
         step.draw();
+        progHero.draw();
     }
 
     @Override
     public void update()
     {
         super.update();
+        progHero.update();
         step.setValue(StepCount.getAll());
     }
 
@@ -96,9 +106,11 @@ public class UITitle extends Object
             if(touchPos.x < setting.getPosition().x + setting.getSize().x / 2 && touchPos.x > setting.getPosition().x - setting.getSize().x / 2 &&
                     touchPos.y < setting.getPosition().y + setting.getSize().y / 2 && touchPos.y > setting.getPosition().y - setting.getSize().y / 2)
             {
-                //サービスを開始してみたい
-                Intent intent = new Intent(GameActivity.getActivity().getApplication(), StService.class);
-                startForegroundService(GameActivity.getCntxt(),intent);
+                //サービスを終了
+                if(GameActivity.getIntent() != null)
+                {
+                    GameActivity.getActivity().stopService(GameActivity.getIntent());
+                }
             }
         }
     }

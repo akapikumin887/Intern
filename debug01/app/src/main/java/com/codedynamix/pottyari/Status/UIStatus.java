@@ -85,11 +85,6 @@ public class UIStatus extends Object
         if(StepCount.getTtPoint() % 10 > 4)    //四捨五入
             p++;
 
-        //ポイント計算中
-        int pp = pointPrefs.getInt("int",0);
-        int pt = round((float)StepCount.getTtPoint() * 0.1f) * 10;
-
-
         StepCount.resetTtPoint();   //ちゃんとポイントをゲットしたので値を初期化しておく
         StepCount.save();           //念を入れて保存
 
@@ -176,6 +171,7 @@ public class UIStatus extends Object
                 if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
                         touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
                 {
+                    //ポイントを払ってレベルを上げる
                     BattleSystem.playerGrow();
                     stLv.setValue(HeroStatus.getLv());
                     stHp.setValue(HeroStatus.getHp());

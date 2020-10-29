@@ -28,7 +28,7 @@ public class ProgressScene extends BaseScene
     private int step;       //今回歩いた歩数
     private int count;      //updateカウンタ
 
-    private  static int MAX = 100000;
+    private  static int MAX = 20;
     private static int bossStep;
 
     private Random random;      //乱数
@@ -72,8 +72,8 @@ public class ProgressScene extends BaseScene
         if(road == 0)
         {
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            int max = 10000;
-            int min = 1000;
+            int max = 10;
+            int min = 5;
             
             road = min + random.nextInt(max - min);
 
@@ -152,7 +152,6 @@ public class ProgressScene extends BaseScene
             //！が出てから60カウント後に戦闘開始
             if(isBoss)
             {
-
 				enemyType = 2;
                 BaseScene.setnextScene(new BattleScene(2));
                 HeroStatus.setIsBattle(true);
