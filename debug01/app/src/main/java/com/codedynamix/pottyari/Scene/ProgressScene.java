@@ -72,8 +72,8 @@ public class ProgressScene extends BaseScene
         if(road == 0)
         {
             //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            int max = 10000;
-            int min = 1000;
+            int max = 4;
+            int min = 3;
             
             road = min + random.nextInt(max - min);
 
