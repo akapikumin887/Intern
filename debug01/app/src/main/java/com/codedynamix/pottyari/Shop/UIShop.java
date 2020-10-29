@@ -59,7 +59,7 @@ public class UIShop extends Object
     private int itemSelect;
 
     private final int VEGETABLES_DRINK_VALUE = 500;
-    private final int ENERGY_DRINK_VALUE = 1000;
+    private final int ENERGY_DRINK_VALUE = 1;
     private Figure vetables;
     private Figure energy;
 
@@ -68,7 +68,7 @@ public class UIShop extends Object
     private Figure wpLv;
     private Figure wp;
 
-    private int bukiPo=1500;
+    private int bukiPo;
     private Figure bukipo;
 
     private Figure Heal;
@@ -158,6 +158,8 @@ public class UIShop extends Object
         wp.setSize(new Vector2(attack.getSize().y,attack.getSize().y));
         wp.setPosition(new Vector2(GameActivity.getBaseWid() / 2 - wp.getSize().x / 2,-GameActivity.getBaseHei() / 2+ size.y/1.9f));
 
+        //武器のレベル上げにかかるptは 300 + (レベルの値-1) * 150 である
+        bukiPo = 300 + 150 * (int)(HeroStatus.getWeaponLv() - 1);
         bukipo = new Figure(bukiPo,1);
         bukipo.setSize(new Vector2(100.0f,100.0f));
         bukipo.setPosition(new Vector2(pt.getSize().x/2-size.x/0.8f,GameActivity.getBaseHei() / 2- size.y/0.185f));
@@ -284,15 +286,22 @@ public class UIShop extends Object
                         case 1:
                             point.setValue(point.getValue() - ENERGY_DRINK_VALUE);
                             HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
-                            Revive.setValue(HeroStatus.getHealCnt());
+
+                            if(HeroStatus.getHp() <= 0)
+                                HeroStatus.setHp(BattleSystem.playerResurrection());
+
+                            Revive.setValue(HeroStatus.getReviveCnt());
                             break;
                         case 2:
-                            BattleSystem.weaponGrow();
-                            point.setValue(point.getValue() - bukiPo );
-                            bukiPo=bukiPo+1500;
-                            bukipo.setValue(bukiPo);
-                            wpLv.setValue(HeroStatus.getWeaponLv());
-                            wp.setValue(HeroStatus.getWp());
+                            if(HeroStatus.getWeaponLv() < 99)
+                            {
+                                BattleSystem.weaponGrow();
+                                point.setValue(point.getValue() - bukiPo );
+                                wpLv.setValue(HeroStatus.getWeaponLv());
+                                wp.setValue(HeroStatus.getWp());
+                                bukiPo = 300 + 150 * (int)(HeroStatus.getWeaponLv() - 1);
+                                bukipo.setValue(bukiPo);
+                            }
                             break;
                     }
                     SharedPreferences.Editor editor = pointPrefs.edit();

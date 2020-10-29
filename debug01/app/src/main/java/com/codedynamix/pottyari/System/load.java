@@ -57,7 +57,8 @@ public class load extends Service
             //サービス開始
             startForeground(1, notification);
 
-            GameActivity.load();
+            NowLoading nld = new NowLoading();
+            
         }
         return START_NOT_STICKY;
     }

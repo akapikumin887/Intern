@@ -59,12 +59,14 @@ public class UIBattle extends Object
     private int cCount;     //countが一定数に達したら増やして制御
     private boolean isLog;
     private boolean isFinish;
+    private boolean isDead;
 
     //何の行動をしたかを管理
     private enum Action
     {
         ACTION_ATTACK,
         ACTION_HEAL,
+        ACTION_REVIVE,
         ACTION_ENEMY_ATTACK,
         ACTION_ATTACK_APPO,
         ACTION_HEAL_APPO,
@@ -128,13 +130,14 @@ public class UIBattle extends Object
 
         }
         //初めは2行から開始
-        textNum = 2;
+        textNum = 1;
 
         //初期化
         count = 0;
         cCount = 0;
         isLog = false;
         isFinish = false;
+        isDead = false;
         action = Action.ACTION_NONE;
 
         //戻る
@@ -155,7 +158,7 @@ public class UIBattle extends Object
         if(count > 40)
         {
             //敵を倒していなかったら
-            if(!isFinish)
+            if(!isFinish && !isDead)
             {
                 cCount++;
                 count = 0;
@@ -181,6 +184,7 @@ public class UIBattle extends Object
                         HeroStatus.setIsBattle(false);
                         isFinish = true;
                         count = 0;
+                        BattleSystem.enemyGrow();
                     }
                     else
                         action = Action.ACTION_ENEMY_ATTACK;
@@ -196,6 +200,12 @@ public class UIBattle extends Object
                     stHp.setValue(stHp.getValue() + num);
                     HeroStatus.setHp(HeroStatus.getHp() + num);
                     action = Action.ACTION_ENEMY_ATTACK;
+                    break;
+                case ACTION_REVIVE:
+                    num = BattleSystem.playerResurrection();
+                    stHp.setValue(stHp.getValue() + num);
+                    HeroStatus.setHp(HeroStatus.getHp() + num);
+                    action = Action.ACTION_NONE;
                     break;
                 case ACTION_ATTACK_APPO:
                     action = Action.ACTION_ATTACK;
@@ -222,7 +232,26 @@ public class UIBattle extends Object
                 //自分が死んでいるとき
                 if(HeroStatus.getHp() <= 0)
                 {
+                    text[0] = new BattleText(9);
+                    text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
+                    nowTextNum = 1;
 
+                    if(HeroStatus.getReviveCnt() <= 0)
+                    {
+                        //死んで棺桶になっておしまい
+                        textNum = 1;
+                        isDead = true;
+                    }
+                    else
+                    {
+                        //栄養ドリンクを飲んで生き返る
+                        action = Action.ACTION_REVIVE;
+                        text[1] = new BattleText(8);
+                        text[1].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y * 2.0f));
+                        count = 0;
+                        cCount = 2;
+                        textNum = 2;
+                    }
                 }
                 else
                 {
@@ -232,15 +261,15 @@ public class UIBattle extends Object
                     text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
                     textNum = 1;
                     nowTextNum = 1;
-
-                    EnemyStatus.save();
                 }
+                EnemyStatus.save();
+                HeroStatus.save();
             }
 
         }
 
-        //敵を倒した時
-        if(isFinish && count > 90)
+        //敵を倒してログが流れてから120f経過したらシーンが勝手に変わる
+        if((isFinish || isDead) && count > 120)
         {
             BaseScene.setnextScene(new ProgressScene());
         }
@@ -268,9 +297,7 @@ public class UIBattle extends Object
         back.draw();
 
         for(int i = 0; i < nowTextNum; i++)
-        {
             text[i].draw();
-        }
     }
 
     @Override
@@ -314,7 +341,13 @@ public class UIBattle extends Object
                 {
                     if(HeroStatus.getHealCnt() <= 0)
                     {
+                        //買う副アイテムが足りない時
+                        text[0] = new BattleText(11);
+                        text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
 
+                        textNum = 1;
+                        nowTextNum = 1;
+                        cCount = 0;
                     }
                     else
                     {
@@ -340,11 +373,6 @@ public class UIBattle extends Object
                 {
                     BaseScene.setnextScene(new ProgressScene());
                 }
-            }
-            else
-            {
-
-
             }
         }
     }

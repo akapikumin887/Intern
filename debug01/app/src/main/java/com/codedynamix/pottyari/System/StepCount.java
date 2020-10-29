@@ -67,24 +67,18 @@ public class StepCount
 
     public static void save()
     {
+        //エラー処理
+        if(allPrefs == null)
+            return;
+
         //データを保存する
         SharedPreferences.Editor editor = allPrefs.edit();
         editor.putInt("int",all);
         editor.apply();
 
-        if(ttPhone < 0)
-        {
-            //読み込み失敗していたら次回たくさん稼げてもらう
-            editor = phonePrefs.edit();
-            editor.putInt("int", ltPhone);
-            editor.apply();
-        }
-        else
-        {
-            editor = phonePrefs.edit();
-            editor.putInt("int", ttPhone);
-            editor.apply();
-        }
+        editor = phonePrefs.edit();
+        editor.putInt("int", ttPhone);
+        editor.apply();
 
         editor = thisStepPrefs.edit();
         editor.putInt("int",ttStep);

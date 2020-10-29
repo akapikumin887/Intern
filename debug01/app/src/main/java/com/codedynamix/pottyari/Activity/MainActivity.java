@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 {
                     //ダメだった時の処理
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("このアプリには歩数を利用するため、許可しないとゲームを楽しめない可能性がございます。").setPositiveButton("OK", new DialogInterface.OnClickListener()
+                    builder.setMessage("このアプリには歩数を利用するため、ゲームを楽しめない可能性がございます。").setPositiveButton("わかった", new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int id)
                         {
