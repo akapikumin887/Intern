@@ -21,17 +21,19 @@ public class ProgressScene extends BaseScene
     private UIProgress uiProgress;
 
     private SharedPreferences nextEncountPrefs;  //次の遭遇までの歩数
-    private SharedPreferences stepPrefs;         //スタート地点から何歩進んだか
-    private boolean canBattle;  //今回バトルできるか
-    private boolean isBoss;     //次に戦う敵はボスなのか
+    private SharedPreferences stepPrefs;         //歩いた歩数
+    private SharedPreferences bossPrefs;         //次戦う敵がボスかどうか
+    private SharedPreferences maxPrefs;          //ボスまでの距離
+
+    private static boolean canBattle;  //今回バトルできるか
+    private static boolean isBoss;     //次に戦う敵はボスなのか
 
     private int step;       //今回歩いた歩数
     private int count;      //updateカウンタ
+    private int road;       //次の敵までの距離
 
-    private static int MAX = 20;
-    private static SharedPreferences maxPrefs;
+    private static int max;
     private static int bossStep;
-    private int road;
 
     private static boolean isBattle;
 
@@ -42,64 +44,74 @@ public class ProgressScene extends BaseScene
 
     public ProgressScene()
     {
+        canBattle = false;
+
         step = StepCount.getTtStep();   //今回歩いた歩数
-        isBoss = false;
 
         nextEncountPrefs = GameActivity.getActivity().getSharedPreferences("encount", Context.MODE_PRIVATE);
-        road = nextEncountPrefs.getInt("int",-1);        //次の敵までの距離
+        road = nextEncountPrefs.getInt("int",0);        //次の敵までの距離
 
         stepPrefs = GameActivity.getActivity().getSharedPreferences("step", Context.MODE_PRIVATE);
-        int startStep = stepPrefs.getInt("int",0);   //スタート地点から何歩進んだか
+        int startStep = stepPrefs.getInt("int",0);   //ゲーム内で歩いた歩数
 
+        bossPrefs = GameActivity.getActivity().getSharedPreferences("boss", Context.MODE_PRIVATE);
+        isBoss = bossPrefs.getBoolean("boolean",false);   //次に戦う敵はボスかどうか
 
-        //バトル中でなければプレイヤーは進む
-        if(!HeroStatus.getIsBattle())
+        maxPrefs = GameActivity.getActivity().getSharedPreferences("max", Context.MODE_PRIVATE);
+        max = maxPrefs.getInt("int",5);           //初期値からボスまでの距離
+
         {
-            //近くの敵と歩いた歩数で小さいほうが加算される
-            startStep += Math.min(road, step);
-            road -= step;               //敵と戦っていない間なので歩数も進める
-
-//            //敵にたどり着いたらその位置で止まる
-//            if(road < 0)
-//                road = 0;
-        }
-
-        //ボスまでの歩数を最大値から歩いた分だけ減らして求める
-        bossStep = MAX - startStep;
-
-        //ボスを通り過ぎてしまった場合は立ち止まってもらう
-        if (bossStep <= 0) bossStep = 0;
+            //ボスまでの歩数を最大値から歩いた分だけ減らして求める
+            bossStep = max - startStep;
 
 
-        //次の敵までの距離が決まってなかったら設定する
-        if(road == 0)
-        //if(road == -1)
-        {
-            Random random = new Random();
-            //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-            int max = 3;
-            int min = 1;
-            road = min + random.nextInt(max - min);
+            //次の敵までの距離を決める
+            if(road == 0)   setNextEnemyLocation();
 
-            //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
-            if(bossStep < road)
+
+            //バトル中でなければプレイヤーは進む
+            if (!HeroStatus.getIsBattle())
             {
-                road = bossStep;
-                isBoss = true;
+                startStep += step;          //近くの敵と歩いた歩数で小さいほうが加算される
+                road -= step;               //敵と戦っていない間なので歩数も進める
+                bossStep -= step;           //今回進んでいた分を引いておく
+
+                //敵と遭遇していたら差分を戻しておく
+                if(road <= 0)
+                {
+                    bossStep -= road;
+                    startStep += road;
+                }
             }
-        }
 
-        //敵とエンカウント
-        if(road == 0)
-        //if(road < 0)
-        {
-            if(bossStep == 0)
-                isBoss = true;
+            //ボスを通り過ぎてしまった場合は立ち止まってもらう
+            if (bossStep <= 0) bossStep = 0;
 
-            //今回で戦闘が始まる
-            canBattle = true;
-            road = 0;   //歩数をリセットして次の敵に備える
-            EnemyStatus.setEnemy();
+            //敵とエンカウント
+            if(road <= 0)
+            {
+                if(!isBattle)
+                {
+                    //遭遇した敵がボスだったら次の準備をしておく
+                    if(bossStep == 0)
+                    {
+                        isBoss = true;
+                        max *= 1.1f;
+                        //オーバーフロー対策
+                        if(max < 0)
+                            max = 1 << 15;
+                    }
+                    else
+                    {
+                        isBoss = false;
+                    }
+
+                    //今回で戦闘が始まる
+                    canBattle = true;
+                    road = 0;   //歩数をリセットして次の敵に備える
+                    EnemyStatus.setEnemy();
+                }
+            }
         }
 
         //背景とUIのコンストラクタ 上で計算した値を使用するのでこのタイミング
@@ -117,6 +129,16 @@ public class ProgressScene extends BaseScene
         //ボスまでの距離も保存
         editor = stepPrefs.edit();
         editor.putInt("int",startStep);
+        editor.apply();
+
+        //ボスかどうかを保存
+        editor = bossPrefs.edit();
+        editor.putBoolean("boolean", isBoss);
+        editor.apply();
+
+        //距離の最大値
+        editor = maxPrefs.edit();
+        editor.putInt("int",max);
         editor.apply();
 
         //step側も上書き保存
@@ -147,7 +169,6 @@ public class ProgressScene extends BaseScene
             {
                 isBattle = true;
                 count = 0;
-                //road = -1;
             }
         }
 
@@ -161,6 +182,12 @@ public class ProgressScene extends BaseScene
 				enemyType = 2;
                 BaseScene.setnextScene(new BattleScene(2));
                 HeroStatus.setIsBattle(true);
+                isBoss = false;
+
+                bossPrefs = GameActivity.getActivity().getSharedPreferences("boss", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = bossPrefs.edit();
+                editor.putBoolean("boolean", isBoss);
+                editor.apply();
             }
             else
             {
@@ -169,19 +196,36 @@ public class ProgressScene extends BaseScene
                 BaseScene.setnextScene(new BattleScene(enemyType));
                 HeroStatus.setIsBattle(true);
             }
-//            road = 0;   //歩数をリセットして次の敵に備える
-//            EnemyStatus.setEnemy();
         }
     }
 
+    //次の敵の座標を決める
+    public void setNextEnemyLocation()
+    {
+        Random random = new Random();
+        //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
+        int max = 3;
+        int min = 1;
+        road = min + random.nextInt(max - min);
+
+        //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
+        if (road > bossStep)
+        {
+            road = bossStep;
+            isBoss = true;
+        }
+    }
 
     @Override
     public void back() {BaseScene.setnextScene(new HomeScene());}
 
     public static int getBossStep(){return bossStep;}
-    public static int getMAX(){return MAX;}
+    public static int getMAX(){return max;}
     public static boolean getIsBattle(){return isBattle;}
+    public static boolean getCanBattle(){return canBattle;}
 
     public static int getEnemyType(){return enemyType;}
+    public static boolean getIsBoss(){return isBoss;}
+
 
 }

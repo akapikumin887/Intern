@@ -142,18 +142,22 @@ public class UIProgress extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //Home遷移
-            if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                    touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+            //今回バトルしないならば
+            if(!ProgressScene.getCanBattle())
             {
-                BaseScene.setnextScene(new HomeScene());
-            }
+                //Home遷移
+                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new HomeScene());
+                }
 
-            //Step遷移
-            if(touchPos.x < way.getPosition().x + way.getSize().x / 2 && touchPos.x > way.getPosition().x - way.getSize().x / 2 &&
-                    touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
-            {
-                BaseScene.setnextScene(new StepScene());
+                //Step遷移
+                if(touchPos.x < way.getPosition().x + way.getSize().x / 2 && touchPos.x > way.getPosition().x - way.getSize().x / 2 &&
+                        touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
+                {
+                    BaseScene.setnextScene(new StepScene());
+                }
             }
 
             //Battle遷移

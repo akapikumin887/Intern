@@ -1,5 +1,7 @@
 package com.codedynamix.pottyari.Battle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
@@ -185,6 +187,16 @@ public class UIBattle extends Object
                         count = 0;
                         HeroStatus.setIsBattle(false);
                         BattleSystem.enemyGrow();
+
+                        //次のボスまでの距離を初期化しておく
+                        if(ProgressScene.getIsBoss())
+                        {
+                            //次のボス座標をセット
+                            SharedPreferences stepPrefs = GameActivity.getActivity().getSharedPreferences("step", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = stepPrefs.edit();
+                            editor.putInt("int",0);
+                            editor.apply();
+                        }
                     }
                     else
                         action = Action.ACTION_ENEMY_ATTACK;

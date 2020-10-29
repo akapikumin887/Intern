@@ -59,7 +59,7 @@ public class UIShop extends Object
     private int itemSelect;
 
     private final int VEGETABLES_DRINK_VALUE = 500;
-    private final int ENERGY_DRINK_VALUE = 1;
+    private final int ENERGY_DRINK_VALUE = 1000;
     private Figure vetables;
     private Figure energy;
 

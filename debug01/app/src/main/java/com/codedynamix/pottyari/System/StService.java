@@ -12,10 +12,14 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
+import com.codedynamix.pottyari.Activity.MainActivity;
 import com.codedynamix.pottyari.R;
 
 public class StService extends Service
 {
+//マクロ定義
+    private final int UNIQUE_CODE = 893;
+
     @Override
     public void onCreate()
     {
@@ -43,14 +47,17 @@ public class StService extends Service
 
         if (notificationManager != null)
         {
+            Intent mainIntent = new Intent(GameActivity.getActivity().getApplication(), MainActivity.class);
+            PendingIntent pedIntent =  PendingIntent.getActivity(GameActivity.getCntxt(),UNIQUE_CODE,mainIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
             notificationManager.createNotificationChannel(channel);
             Notification notification = new Notification.Builder(GameActivity.getCntxt(), channelId)
                     .setContentTitle(title)
                     // android標準アイコンから
-                    .setSmallIcon(android.R.drawable.ic_media_play)
+                    .setSmallIcon(android.R.drawable.ic_dialog_map)
                     .setContentText("歩数計測中...")
                     .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
+                    .setContentIntent(pedIntent)
                     .setWhen(System.currentTimeMillis())
                     .build();
 

@@ -21,8 +21,6 @@ public class BattleMark extends Object
         setPosition(new Vector2(GameActivity.getBaseWid() / 2 - size.x,-GameActivity.getBaseHei() / 2 + size.y/0.3f));
         texStartPoint = new Vector2();
         texSize = new Vector2(1.0f, 1.0f);
-
-
     }
 
     @Override
