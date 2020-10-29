@@ -24,6 +24,8 @@ import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.System.StepCount;
 
+import static com.codedynamix.pottyari.Activity.GameActivity.getActivity;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
     private GameActivity gameActivity;
@@ -200,15 +202,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 else
                 {
-                    //ダメだった時の処理
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("このアプリには歩数を利用するため、ゲームを楽しめない可能性がございます。").setPositiveButton("わかった", new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int id)
-                        {
-                            // ボタンをクリックしたときの動作
-                        }});
-                    builder.show();
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("このアプリには歩数を利用するため、\nゲームを楽しめない可能性がございます。")
+                            .setPositiveButton("OK", null)
+                            .show();
                 }
             }
             return;
