@@ -14,11 +14,13 @@ import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StepScene;
 import com.codedynamix.pottyari.Step.PlayerStep;
 import com.codedynamix.pottyari.Step.UIStep;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.BattleMark;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.Exclamation;
 import com.codedynamix.pottyari.UI.GameWay;
+import com.codedynamix.pottyari.UI.Information;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Status;
 
@@ -46,6 +48,8 @@ public class UIProgress extends Object
     private Figure stLv;
     private Figure stHp;
     private Figure stAt;
+
+    private Information info;
 
     public UIProgress()
     {
@@ -85,6 +89,8 @@ public class UIProgress extends Object
         stAt = new Figure(HeroStatus.getAttack(),0);
         stAt.setSize(new Vector2(at.getSize().y,at.getSize().y));
         stAt.setPosition(new Vector2(-GameActivity.getBaseWid() / 4,at.getPosition().y - at.getSize().y));
+
+        info = new Information();
     }
 
 
@@ -119,6 +125,8 @@ public class UIProgress extends Object
         stLv.draw();
         stHp.draw();
         stAt.draw();
+
+        info.draw(3);
     }
 
     @Override
@@ -142,28 +150,39 @@ public class UIProgress extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //Home遷移
-            if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                    touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+            if(NewEnter.getInformScene(3))
             {
-                BaseScene.setnextScene(new HomeScene());
+                info.addTouch();
             }
-
-            //Step遷移
-            if(touchPos.x < way.getPosition().x + way.getSize().x / 2 && touchPos.x > way.getPosition().x - way.getSize().x / 2 &&
-                    touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
+            else
             {
-                BaseScene.setnextScene(new StepScene());
-            }
-
-            //Battle遷移
-            if(touchPos.x < battleMark.getPosition().x + battleMark.getSize().x / 2 && touchPos.x > battleMark.getPosition().x - battleMark.getSize().x / 2 &&
-                    touchPos.y < battleMark.getPosition().y + battleMark.getSize().y / 2 && touchPos.y > battleMark.getPosition().y - battleMark.getSize().y / 2)
-            {
-                if (HeroStatus.getIsBattle() && HeroStatus.getHp() > 0)
+                //今回バトルしないならば
+                if(!ProgressScene.getCanBattle())
                 {
-                    BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyType()));
-                    EnemyStatus.init();
+                    //Home遷移
+                    if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                            touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                    {
+                        BaseScene.setnextScene(new HomeScene());
+                    }
+
+                    //Step遷移
+                    if(touchPos.x < way.getPosition().x + way.getSize().x / 2 && touchPos.x > way.getPosition().x - way.getSize().x / 2 &&
+                            touchPos.y < way.getPosition().y + way.getSize().y / 2 && touchPos.y > way.getPosition().y - way.getSize().y / 2)
+                    {
+                        BaseScene.setnextScene(new StepScene());
+                    }
+                }
+
+                //Battle遷移
+                if(touchPos.x < battleMark.getPosition().x + battleMark.getSize().x / 2 && touchPos.x > battleMark.getPosition().x - battleMark.getSize().x / 2 &&
+                        touchPos.y < battleMark.getPosition().y + battleMark.getSize().y / 2 && touchPos.y > battleMark.getPosition().y - battleMark.getSize().y / 2)
+                {
+                    if (HeroStatus.getIsBattle() && HeroStatus.getHp() > 0)
+                    {
+                        BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyType()));
+                        EnemyStatus.init();
+                    }
                 }
             }
         }

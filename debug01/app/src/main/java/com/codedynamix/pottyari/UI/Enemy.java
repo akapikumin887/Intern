@@ -8,7 +8,9 @@ import com.codedynamix.pottyari.System.Vector2;
 
 public class Enemy extends Object
 {
-    private static Texture texture;
+    private static Texture texNormal;
+    private static Texture texChocolate;
+    private static Texture texStrawberry;
 
     private Vector2 texStartPoint;
     private Vector2 texSize;
@@ -16,11 +18,16 @@ public class Enemy extends Object
     private boolean isBoss;
     private int animCnt;
 
+    private int enemyType;      //0は通常で1はチョコ
+
+    //引数は敵の種類を
     public Enemy(int num)
     {
         super();
         setLayer(Layer.LAYER_BUTTON);
-        switch (num)
+        enemyType = num;
+
+        switch (enemyType % 3)
         {
             case 0:
                 //敵01 一般的な奴
@@ -78,14 +85,33 @@ public class Enemy extends Object
     @Override
     public void draw()
     {
-        if(texture == null) return;
-        texture.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+        switch(enemyType / 3)
+        {
+            case 0:
+                if(texNormal == null) return;
+                texNormal.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+            case 1:
+                if(texChocolate == null) return;
+                texChocolate.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+            case 2:
+                if(texStrawberry == null) return;
+                texChocolate.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+        }
     }
 
     public static void loadTexture()
     {
-        texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.enemy);
+        texNormal = new Texture();
+        texNormal.loadTexture(GameActivity.getCntxt(), R.drawable.enemy);
+
+        texChocolate = new Texture();
+        texChocolate.loadTexture(GameActivity.getCntxt(), R.drawable.enemy2);
+
+        texStrawberry = new Texture();
+        texStrawberry.loadTexture(GameActivity.getCntxt(), R.drawable.enemy3);
     }
 
 }

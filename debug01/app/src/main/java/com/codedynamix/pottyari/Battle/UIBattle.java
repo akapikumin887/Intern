@@ -1,5 +1,7 @@
 package com.codedynamix.pottyari.Battle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
 import com.codedynamix.pottyari.Activity.GameActivity;
@@ -8,6 +10,7 @@ import com.codedynamix.pottyari.BaseClass.Object;
 import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Object.HeroStatus;
+import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.BattleText;
@@ -181,10 +184,19 @@ public class UIBattle extends Object
                         text[0].setPosition(new Vector2(textBasePos.x,wndTop - textBasePos.y));
 
                         action = Action.ACTION_NONE;
-                        HeroStatus.setIsBattle(false);
                         isFinish = true;
                         count = 0;
+                        HeroStatus.setIsBattle(false);
                         BattleSystem.enemyGrow();
+
+                        //次のボスまでの距離を初期化しておく
+                        if(ProgressScene.getIsBoss())
+                        {
+                            EnemyStatus.setBossDeadCount(EnemyStatus.getBossDeadCount() + 1);
+                            EnemyStatus.save();
+                            ProgressScene.setStartStep(0);
+                            ProgressScene.save();
+                        }
                     }
                     else
                         action = Action.ACTION_ENEMY_ATTACK;
@@ -262,10 +274,9 @@ public class UIBattle extends Object
                     textNum = 1;
                     nowTextNum = 1;
                 }
-                EnemyStatus.save();
-                HeroStatus.save();
             }
-
+            EnemyStatus.save();
+            HeroStatus.save();
         }
 
         //敵を倒してログが流れてから120f経過したらシーンが勝手に変わる

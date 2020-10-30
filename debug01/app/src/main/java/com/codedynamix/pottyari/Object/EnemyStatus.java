@@ -57,8 +57,8 @@ public class EnemyStatus
         }
 
         status[0] = status[3] = 30 * (status[5] + 1) + eAddStatus;
-        status[1] = 5 + (status[5] * 3);
-        status[2] = 5 + (status[5] * 3);
+        status[1] = 5 + (status[5] * 2) + eAddStatus;
+        status[2] = 5 + (status[5] * 2) + eAddStatus;
 
         save();
     }
@@ -77,5 +77,8 @@ public class EnemyStatus
 
     public static int  getEnemyDeadCount(){return status[4];}
     public static void setEnemyDeadCount(int dc){status[4] = dc;}
+
+    public static int  getBossDeadCount(){return status[5];}
+    public static void setBossDeadCount(int bdc){status[5] = bdc;}
 
 }

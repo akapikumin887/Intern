@@ -12,8 +12,10 @@ import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Object.Item;
 import com.codedynamix.pottyari.Scene.StatusScene;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
+import com.codedynamix.pottyari.UI.Information;
 import com.codedynamix.pottyari.UI.ItemName;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Reinforcement;
@@ -59,7 +61,7 @@ public class UIShop extends Object
     private int itemSelect;
 
     private final int VEGETABLES_DRINK_VALUE = 500;
-    private final int ENERGY_DRINK_VALUE = 1;
+    private final int ENERGY_DRINK_VALUE = 1000;
     private Figure vetables;
     private Figure energy;
 
@@ -73,6 +75,8 @@ public class UIShop extends Object
 
     private Figure Heal;
     private Figure Revive;
+
+    private Information info;
 
     public UIShop()
     {
@@ -175,6 +179,8 @@ public class UIShop extends Object
         isWindow = false;
 
         itemSelect = 0;
+
+        info = new Information();
     }
 
     @Override
@@ -249,6 +255,8 @@ public class UIShop extends Object
             not_enoughwin.draw();
             not_enough.draw();
         }
+
+        info.draw(2);
     }
 
     @Override
@@ -268,121 +276,128 @@ public class UIShop extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //windowが出ているときのみ
-            if(isWindow)
+            //infoが見えてる間はそこを進めることしかできない
+            if(NewEnter.getInformScene(2))
             {
-                //買う
-                if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
-                        touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
-                {
-                    isWindow = false;
-                    switch(itemSelect)
-                    {
-                        case 0:
-                            point.setValue(point.getValue() - VEGETABLES_DRINK_VALUE);
-                            HeroStatus.setHealCnt(HeroStatus.getHealCnt() + 1);
-                            Heal.setValue(HeroStatus.getHealCnt());
-                            break;
-                        case 1:
-                            point.setValue(point.getValue() - ENERGY_DRINK_VALUE);
-                            HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
-
-                            if(HeroStatus.getHp() <= 0)
-                                HeroStatus.setHp(BattleSystem.playerResurrection());
-
-                            Revive.setValue(HeroStatus.getReviveCnt());
-                            break;
-                        case 2:
-                            if(HeroStatus.getWeaponLv() < 99)
-                            {
-                                BattleSystem.weaponGrow();
-                                point.setValue(point.getValue() - bukiPo );
-                                wpLv.setValue(HeroStatus.getWeaponLv());
-                                wp.setValue(HeroStatus.getWp());
-                                bukiPo = 300 + 150 * (int)(HeroStatus.getWeaponLv() - 1);
-                                bukipo.setValue(bukiPo);
-                            }
-                            break;
-                    }
-                    SharedPreferences.Editor editor = pointPrefs.edit();
-                    editor.putInt("int",point.getValue());
-                    editor.apply();
-                }
-                //買わない
-                if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
-                        touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
-                {
-                    isWindow = false;
-                }
+                info.addTouch();
             }
             else
             {
-                //Status遷移
-                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                //windowが出ているときのみ
+                if(isWindow)
                 {
-                    BaseScene.setnextScene(new StatusScene());
-                }
-
-                //左ボタン
-                if(touchPos.x < left.getPosition().x + left.getSize().x / 2 && touchPos.x > left.getPosition().x - left.getSize().x / 2 &&
-                        touchPos.y < left.getPosition().y + left.getSize().y / 2 && touchPos.y > left.getPosition().y - left.getSize().y / 2)
-                {
-                    if(itemSelect >=1&&itemSelect<3)
+                    //買う
+                    if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
+                            touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
                     {
-                        itemSelect--;
-                    }
-                }
+                        isWindow = false;
+                        switch(itemSelect)
+                        {
+                            case 0:
+                                point.setValue(point.getValue() - VEGETABLES_DRINK_VALUE);
+                                HeroStatus.setHealCnt(HeroStatus.getHealCnt() + 1);
+                                Heal.setValue(HeroStatus.getHealCnt());
+                                break;
+                            case 1:
+                                point.setValue(point.getValue() - ENERGY_DRINK_VALUE);
+                                HeroStatus.setReviveCnt(HeroStatus.getReviveCnt() + 1);
 
-                //右ボタン
-                if(touchPos.x < right.getPosition().x + right.getSize().x / 2 && touchPos.x > right.getPosition().x - right.getSize().x / 2 &&
-                        touchPos.y < right.getPosition().y + right.getSize().y / 2 && touchPos.y > right.getPosition().y - right.getSize().y / 2)
-                {
-                    if (itemSelect >=0&&itemSelect<2)
+                                if(HeroStatus.getHp() <= 0)
+                                    HeroStatus.setHp(BattleSystem.playerResurrection());
+
+                                Revive.setValue(HeroStatus.getReviveCnt());
+                                break;
+                            case 2:
+                                if(HeroStatus.getWeaponLv() < 99)
+                                {
+                                    BattleSystem.weaponGrow();
+                                    point.setValue(point.getValue() - bukiPo );
+                                    wpLv.setValue(HeroStatus.getWeaponLv());
+                                    wp.setValue(HeroStatus.getWp());
+                                    bukiPo = 300 + 150 * (int)(HeroStatus.getWeaponLv() - 1);
+                                    bukipo.setValue(bukiPo);
+                                }
+                                break;
+                        }
+                        SharedPreferences.Editor editor = pointPrefs.edit();
+                        editor.putInt("int",point.getValue());
+                        editor.apply();
+                    }
+                    //買わない
+                    if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
+                            touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
                     {
-                        itemSelect++;
+                        isWindow = false;
                     }
-                }
-
-                if(isnot_enoughwin)
-                {
-                    isnot_enoughwin=false;
                 }
                 else
                 {
-                    //アイテム購入
-                    if (touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
-                            touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2) {
-                        switch (itemSelect) {
-                            case 0:
-                                if (point.getValue() >= VEGETABLES_DRINK_VALUE) {
-                                    isWindow = true;
-                                    break;
-                                } else {
-                                    isnot_enoughwin = true;
-                                    break;
-                                }
-                            case 1:
-                                if (point.getValue() >= ENERGY_DRINK_VALUE) {
-                                    isWindow = true;
-                                    break;
-                                } else {
-                                    isnot_enoughwin = true;
-                                    break;
-                                }
-                            case 2:
-                                if (point.getValue() >= bukiPo) {
-                                    isWindow = true;
-                                    break;
-                                } else {
-                                    isnot_enoughwin = true;
-                                    break;
-                                }
+                    //Status遷移
+                    if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                            touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                    {
+                        BaseScene.setnextScene(new StatusScene());
+                    }
+
+                    //左ボタン
+                    if(touchPos.x < left.getPosition().x + left.getSize().x / 2 && touchPos.x > left.getPosition().x - left.getSize().x / 2 &&
+                            touchPos.y < left.getPosition().y + left.getSize().y / 2 && touchPos.y > left.getPosition().y - left.getSize().y / 2)
+                    {
+                        if(itemSelect >=1&&itemSelect<3)
+                        {
+                            itemSelect--;
+                        }
+                    }
+
+                    //右ボタン
+                    if(touchPos.x < right.getPosition().x + right.getSize().x / 2 && touchPos.x > right.getPosition().x - right.getSize().x / 2 &&
+                            touchPos.y < right.getPosition().y + right.getSize().y / 2 && touchPos.y > right.getPosition().y - right.getSize().y / 2)
+                    {
+                        if (itemSelect >=0&&itemSelect<2)
+                        {
+                            itemSelect++;
+                        }
+                    }
+
+                    if(isnot_enoughwin)
+                    {
+                        isnot_enoughwin=false;
+                    }
+                    else
+                    {
+                        //アイテム購入
+                        if (touchPos.x < heal.getPosition().x + heal.getSize().x / 2 && touchPos.x > heal.getPosition().x - heal.getSize().x / 2 &&
+                                touchPos.y < heal.getPosition().y + heal.getSize().y / 2 && touchPos.y > heal.getPosition().y - heal.getSize().y / 2) {
+                            switch (itemSelect) {
+                                case 0:
+                                    if (point.getValue() >= VEGETABLES_DRINK_VALUE) {
+                                        isWindow = true;
+                                        break;
+                                    } else {
+                                        isnot_enoughwin = true;
+                                        break;
+                                    }
+                                case 1:
+                                    if (point.getValue() >= ENERGY_DRINK_VALUE) {
+                                        isWindow = true;
+                                        break;
+                                    } else {
+                                        isnot_enoughwin = true;
+                                        break;
+                                    }
+                                case 2:
+                                    if (point.getValue() >= bukiPo) {
+                                        isWindow = true;
+                                        break;
+                                    } else {
+                                        isnot_enoughwin = true;
+                                        break;
+                                    }
+                            }
                         }
                     }
                 }
             }
-
         }
     }
 }
