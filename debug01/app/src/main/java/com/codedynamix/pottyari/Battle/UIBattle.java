@@ -192,6 +192,8 @@ public class UIBattle extends Object
                         //次のボスまでの距離を初期化しておく
                         if(ProgressScene.getIsBoss())
                         {
+                            EnemyStatus.setBossDeadCount(EnemyStatus.getBossDeadCount() + 1);
+                            EnemyStatus.save();
                             ProgressScene.setStartStep(0);
                             ProgressScene.save();
                         }

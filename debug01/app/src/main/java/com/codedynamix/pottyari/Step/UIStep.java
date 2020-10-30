@@ -8,10 +8,12 @@ import com.codedynamix.pottyari.BaseClass.Object;
 import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Progress.UIProgress;
 import com.codedynamix.pottyari.Scene.ProgressScene;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
 import com.codedynamix.pottyari.UI.Game_stepword;
+import com.codedynamix.pottyari.UI.Information;
 
 public class UIStep extends Object
 {
@@ -23,7 +25,6 @@ public class UIStep extends Object
     private Game_stepword walk2;
     private Figure step;
     private Figure step1;
-
 
     public  UIStep()
     {
@@ -54,7 +55,6 @@ public class UIStep extends Object
         step1 = new Figure(ProgressScene.getBossStep(),1);
         step1.setSize(new Vector2(150.0f,150.0f));
         step1.setPosition(new Vector2(walk1.getSize().x/2+80.0f,GameActivity.getBaseHei() / 2 - size.y / 0.0865f));
-
     }
 
     @Override
@@ -76,7 +76,6 @@ public class UIStep extends Object
         step.draw();
 
         step1.draw();
-
     }
 
     @Override

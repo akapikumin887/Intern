@@ -12,9 +12,11 @@ import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Scene.HomeScene;
 import com.codedynamix.pottyari.Scene.ShopScene;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.ChoiseBack;
+import com.codedynamix.pottyari.UI.Information;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.ShopText;
 import com.codedynamix.pottyari.UI.Status;
@@ -52,8 +54,11 @@ public class UIStatus extends Object
     private Figure stAt;
     private Figure lvPoint;
 
-    SharedPreferences pointPrefs;
-    SharedPreferences lvpointPrefs;
+    private SharedPreferences pointPrefs;
+    private SharedPreferences lvpointPrefs;
+
+    private Information info;
+
 
     public UIStatus()
     {
@@ -95,7 +100,7 @@ public class UIStatus extends Object
 
         //レベルアップで使用するポイント数
         lvpointPrefs= GameActivity.getActivity().getSharedPreferences("lvPoint", Context.MODE_PRIVATE);
-        int lp = lvpointPrefs.getInt("int",10);
+        int lp = lvpointPrefs.getInt("int",100);
 
         lvPoint = new Figure(lp,0);
         lvPoint.setSize(new Vector2(100.0f,100.0f));
@@ -136,6 +141,8 @@ public class UIStatus extends Object
 
         isWindow = false;
         isnot_enoughwin = false;
+
+        info = new Information();
     }
 
     @Override
@@ -185,6 +192,7 @@ public class UIStatus extends Object
             not_enoughwin.draw();
             not_enough.draw();
         }
+        info.draw(1);
     }
 
     @Override
@@ -198,79 +206,87 @@ public class UIStatus extends Object
 
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            if(isWindow)
+            //infoが見えてる間はそこを進めることしかできない
+            if(NewEnter.getInformScene(1))
             {
-                //はい
-                if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
-                        touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
-                {
-                    if(point.getValue() >= lvPoint.getValue())
-                    {
-                        //ポイントを払う
-                        point.setValue(Math.min((point.getValue() - lvPoint.getValue()),999999));
-                        //次に必要なポイントを上げる
-                        lvPoint.setValue((int)((float)lvPoint.getValue() * 1.1f));
-
-                        //ステータスを上げる
-                        BattleSystem.playerGrow();
-                        stLv.setValue(HeroStatus.getLv());
-                        stHp.setValue(HeroStatus.getHp());
-                        stAt.setValue(HeroStatus.getAttack());
-
-                        //情報を保存
-                        SharedPreferences.Editor editor = pointPrefs.edit();
-                        editor.putInt("int",point.getValue());
-                        editor.apply();
-
-                        editor = lvpointPrefs.edit();
-                        editor.putInt("int",lvPoint.getValue());
-                        editor.apply();
-                    }
-                    else
-                    {
-                        //ptが足りなかったら
-                        isnot_enoughwin = true;
-                    }
-
-                    isWindow = false;
-                }
-                //いいえ
-                if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
-                        touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
-                {
-                    isWindow = false;
-                }
+                info.addTouch();
             }
             else
             {
-                //Home遷移
-                if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
-                        touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                if(isWindow)
                 {
-                    BaseScene.setnextScene(new HomeScene());
-                }
-
-                //ショップ遷移
-                if(touchPos.x < shop.getPosition().x + shop.getSize().x / 2 && touchPos.x > shop.getPosition().x - shop.getSize().x / 2 &&
-                        touchPos.y < shop.getPosition().y + shop.getSize().y / 2 && touchPos.y > shop.getPosition().y - shop.getSize().y / 2)
-                {
-                    BaseScene.setnextScene(new ShopScene());
-                }
-
-                //ptが足りませんのウィンドウが出ていたら
-                if(isnot_enoughwin)
-                    isnot_enoughwin = false;
-                else
-                {
-                    //レベルアップ
-                    if(touchPos.x < lvUp.getPosition().x + lvUp.getSize().x / 2 && touchPos.x > lvUp.getPosition().x - lvUp.getSize().x / 2 &&
-                            touchPos.y < lvUp.getPosition().y + lvUp.getSize().y / 2 && touchPos.y > lvUp.getPosition().y - lvUp.getSize().y / 2)
+                    //はい
+                    if(touchPos.x < yeswnd.getPosition().x + yeswnd.getSize().x / 2 && touchPos.x > yeswnd.getPosition().x - yeswnd.getSize().x / 2 &&
+                            touchPos.y < yeswnd.getPosition().y + yeswnd.getSize().y / 2 && touchPos.y > yeswnd.getPosition().y - yeswnd.getSize().y / 2)
                     {
-                        isWindow = true;
+                        if(point.getValue() >= lvPoint.getValue())
+                        {
+                            //ポイントを払う
+                            point.setValue(Math.min((point.getValue() - lvPoint.getValue()),999999));
+                            //次に必要なポイントを上げる
+                            lvPoint.setValue((int)((float)lvPoint.getValue() * 1.1f));
+
+                            //ステータスを上げる
+                            BattleSystem.playerGrow();
+                            stLv.setValue(HeroStatus.getLv());
+                            stHp.setValue(HeroStatus.getHp());
+                            stAt.setValue(HeroStatus.getAttack());
+
+                            //情報を保存
+                            SharedPreferences.Editor editor = pointPrefs.edit();
+                            editor.putInt("int",point.getValue());
+                            editor.apply();
+
+                            editor = lvpointPrefs.edit();
+                            editor.putInt("int",lvPoint.getValue());
+                            editor.apply();
+                        }
+                        else
+                        {
+                            //ptが足りなかったら
+                            isnot_enoughwin = true;
+                        }
+
+                        isWindow = false;
+                    }
+                    //いいえ
+                    if(touchPos.x < nownd.getPosition().x + nownd.getSize().x / 2 && touchPos.x > nownd.getPosition().x - nownd.getSize().x / 2 &&
+                            touchPos.y < nownd.getPosition().y + nownd.getSize().y / 2 && touchPos.y > nownd.getPosition().y - nownd.getSize().y / 2)
+                    {
+                        isWindow = false;
                     }
                 }
-            }
+                else
+                {
+                    //Home遷移
+                    if(touchPos.x < back.getPosition().x + back.getSize().x / 2 && touchPos.x > back.getPosition().x - back.getSize().x / 2 &&
+                            touchPos.y < back.getPosition().y + back.getSize().y / 2 && touchPos.y > back.getPosition().y - back.getSize().y / 2)
+                    {
+                        BaseScene.setnextScene(new HomeScene());
+                    }
 
+                    //ショップ遷移
+                    if(touchPos.x < shop.getPosition().x + shop.getSize().x / 2 && touchPos.x > shop.getPosition().x - shop.getSize().x / 2 &&
+                            touchPos.y < shop.getPosition().y + shop.getSize().y / 2 && touchPos.y > shop.getPosition().y - shop.getSize().y / 2)
+                    {
+                        BaseScene.setnextScene(new ShopScene());
+                    }
+
+                    //ptが足りませんのウィンドウが出ていたら
+                    if(isnot_enoughwin)
+                        isnot_enoughwin = false;
+                    else
+                    {
+                        //レベルアップ
+                        if(touchPos.x < lvUp.getPosition().x + lvUp.getSize().x / 2 && touchPos.x > lvUp.getPosition().x - lvUp.getSize().x / 2 &&
+                                touchPos.y < lvUp.getPosition().y + lvUp.getSize().y / 2 && touchPos.y > lvUp.getPosition().y - lvUp.getSize().y / 2)
+                        {
+                            isWindow = true;
+                        }
+                    }
+                }
+
+            }
         }
     }
 }

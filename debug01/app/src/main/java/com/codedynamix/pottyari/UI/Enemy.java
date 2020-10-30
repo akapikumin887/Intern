@@ -10,27 +10,24 @@ public class Enemy extends Object
 {
     private static Texture texNormal;
     private static Texture texChocolate;
+    private static Texture texStrawberry;
 
     private Vector2 texStartPoint;
     private Vector2 texSize;
 
     private boolean isBoss;
     private int animCnt;
-    public enum ENEMY_TYPE
-    {
-        TYPE_NORMAL,
-        TYPE_CHOCOLATE
-    }
 
-    ENEMY_TYPE enemyType;
+    private int enemyType;      //0は通常で1はチョコ
 
-    public Enemy(int num,ENEMY_TYPE type)
+    //引数は敵の種類を
+    public Enemy(int num)
     {
         super();
         setLayer(Layer.LAYER_BUTTON);
-        enemyType = type;
+        enemyType = num;
 
-        switch (num)
+        switch (enemyType % 3)
         {
             case 0:
                 //敵01 一般的な奴
@@ -88,14 +85,18 @@ public class Enemy extends Object
     @Override
     public void draw()
     {
-        switch(enemyType)
+        switch(enemyType / 3)
         {
-            case TYPE_NORMAL:
+            case 0:
                 if(texNormal == null) return;
                 texNormal.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
                 break;
-            case TYPE_CHOCOLATE:
+            case 1:
                 if(texChocolate == null) return;
+                texChocolate.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+            case 2:
+                if(texStrawberry == null) return;
                 texChocolate.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
                 break;
         }
@@ -108,6 +109,9 @@ public class Enemy extends Object
 
         texChocolate = new Texture();
         texChocolate.loadTexture(GameActivity.getCntxt(), R.drawable.enemy2);
+
+        texStrawberry = new Texture();
+        texStrawberry.loadTexture(GameActivity.getCntxt(), R.drawable.enemy3);
     }
 
 }

@@ -13,11 +13,13 @@ import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.Scene.StatusScene;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.StService;
 import com.codedynamix.pottyari.System.StepCount;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
+import com.codedynamix.pottyari.UI.Information;
 import com.codedynamix.pottyari.UI.Waku;
 
 import static androidx.core.content.ContextCompat.startForegroundService;
@@ -35,6 +37,9 @@ public class UITitle extends Object
 
     private Waku waku;
     private Figure step;
+
+    private Information info;
+    private Information hintInfo;
 
     public UITitle()
     {
@@ -60,6 +65,8 @@ public class UITitle extends Object
         step = new Figure(Math.min(StepCount.getAll(),999999999),1);
         step.setSize(new Vector2(100.0f,100.0f));
         step.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/0.18f,GameActivity.getBaseHei() / 2 - size.y/1.0f));
+
+        info = new Information();
     }
 
     @Override
@@ -72,6 +79,9 @@ public class UITitle extends Object
         waku.draw();
         step.draw();
         progHero.draw();
+        info.draw(0);
+
+        if(hintInfo != null) hintInfo.draw();
     }
 
     @Override
@@ -92,45 +102,66 @@ public class UITitle extends Object
         Vector2 touchPos = new Vector2(event.getX() * ratio.x - GameActivity.getBaseWid() / 2,(-event.getY() * ratio.y + GameActivity.getBaseHei() / 2));
         if(event.getAction() == MotionEvent.ACTION_DOWN)    //trigger
         {
-            //当たり判定取得(めんどい)
-            if(touchPos.x < adventure.getPosition().x + adventure.getSize().x / 2 && touchPos.x > adventure.getPosition().x - adventure.getSize().x / 2 &&
-                    touchPos.y < adventure.getPosition().y + adventure.getSize().y / 2 && touchPos.y > adventure.getPosition().y - adventure.getSize().y / 2)
+            //infoが見えてる間はそこを進めることしかできない
+            if(NewEnter.getInformScene(0))
             {
-                //冒険する を押したらゲーム画面へ
-                BaseScene.setnextScene(new ProgressScene());
+                info.addTouch();
             }
-
-            if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&
-                    touchPos.y < heroTitle.getPosition().y + heroTitle.getSize().y / 4 && touchPos.y > heroTitle.getPosition().y - heroTitle.getSize().y / 3)
+            else if(hintInfo != null)
             {
-                //プレイヤーを押したらステータス確認画面へ
-                BaseScene.setnextScene(new StatusScene());
+                hintInfo.addTouch();
+                if(hintInfo.getTouchCnt() >= 7)
+                    hintInfo = null;
             }
-
-            if(touchPos.x < stop.getPosition().x + stop.getSize().x / 2 && touchPos.x > stop.getPosition().x - stop.getSize().x / 2 &&
-                    touchPos.y < stop.getPosition().y + stop.getSize().y / 2 && touchPos.y > stop.getPosition().y - stop.getSize().y / 2)
+            else
             {
-                //サービスを終了
-                if(GameActivity.getIntent() != null)
+                //当たり判定取得(めんどい)
+                if(touchPos.x < adventure.getPosition().x + adventure.getSize().x / 2 && touchPos.x > adventure.getPosition().x - adventure.getSize().x / 2 &&
+                        touchPos.y < adventure.getPosition().y + adventure.getSize().y / 2 && touchPos.y > adventure.getPosition().y - adventure.getSize().y / 2)
                 {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("注意")
-                            .setMessage("アプリの常駐状態を解除します。\n歩数の取得が不安定になることが予想されますがよろしいですか？")
-                            .setPositiveButton("はい", new DialogInterface.OnClickListener()
-                            {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which)
+                    //冒険する を押したらゲーム画面へ
+                    BaseScene.setnextScene(new ProgressScene());
+                }
+
+                if(touchPos.x < heroTitle.getPosition().x + heroTitle.getSize().x / 4 && touchPos.x > heroTitle.getPosition().x - heroTitle.getSize().x / 4 &&
+                        touchPos.y < heroTitle.getPosition().y + heroTitle.getSize().y / 4 && touchPos.y > heroTitle.getPosition().y - heroTitle.getSize().y / 3)
+                {
+                    //プレイヤーを押したらステータス確認画面へ
+                    BaseScene.setnextScene(new StatusScene());
+                }
+
+                if(touchPos.x < stop.getPosition().x + stop.getSize().x / 2 && touchPos.x > stop.getPosition().x - stop.getSize().x / 2 &&
+                        touchPos.y < stop.getPosition().y + stop.getSize().y / 2 && touchPos.y > stop.getPosition().y - stop.getSize().y / 2)
+                {
+                    //サービスを終了
+                    if(GameActivity.getIntent() != null)
+                    {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("注意")
+                                .setMessage("アプリの常駐状態を解除します。\n歩数の取得が不安定になることが予想されますがよろしいですか？")
+                                .setPositiveButton("はい", new DialogInterface.OnClickListener()
                                 {
-                                    getActivity().stopService(GameActivity.getIntent());
-                                    GameActivity.setIntent(null);
-                                    new AlertDialog.Builder(getActivity())
-                                            .setMessage("次回アプリ起動の際には常駐状態に戻ります。")
-                                            .setPositiveButton("わかった", null)
-                                            .show();
-                                }
-                            })
-                            .setNegativeButton("いいえ", null)
-                            .show();
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        getActivity().stopService(GameActivity.getIntent());
+                                        GameActivity.setIntent(null);
+                                        new AlertDialog.Builder(getActivity())
+                                                .setMessage("次回アプリ起動の際には常駐状態に戻ります。")
+                                                .setPositiveButton("わかった", null)
+                                                .show();
+                                    }
+                                })
+                                .setNegativeButton("いいえ", null)
+                                .show();
+                    }
+                }
+
+                if(touchPos.x < hint.getPosition().x + hint.getSize().x / 2 && touchPos.x > hint.getPosition().x - hint.getSize().x / 2 &&
+                        touchPos.y < hint.getPosition().y + hint.getSize().y / 2 && touchPos.y > hint.getPosition().y - hint.getSize().y / 2)
+                {
+                    //?を押したら説明が読めるぞ！
+                    hintInfo = new Information();
                 }
             }
         }

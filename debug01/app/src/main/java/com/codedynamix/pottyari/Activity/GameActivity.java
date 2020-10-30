@@ -21,6 +21,7 @@ import com.codedynamix.pottyari.Progress.Coffin;
 import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.LoadScene;
 import com.codedynamix.pottyari.System.FPSManager;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.UI.BattleMark;
 import com.codedynamix.pottyari.UI.BattleText;
 import com.codedynamix.pottyari.UI.ChoiseBack;
@@ -31,6 +32,7 @@ import com.codedynamix.pottyari.UI.Game_stepword;
 import com.codedynamix.pottyari.UI.HeroUI;
 import com.codedynamix.pottyari.UI.HomeButton;
 import com.codedynamix.pottyari.UI.HpBar;
+import com.codedynamix.pottyari.UI.Information;
 import com.codedynamix.pottyari.UI.ItemName;
 import com.codedynamix.pottyari.UI.MessageWindow;
 import com.codedynamix.pottyari.UI.Reinforcement;
@@ -75,7 +77,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
         //activity.onSensorChanged();
         setRenderer(this);
         FPSManager.init();
-        //StepCount.init();
+        NewEnter.init();
         HeroStatus.init();
         EnemyStatus.init();
     }
@@ -213,6 +215,7 @@ public class GameActivity extends GLSurfaceView implements GLSurfaceView.Rendere
             ChoiseBack.loadTexture();
             MessageWindow.loadTexture();
             ShopText.loadTexture();
+            Information.loadTexture();
         }
         //title
         {

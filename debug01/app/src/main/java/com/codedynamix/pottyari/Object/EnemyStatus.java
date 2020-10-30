@@ -57,8 +57,8 @@ public class EnemyStatus
         }
 
         status[0] = status[3] = 30 * (status[5] + 1) + eAddStatus;
-        status[1] = 5 + (status[5] * 3);
-        status[2] = 5 + (status[5] * 3);
+        status[1] = 5 + (status[5] * 2) + eAddStatus;
+        status[2] = 5 + (status[5] * 2) + eAddStatus;
 
         save();
     }

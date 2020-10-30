@@ -9,8 +9,8 @@ import com.codedynamix.pottyari.BaseClass.BaseScene;
 import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Object.HeroStatus;
 import com.codedynamix.pottyari.Progress.UIProgress;
+import com.codedynamix.pottyari.System.NewEnter;
 import com.codedynamix.pottyari.System.StepCount;
-import com.codedynamix.pottyari.UI.Enemy;
 
 import java.util.Random;
 
@@ -25,6 +25,7 @@ public class ProgressScene extends BaseScene
     private static SharedPreferences stepPrefs;         //歩いた歩数
     private static SharedPreferences bossPrefs;         //次戦う敵がボスかどうか
     private static SharedPreferences maxPrefs;          //ボスまでの距離
+    private static SharedPreferences enemyTypePrefs;    //今戦っている敵の種類
 
     private static boolean canBattle;  //今回バトルできるか
     private static boolean isBoss;     //次に戦う敵はボスなのか
@@ -40,12 +41,13 @@ public class ProgressScene extends BaseScene
 
     private static boolean isBattle;
 
-    //ここ二つは保存する
-    private static int enemyVal;
-    private static Enemy.ENEMY_TYPE enemyType;
+    //今戦っている敵の種類
+    private static int enemyType;
 
 //マクロ定義
-    private final int ENEMY_TYPE = 2;   //全ての種類
+    private final int LOAD_MAX = 100000;              //初期値の道の長さ
+    private final int ENEMY_ENCOUNT_MAX = 10000;
+    private final int ENEMY_ENCOUNT_MIN = 1000;
 
     public ProgressScene()
     {
@@ -69,7 +71,10 @@ public class ProgressScene extends BaseScene
         isBoss = bossPrefs.getBoolean("boolean",false);   //次に戦う敵はボスかどうか
 
         maxPrefs = GameActivity.getActivity().getSharedPreferences("max", Context.MODE_PRIVATE);
-        max = maxPrefs.getInt("int",5);           //初期値からボスまでの距離
+        max = maxPrefs.getInt("int",LOAD_MAX);           //初期値からボスまでの距離
+
+        enemyTypePrefs = GameActivity.getActivity().getSharedPreferences("enemyType", Context.MODE_PRIVATE);
+        enemyType = enemyTypePrefs.getInt("int",0);      //今戦っている敵の種類
 
         {
             //ボスまでの歩数を最大値から歩いた分だけ減らして求める
@@ -152,52 +157,87 @@ public class ProgressScene extends BaseScene
     @Override
     public void update()
     {
-        count++;
-
-        //！が出るまでの間
-        if(count > 120)
+        //説明するまでエンカウントは待ってもらう
+        if(!NewEnter.getInformScene(3))
         {
-            //バトル開始
-            if(canBattle)
+            count++;
+
+            //！が出るまでの間
+            if(count > 120)
             {
-                isBattle = true;
-                count = 0;
+                //バトル開始
+                if(canBattle)
+                {
+                    isBattle = true;
+                    count = 0;
+                }
             }
-        }
 
-        if(!isBattle)
-            super.update();
-        else if(count > 60)
-        {
-            //ボスを3回以上倒していたらチョコ味解禁
-            if(EnemyStatus.getBossDeadCount() > 3)
+            if(!isBattle)
+                super.update();
+            else if(count > 60)
             {
                 Random random = new Random();
 
-                if(random.nextInt() % 2 == 1)
-                    enemyType = Enemy.ENEMY_TYPE.TYPE_CHOCOLATE;
+                int enemyFlavor = 0;
+                if(EnemyStatus.getBossDeadCount() > 5)
+                {
+                    //ボスを5回以上倒していたらイチゴ味解禁
+                    enemyFlavor = random.nextInt(3);
+                }
+                else if(EnemyStatus.getBossDeadCount() > 3)
+                {
+                    //ボスを3回以上倒していたらチョコ味解禁
+                    enemyFlavor = random.nextInt(2);
+                }
+                //！が出てから60カウント後に戦闘開始
+                if(isBoss)
+                {
+                    switch(enemyFlavor)
+                    {
+                        case 0:
+                            enemyType = 2;
+                            break;
+                        case 1:
+                            enemyType = 5;
+                            break;
+                        case 2:
+                            enemyType = 8;
+                            break;
+                    }
+
+                    BaseScene.setnextScene(new BattleScene(enemyType));
+                    isBoss = true;
+
+                    SharedPreferences.Editor editor = bossPrefs.edit();
+                    editor.putBoolean("boolean", isBoss);
+                    editor.apply();
+
+                    editor = enemyTypePrefs.edit();
+                    editor.putInt("int",enemyType);
+                    editor.apply();
+                }
                 else
-                    enemyType = Enemy.ENEMY_TYPE.TYPE_NORMAL;
-            }
-            else
-                enemyType = Enemy.ENEMY_TYPE.TYPE_NORMAL;
+                {
+                    switch(enemyFlavor)
+                    {
+                        case 0:
+                            enemyType = random.nextInt(2);
+                            break;
+                        case 1:
+                            enemyType = random.nextInt(2) + 3;
+                            break;
+                        case 2:
+                            enemyType = random.nextInt(2) + 6;
+                            break;
+                    }
 
-            //！が出てから60カウント後に戦闘開始
-            if(isBoss)
-            {
-				enemyVal = 2;
-                BaseScene.setnextScene(new BattleScene(enemyVal,enemyType));
-                isBoss = true;
+                    BaseScene.setnextScene(new BattleScene(enemyType));
 
-                SharedPreferences.Editor editor = bossPrefs.edit();
-                editor.putBoolean("boolean", isBoss);
-                editor.apply();
-            }
-            else
-            {
-				Random random = new Random();
-                enemyVal = random.nextInt(ENEMY_TYPE - 1);
-                BaseScene.setnextScene(new BattleScene(enemyVal,enemyType));
+                    SharedPreferences.Editor editor = enemyTypePrefs.edit();
+                    editor.putInt("int",enemyType);
+                    editor.apply();
+                }
             }
         }
     }
@@ -207,8 +247,8 @@ public class ProgressScene extends BaseScene
     {
         Random random = new Random();
         //最小値1000 : 最大値10000の歩数歩くと敵と遭遇する
-        int max = 4;
-        int min = 3;
+        int max = ENEMY_ENCOUNT_MAX;
+        int min = ENEMY_ENCOUNT_MIN;
         road = min + random.nextInt(max - min);
 
         //エンカウントの敵よりボスのほうが近ければ次に戦う敵はボスになる
@@ -248,8 +288,7 @@ public class ProgressScene extends BaseScene
     public static boolean getIsBattle(){return isBattle;}
     public static boolean getCanBattle(){return canBattle;}
 
-    public static int getEnemyVal(){return enemyVal;}
-    public static Enemy.ENEMY_TYPE getEnemyType(){return enemyType;}
+    public static int getEnemyType(){return enemyType;}
     public static boolean getIsBoss(){return isBoss;}
     public static void setStartStep(int num){startStep = num;}
 
