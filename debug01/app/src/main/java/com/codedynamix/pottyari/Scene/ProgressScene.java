@@ -90,7 +90,8 @@ public class ProgressScene extends BaseScene
             {
                 startStep += step;          //近くの敵と歩いた歩数で小さいほうが加算される
                 road -= step;               //敵と戦っていない間なので歩数も進める
-                bossStep -= step;           //今回進んでいた分を引いておく
+				bossStep -= step;           //今回進んでいた分を引いておく
+
 
                 //敵と遭遇していたら差分を戻しておく
                 if(road <= 0)
