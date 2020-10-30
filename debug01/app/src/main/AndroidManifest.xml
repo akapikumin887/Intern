@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <service android:name=".System.StService" />
-        <service android:name=".System.load" />
     </application>
 
 </manifest>

@@ -8,18 +8,28 @@ import com.codedynamix.pottyari.System.Vector2;
 
 public class Enemy extends Object
 {
-    private static Texture texture;
+    private static Texture texNormal;
+    private static Texture texChocolate;
 
     private Vector2 texStartPoint;
     private Vector2 texSize;
 
     private boolean isBoss;
     private int animCnt;
+    public enum ENEMY_TYPE
+    {
+        TYPE_NORMAL,
+        TYPE_CHOCOLATE
+    }
 
-    public Enemy(int num)
+    ENEMY_TYPE enemyType;
+
+    public Enemy(int num,ENEMY_TYPE type)
     {
         super();
         setLayer(Layer.LAYER_BUTTON);
+        enemyType = type;
+
         switch (num)
         {
             case 0:
@@ -78,14 +88,26 @@ public class Enemy extends Object
     @Override
     public void draw()
     {
-        if(texture == null) return;
-        texture.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+        switch(enemyType)
+        {
+            case TYPE_NORMAL:
+                if(texNormal == null) return;
+                texNormal.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+            case TYPE_CHOCOLATE:
+                if(texChocolate == null) return;
+                texChocolate.draw(pos,size,rotate,reverse,texStartPoint,texSize,color);
+                break;
+        }
     }
 
     public static void loadTexture()
     {
-        texture = new Texture();
-        texture.loadTexture(GameActivity.getCntxt(), R.drawable.enemy);
+        texNormal = new Texture();
+        texNormal.loadTexture(GameActivity.getCntxt(), R.drawable.enemy);
+
+        texChocolate = new Texture();
+        texChocolate.loadTexture(GameActivity.getCntxt(), R.drawable.enemy2);
     }
 
 }

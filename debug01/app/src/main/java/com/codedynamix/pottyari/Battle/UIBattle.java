@@ -10,6 +10,7 @@ import com.codedynamix.pottyari.BaseClass.Object;
 import com.codedynamix.pottyari.Object.EnemyStatus;
 import com.codedynamix.pottyari.Object.Figure;
 import com.codedynamix.pottyari.Object.HeroStatus;
+import com.codedynamix.pottyari.Progress.ProgressHero;
 import com.codedynamix.pottyari.Scene.ProgressScene;
 import com.codedynamix.pottyari.System.Vector2;
 import com.codedynamix.pottyari.UI.BattleText;
@@ -191,11 +192,8 @@ public class UIBattle extends Object
                         //次のボスまでの距離を初期化しておく
                         if(ProgressScene.getIsBoss())
                         {
-                            //次のボス座標をセット
-                            SharedPreferences stepPrefs = GameActivity.getActivity().getSharedPreferences("step", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = stepPrefs.edit();
-                            editor.putInt("int",0);
-                            editor.apply();
+                            ProgressScene.setStartStep(0);
+                            ProgressScene.save();
                         }
                     }
                     else

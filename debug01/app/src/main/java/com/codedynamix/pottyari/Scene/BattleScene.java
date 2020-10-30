@@ -14,7 +14,7 @@ public class BattleScene extends BaseScene
 
     private Enemy enemy;
 
-    public BattleScene(int num)
+    public BattleScene(int num,Enemy.ENEMY_TYPE type)
     {
         bgBattle = new BGBattle();
         list.add(bgBattle);
@@ -23,7 +23,7 @@ public class BattleScene extends BaseScene
         list.add(uiBattle);
 
         //敵
-        enemy = new Enemy(num);
+        enemy = new Enemy(num, type);
         list.add(enemy);
 
         HeroStatus.setIsBattle(true);

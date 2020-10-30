@@ -78,4 +78,7 @@ public class EnemyStatus
     public static int  getEnemyDeadCount(){return status[4];}
     public static void setEnemyDeadCount(int dc){status[4] = dc;}
 
+    public static int  getBossDeadCount(){return status[5];}
+    public static void setBossDeadCount(int bdc){status[5] = bdc;}
+
 }

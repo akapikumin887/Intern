@@ -166,7 +166,7 @@ public class UIProgress extends Object
             {
                 if (HeroStatus.getIsBattle() && HeroStatus.getHp() > 0)
                 {
-                    BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyType()));
+                    BaseScene.setnextScene(new BattleScene(ProgressScene.getEnemyVal(),ProgressScene.getEnemyType()));
                     EnemyStatus.init();
                 }
             }

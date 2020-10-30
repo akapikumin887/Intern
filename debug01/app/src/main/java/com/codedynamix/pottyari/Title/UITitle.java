@@ -56,8 +56,8 @@ public class UITitle extends Object
         progHero.setSize(new Vector2(100.0f,100.0f));
         progHero.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + progHero.getSize().x,GameActivity.getBaseHei() / 2 - progHero.getSize().y));
 
-        //歩数
-        step = new Figure(StepCount.getAll(),1);
+        //歩数 オーバーしないように限界を定める
+        step = new Figure(Math.min(StepCount.getAll(),999999999),1);
         step.setSize(new Vector2(100.0f,100.0f));
         step.setPosition(new Vector2(-GameActivity.getBaseWid() / 2 + size.x/0.18f,GameActivity.getBaseHei() / 2 - size.y/1.0f));
     }
@@ -77,9 +77,9 @@ public class UITitle extends Object
     @Override
     public void update()
     {
-        super.update();
         progHero.update();
-        step.setValue(StepCount.getAll());
+        step.setValue(Math.min(StepCount.getAll(),999999999));
+        step.update();
     }
 
 
